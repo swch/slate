@@ -4,7 +4,7 @@ title: API Reference
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
   - javascript
-  - c#
+  - csharp
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -26,35 +26,42 @@ CardSavr responses and requests support JSON-formatted bodies only.
 
 > To authorize, use this code:
 
-```ruby
-require 'kittn'
+```javascript
+const { CardsavrHelper } = require("@strivve/strivve-sdk/lib/cardsavr/CardsavrJSLibrary-2.0");
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+const session = new CardsavrSession(this.cardsavr_server, 
+    this.app_key, this.app_name, username, password);
+const login_data = await session.init();
+//await session.getCards({}); //session can now be used to make api calls
 ```
 
-```python
-import kittn
+```csharp
+using Switch.CardSavr.Http;
 
-api = kittn.authorize('meowmeowmeow')
+CardSavrHttpClient session = new CardSavrHttpClient(_cardsavrServer, 
+  _appKey, _appName, userName, password);
+CardSavrResponse<LoginResult> login = await session.Init();
+
+//await session.getCardsAsync(); //session can now be used to make api calls
 ```
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+# With a shell, you must first establish a session, followed by 
+# a login command.  Note that the cookies from the session call 
+# must be passed into the login call. Keep in mind, this ONLY works 
+# with a development server that supports unsigned body requests. 
+curl "https://api.INSTANCE.cardsavr.io/session/start" 
+  -H "trace: {\"key\": \"my_trace\"}" -c ~/_cookies
+
+curl -iv -d "{\"password\": \"PASSWORD\", \"userName\": \"USERNAME\"}" 
+  -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/session/login" 
+  -H "trace: {\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+  
 ```
 
-```javascript
-const kittn = require('kittn');
+> You can retrieve an integrator name/key and an agent username/password from developers@strivve.com
 
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+There is more information in the [session endpoint](#session) docuemtnation. If you decide not to use one of our SDKs, you are responsible for encryption of all bodies passed into the REST API.  
 
 `Authorization: meowmeowmeow`
 
@@ -66,14 +73,14 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
 
 ## Get All Kittens
 
-```ruby
+```javascript
 require 'kittn'
 
 api = Kittn::APIClient.authorize!('meowmeowmeow')
 api.kittens.get
 ```
 
-```python
+```csharp
 import kittn
 
 api = kittn.authorize('meowmeowmeow')
@@ -132,14 +139,14 @@ Remember — a happy kitten is an authenticated kitten!
 
 ## Get a Specific Kitten
 
-```ruby
+```javascript
 require 'kittn'
 
 api = Kittn::APIClient.authorize!('meowmeowmeow')
 api.kittens.get(2)
 ```
 
-```python
+```csharp
 import kittn
 
 api = kittn.authorize('meowmeowmeow')
@@ -186,14 +193,14 @@ ID | The ID of the kitten to retrieve
 
 ## Delete a Specific Kitten
 
-```ruby
+```javascript
 require 'kittn'
 
 api = Kittn::APIClient.authorize!('meowmeowmeow')
 api.kittens.delete(2)
 ```
 
-```python
+```csharp
 import kittn
 
 api = kittn.authorize('meowmeowmeow')
