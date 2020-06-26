@@ -201,7 +201,7 @@
       <script src="javascripts/all-c5541673.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;javascript&quot;,&quot;c#&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;javascript&quot;,&quot;csharp&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -213,7 +213,7 @@
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
               <a href="#" data-language-name="javascript">javascript</a>
-              <a href="#" data-language-name="c#">c#</a>
+              <a href="#" data-language-name="csharp">csharp</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -260,40 +260,50 @@
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">CardsavrHelper</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@strivve/strivve-sdk/lib/cardsavr/CardsavrJSLibrary-2.0</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<span class="kd">const</span> <span class="nx">session</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CardsavrSession</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">cardsavr_server</span><span class="p">,</span> 
+    <span class="k">this</span><span class="p">.</span><span class="nx">app_key</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">app_name</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">login_data</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
+<span class="c1">//await session.getCards({}); //session can now be used to make api calls</span>
+</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="k">using</span> <span class="nn">Switch.CardSavr.Http</span><span class="p">;</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
+<span class="n">CardSavrHttpClient</span> <span class="n">session</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CardSavrHttpClient</span><span class="p">(</span><span class="n">_cardsavrServer</span><span class="p">,</span> 
+  <span class="n">_appKey</span><span class="p">,</span> <span class="n">_appName</span><span class="p">,</span> <span class="n">userName</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span>
+<span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">LoginResult</span><span class="p">&gt;</span> <span class="n">login</span> <span class="p">=</span> <span class="k">await</span> <span class="n">session</span><span class="p">.</span><span class="nf">Init</span><span class="p">();</span>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
+<span class="c1">//await session.getCardsAsync(); //session can now be used to make api calls</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># With a shell, you must first establish a session, followed by </span>
+<span class="c"># a login command.  Note that the cookies from the session call </span>
+<span class="c"># must be passed into the login call. Keep in mind, this ONLY works </span>
+<span class="c"># with a development server that supports unsigned body requests. </span>
+curl <span class="s2">"https://api.INSTANCE.cardsavr.io/session/start"</span> 
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-c</span> ~/_cookies
+
+curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="s2">"{</span><span class="se">\"</span><span class="s2">password</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">PASSWORD</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">userName</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">USERNAME</span><span class="se">\"</span><span class="s2">}"</span> 
+  <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="s2">"https://api.INSTANCE.cardsavr.io/session/login"</span> 
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-b</span> ~/_cookies <span class="nt">-c</span> ~/_cookies
+
 </code></pre></div>
 <blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
+<p>You can retrieve an integrator name/key and an agent username/password from developers@strivve.com</p>
 </blockquote>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p>There is more information in the <a href="#session">session endpoint</a> docuemtnation. If you decide not to use one of our SDKs, you are responsible for encryption of all bodies passed into the REST API.  </p>
 
 <p><code>Authorization: meowmeowmeow</code></p>
 
 <aside class="notice">
 You must replace <code>meowmeowmeow</code> with your personal API key.
 </aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="nx">require</span> <span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<span class="nx">api</span> <span class="o">=</span> <span class="nx">Kittn</span><span class="p">::</span><span class="nx">APIClient</span><span class="p">.</span><span class="nx">authorize</span><span class="o">!</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">)</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="kd">get</span>
+</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">import</span> <span class="n">kittn</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="n">api</span> <span class="p">=</span> <span class="n">kittn</span><span class="p">.</span><span class="nf">authorize</span><span class="p">(</span><span class="err">'</span><span class="n">meowmeowmeow</span><span class="err">'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="k">get</span><span class="p">()</span>
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
   <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
@@ -347,14 +357,14 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
 <aside class="success">
 Remember — a happy kitten is an authenticated kitten!
 </aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="nx">require</span> <span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<span class="nx">api</span> <span class="o">=</span> <span class="nx">Kittn</span><span class="p">::</span><span class="nx">APIClient</span><span class="p">.</span><span class="nx">authorize</span><span class="o">!</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">)</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">import</span> <span class="n">kittn</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">api</span> <span class="p">=</span> <span class="n">kittn</span><span class="p">.</span><span class="nf">authorize</span><span class="p">(</span><span class="err">'</span><span class="n">meowmeowmeow</span><span class="err">'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="k">get</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
   <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
@@ -390,14 +400,14 @@ Remember — a happy kitten is an authenticated kitten!
 <td>The ID of the kitten to retrieve</td>
 </tr>
 </tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="nx">require</span> <span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<span class="nx">api</span> <span class="o">=</span> <span class="nx">Kittn</span><span class="p">::</span><span class="nx">APIClient</span><span class="p">.</span><span class="nx">authorize</span><span class="o">!</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">)</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">import</span> <span class="n">kittn</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">api</span> <span class="p">=</span> <span class="n">kittn</span><span class="p">.</span><span class="nf">authorize</span><span class="p">(</span><span class="err">'</span><span class="n">meowmeowmeow</span><span class="err">'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
   <span class="nt">-X</span> DELETE
   <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
@@ -493,7 +503,7 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
                 <a href="#" data-language-name="javascript">javascript</a>
-                <a href="#" data-language-name="c#">c#</a>
+                <a href="#" data-language-name="csharp">csharp</a>
           </div>
       </div>
     </div>
