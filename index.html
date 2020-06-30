@@ -227,6 +227,26 @@
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
+            <a href="#headers" class="toc-h1 toc-link" data-title="Headers">Headers</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#trace" class="toc-h2 toc-link" data-title="Trace">Trace</a>
+                  </li>
+                  <li>
+                    <a href="#hydration" class="toc-h2 toc-link" data-title="Hydration">Hydration</a>
+                  </li>
+                  <li>
+                    <a href="#client-application" class="toc-h2 toc-link" data-title="Client Application">Client Application</a>
+                  </li>
+                  <li>
+                    <a href="#paging" class="toc-h2 toc-link" data-title="Paging">Paging</a>
+                  </li>
+                  <li>
+                    <a href="#safe-key" class="toc-h2 toc-link" data-title="Safe key">Safe key</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
               <ul class="toc-list-h2">
                   <li>
@@ -262,8 +282,8 @@
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">CardsavrHelper</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@strivve/strivve-sdk/lib/cardsavr/CardsavrJSLibrary-2.0</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">session</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CardsavrSession</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">cardsavr_server</span><span class="p">,</span> 
-    <span class="k">this</span><span class="p">.</span><span class="nx">app_key</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">app_name</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">session</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CardsavrSession</span><span class="p">(</span><span class="nx">cardsavr_server</span><span class="p">,</span> 
+    <span class="nx">app_key</span><span class="p">,</span> <span class="nx">app_name</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">login_data</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
 <span class="c1">//await session.getCards({}); //session can now be used to make api calls</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="k">using</span> <span class="nn">Switch.CardSavr.Http</span><span class="p">;</span>
@@ -286,51 +306,221 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="s2">"{<
 
 </code></pre></div>
 <blockquote>
-<p>You can retrieve an integrator name/key and an agent username/password from developers@strivve.com</p>
+<p>The SDK calls save the sessionSalt for future use, so all that is returned is the structure JSON of the login.  See [link to encryption stuff] on how to use the sessionSalt.</p>
 </blockquote>
-
-<p>There is more information in the <a href="#session">session endpoint</a> docuemtnation. If you decide not to use one of our SDKs, you are responsible for encryption of all bodies passed into the REST API.  </p>
-
-<p><code>Authorization: meowmeowmeow</code></p>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"sessionSalt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kz2R3qexAkZqhoCalnNX9+6CLAMZ+"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"serverPublicKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sample_public_key"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"valid_password"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">321</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> 
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john_smith_123"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jsmith@email.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dev"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"created_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-19T23:10:36.657Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>There is more information in the <a href="#session">session endpoint</a> documentation. If you decide not to use one of the Strivve SDKs, you are responsible for encryption of all bodies passed into the REST API.  </p>
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+The cardsavr server, app key, app name, and the application username/password must be attained from developers@strivve.com.  See the definitions of these settings [link to app key definitions] here.
 </aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="nx">require</span> <span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span>
-
-<span class="nx">api</span> <span class="o">=</span> <span class="nx">Kittn</span><span class="p">::</span><span class="nx">APIClient</span><span class="p">.</span><span class="nx">authorize</span><span class="o">!</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">)</span>
-<span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="kd">get</span>
-</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">import</span> <span class="n">kittn</span>
-
-<span class="n">api</span> <span class="p">=</span> <span class="n">kittn</span><span class="p">.</span><span class="nf">authorize</span><span class="p">(</span><span class="err">'</span><span class="n">meowmeowmeow</span><span class="err">'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="k">get</span><span class="p">()</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="kd">get</span><span class="p">();</span>
-</code></pre></div>
+<h1 id='headers'>Headers</h1>
+<p>There is a set of required and optional headers.  The SDKs abstract most of these settings, but it&#39;s important to understand how they are used when making REST calls.</p>
+<h2 id='trace'>Trace</h2>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Setting a sample Trace Header</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="c1">//initialize as part of the session -- defaults to </span>
+<span class="c1">//the unique username of the session</span>
+<span class="kd">const</span> <span class="nx">session</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CardsavrSession</span><span class="p">(</span><span class="nx">cardsavr_server</span><span class="p">,</span> 
+    <span class="nx">app_key</span><span class="p">,</span> <span class="nx">app_name</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> 
+    <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NlOFNNlKabi7Fn26CLw=</span><span class="dl">"</span><span class="p">}));</span>
+
+<span class="c1">//or change the trace mid-session </span>
+<span class="nx">session</span><span class="p">.</span><span class="nx">setHeaders</span><span class="p">({</span><span class="dl">"</span><span class="s2">trace</span><span class="dl">"</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NlOFNNlKabi7Fn26CLw=</span><span class="dl">"</span><span class="p">}));</span>
+
+<span class="c1">//or per request</span>
+<span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getUsers</span><span class="p">({},</span> <span class="p">{},</span> <span class="p">{</span><span class="na">trace</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NlOFNNlKabi7Fn26CLw=</span><span class="dl">"</span><span class="p">})});</span> 
+</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="c1">//Add a trace at the start of the session</span>
+<span class="n">CardSavrHttpClient</span> <span class="n">session</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CardSavrHttpClient</span><span class="p">(</span><span class="n">_cardsavrServer</span><span class="p">,</span> 
+  <span class="n">_appKey</span><span class="p">,</span> <span class="n">_appName</span><span class="p">,</span> <span class="n">userName</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="s">"{\"key\": \"my_trace\"}"</span><span class="p">);</span>
+
+<span class="c1">//or per request</span>
+<span class="n">HttpRequestHeaders</span> <span class="n">headers</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpRequestMessage</span><span class="p">().</span><span class="n">Headers</span><span class="p">;</span>
+<span class="n">headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"trace"</span><span class="p">,</span> <span class="s">"{\"key\": \"my_trace\"}"</span><span class="p">);</span>
+
+<span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;&gt;</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">GetUsersAsync</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="n">headers</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.INSTANCE.cardsavr.io/cardsavr_users"</span> 
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">NlOFNNlKabi7Fn26CLw==</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">bid</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">hEOF26sbi7FCNNlLw==</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-c</span> ~/_cookies
+</code></pre></div>
+<p><code>&quot;trace&quot;: JSON-stringified trace object</code></p>
+
+<p>CardSavr uses trace headers to trace all request-related activity within the CardSavr infrastructure. When a request is made to CardSavr, any ID included in the trace header will appear in all logging associated with that request. This allows for quick troubleshooting and monitoring. .  </p>
+
+<p>The trace header takes a JSON-stringified object, which can be as simple or as complex as necessary for the given application.  The trace is a <strong>required header</strong>, and must contain at least a trace &quot;key&quot;.  Within the SDKs, the trace key defaults to the username of the session.</p>
+
+<table><thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>key</td>
+<td>unique key that identifies a request or set of requests</td>
+<td>`trace: &#39;{ &quot;key&quot;: &quot;hEOFNKapn26sbi7FCNNlLw==&quot; }&#39;</td>
+</tr>
+</tbody></table>
+
+<p>A trace header can contain multiple trace IDs. It is up to the developer to mint trace IDs in a way that best categorizes their app&#39;s requests. If a backend server is used, adding the trace IDs into the backend server logs can yield additional tracing efficacy.</p>
+<h2 id='hydration'>Hydration</h2>
+<blockquote>
+<p>Setting a sample Hydration Header</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="c1">//or per request</span>
+<span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getCards</span><span class="p">(</span><span class="mi">123</span><span class="p">,</span> <span class="p">{},</span> <span class="p">{</span> <span class="dl">"</span><span class="s2">hydration</span><span class="dl">"</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">([</span><span class="dl">"</span><span class="s2">address</span><span class="dl">"</span><span class="p">])</span> <span class="p">});</span>
+</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">HttpRequestHeaders</span> <span class="n">headers</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpRequestMessage</span><span class="p">().</span><span class="n">Headers</span><span class="p">;</span>
+<span class="n">headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"hydration"</span><span class="p">,</span> <span class="s">"[\"address\"]"</span><span class="p">);</span>
+
+<span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Card</span><span class="p">&gt;&gt;</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> 
+  <span class="n">http</span><span class="p">.</span><span class="nf">GetCardsAsync</span><span class="p">(</span><span class="m">123</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.INSTANCE.cardsavr.io/cardsavr_cards/123"</span> 
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">NlOFNNlKabi7Fn26CLw==</span><span class="se">\"</span><span class="s2">}"</span> 
+  <span class="nt">-H</span> <span class="s2">"hydration: [</span><span class="se">\"</span><span class="s2">address</span><span class="se">\"</span><span class="s2">]"</span> 
+  <span class="nt">-c</span> ~/_cookies
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"cardholder_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"bin_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"address_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"par"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Q1J4AwSWD4Dx6q1DTo0MB21XDAV76"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expiration_month"</span><span class="p">:</span><span class="w"> </span><span class="s2">"03"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expiration_year"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name_on_card"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"created_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-06T20:33:23.094Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-03-13T22:32:30.897Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> 
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"is_primary"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"address1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345 Harris Ave"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"address2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"STE. 601"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Seattle"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"subnational"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WA"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USA"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98133"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"postal_other"</span><span class="p">:</span><span class="w"> </span><span class="mi">98133-1234</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"created_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-02T10:12:51.081Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-06T20:33:23.094Z"</span><span class="w">
   </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
+<p><code>{&quot;hydration&quot;: {JSON-stringified array of resources to be hydrated}}</code></p>
+
+<p>For requests against a resource type that contains foreign key references (e.g. &#39;address_id&#39; for &#39;cardsavr_cards&#39;), a hydration header will &quot;hydrate&quot; (i.e. fill out) any of the resources indicated. Therefore, any objects returned in the response body will contain additional key-value pairs for each of the resources listed, where the key is the resource name (e.g. &quot;address&quot; in the previous example) and the value is the full object.</p>
+
+<p>For example, including the header {hydration: &#39;[&quot;address&quot;]&#39;} in a successful PUT request to &#39;/cardsavr_cards/123&#39; would return the updated card with an additional &#39;address&#39; property containing the full address object associated with that card.</p>
+
+<p><strong>Nested hydration</strong> can also be used. For example, the following header:</p>
+
+<p><code>{&quot;hydration&quot;: &#39;[&quot;card.cardholder&quot;]&#39;}</code></p>
+
+<p>for the endpoint &#39;/place_card_on_multiple_sites_jobs&#39; would hydrate the associated card AND cardholder (i.e. user) associated with the card. Hydration headers can be used with any endpoint for any resource that contains foreign key references.</p>
+<h2 id='client-application'>Client Application</h2>
+<blockquote>
+<p>Setting a custom application header (defaults to app name)</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="nx">session</span><span class="p">.</span><span class="nx">setSessionHeaders</span><span class="p">(</span> <span class="p">{</span><span class="dl">'</span><span class="s1">client-application</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">my-client-app</span><span class="dl">'</span> <span class="p">});</span>
+</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">http</span><span class="p">.</span><span class="nf">SetIdentificationHeader</span><span class="p">(</span><span class="err">'</span><span class="n">my</span><span class="p">-</span><span class="n">client</span><span class="p">-</span><span class="n">app</span><span class="err">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.INSTANCE.cardsavr.io/cardsavr_cards/123"</span> 
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">NlOFNNlKabi7Fn26CLw==</span><span class="se">\"</span><span class="s2">}"</span> 
+  <span class="nt">-H</span> <span class="s2">"client-application: </span><span class="se">\"</span><span class="s2">my-client-app</span><span class="se">\"</span><span class="s2">"</span> 
+  <span class="nt">-c</span> ~/_cookies
+</code></pre></div>
+<p><code>{&#39;client-application&#39;: {client application name}}</code></p>
+
+<p>Your client application name will appear in the CardSavr logs alongside each request and response for your app, making troubleshooting and any other information retrieval much easier. Choose a name that clearly identifies your specific app for improved log searching (e.g. &quot;acmebank-web-app&quot;).  When using the SDKs, the client-application defaults to the integrator name, and this is generally acceptable for most use cases.  This is an optional header, but recommended when not using the SDK.</p>
+<h2 id='paging'>Paging</h2>
+<blockquote>
+<p>Setting a custom application header (defaults to app name)</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="c1">//javascript SDK supports a json object as a paging header</span>
+<span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getCards</span><span class="p">(</span><span class="mi">123</span><span class="p">,</span> <span class="p">{</span> <span class="na">page</span><span class="p">:</span> <span class="mi">1</span> <span class="p">});</span>
+</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.INSTANCE.cardsavr.io/cardsavr_cards/123"</span> 
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">NlOFNNlKabi7Fn26CLw==</span><span class="se">\"</span><span class="s2">}"</span> 
+  <span class="nt">-H</span> <span class="s2">"paging: </span><span class="se">\"</span><span class="s2">{</span><span class="se">\"</span><span class="s2">page</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">1</span><span class="se">\"</span><span class="s2">}</span><span class="se">\"</span><span class="s2">"</span> 
+  <span class="nt">-c</span> ~/_cookies
+</code></pre></div>
+<p><code>{&#39;paging&#39;: &#39;JSON-stringified paging object&#39;}</code></p>
+
+<p>CardSavr uses paging headers in both requests to and responses from batch GET endpoints. When sent with a batch GET request, a paging header specifies the length, sorting criterion, page number, and order of the data returned. Since each batch GET request can only return one page of data at a time, paging headers give users more control over the data they receive back.</p>
+
+<p>If no paging header is submitted with the request, default values are applied (see table).</p>
+
+<p><strong>Note</strong>: CardSavr sends a paging header with each batch GET response to provide details about the page returned.</p>
+
+<p>In the example header at right sent to &#39;/cardsavr_cards&#39;, the second page of 25 results would be returned, sorted in descending order by PAR.</p>
+<h3 id='parameters'>Parameters</h3>
+<p>The paging header takes a JSON stringified object with the following properties. If a paging header is not included, the page of results will use the default values.</p>
+
+<table><thead>
+<tr>
+<th>Property name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>page</td>
+<td>integer</td>
+<td>The page to be returned</td>
+<td>1</td>
+</tr>
+<tr>
+<td>page_length</td>
+<td>integer</td>
+<td>Length of each page</td>
+<td>25</td>
+</tr>
+<tr>
+<td>sort*</td>
+<td>string</td>
+<td>Property to sort results by</td>
+<td>&quot;id&quot;</td>
+</tr>
+<tr>
+<td>descending</td>
+<td>boolean</td>
+<td>If true, sorts results in descending order; if false, sorts in ascending order</td>
+<td>false</td>
+</tr>
+</tbody></table>
+
+<p>*Check GET endpoint documentation to see which properties are sort-able</p>
+<h2 id='safe-key'>Safe key</h2>
+<p><code>{&#39;cardholder-safe-key&#39;: &#39;+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=&#39;}</code>
+<code>{&#39;new-cardholder-safe-key&#39;: &#39;+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=&#39;}</code></p>
+
+<p>You must send an encrypted cardholder safe key header for each request that involves safe-protected information. Saving users (/cardsavr_users), accounts (/cardsavr_accounts) and cards (/cardsavr_cards) require the key to write encrypted data like PANs and merchant site passwords to the server side safe.  Safe keys can be stored by the third party, or they can optionally be stored by Strivve within Cardsavr. Individual endpoint documentation will indicate if a safe key header is required.</p>
+
+<p>When creating a user, or rotating a safe key, you must provide a &#39;new-cardholder-safe-key&#39; header.  In the case of rotating the safe key, both headers are required.</p>
+
+<p>See the [link] cardholder safe key section for more information on generating and using safe keys.</p>
+<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2>
 <p>This endpoint retrieves all kittens.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>GET http://example.com/api/kittens</code></p>
