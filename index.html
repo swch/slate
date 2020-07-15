@@ -389,8 +389,7 @@ The cardsavr server, app key, app name, and the application username/password mu
 <blockquote>
 <p>Setting a sample Hydration Header</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="c1">//or per request</span>
-<span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getCards</span><span class="p">(</span><span class="mi">123</span><span class="p">,</span> <span class="p">{},</span> <span class="p">{</span> <span class="dl">"</span><span class="s2">hydration</span><span class="dl">"</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">([</span><span class="dl">"</span><span class="s2">address</span><span class="dl">"</span><span class="p">])</span> <span class="p">});</span>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getCards</span><span class="p">(</span><span class="mi">123</span><span class="p">,</span> <span class="p">{},</span> <span class="p">{</span> <span class="dl">"</span><span class="s2">hydration</span><span class="dl">"</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">([</span><span class="dl">"</span><span class="s2">address</span><span class="dl">"</span><span class="p">])</span> <span class="p">});</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">HttpRequestHeaders</span> <span class="n">headers</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpRequestMessage</span><span class="p">().</span><span class="n">Headers</span><span class="p">;</span>
 <span class="n">headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"hydration"</span><span class="p">,</span> <span class="s">"[\"address\"]"</span><span class="p">);</span>
 
@@ -459,7 +458,9 @@ The cardsavr server, app key, app name, and the application username/password mu
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="c1">//javascript SDK supports a json object as a paging header</span>
 <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getCards</span><span class="p">(</span><span class="mi">123</span><span class="p">,</span> <span class="p">{</span> <span class="na">page</span><span class="p">:</span> <span class="mi">1</span> <span class="p">});</span>
-</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.INSTANCE.cardsavr.io/cardsavr_cards/123"</span> 
+</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">Paging</span> <span class="n">paging</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Paging</span><span class="p">()</span> <span class="p">{</span> <span class="n">PageLength</span> <span class="p">=</span> <span class="m">100</span> <span class="p">};</span>
+<span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Card</span><span class="p">&gt;&gt;</span> <span class="n">list</span> <span class="p">=</span> <span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">getCardsAsync</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="n">paging</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.INSTANCE.cardsavr.io/cardsavr_cards/123"</span> 
   <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">NlOFNNlKabi7Fn26CLw==</span><span class="se">\"</span><span class="s2">}"</span> 
   <span class="nt">-H</span> <span class="s2">"paging: </span><span class="se">\"</span><span class="s2">{</span><span class="se">\"</span><span class="s2">page</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">1</span><span class="se">\"</span><span class="s2">}</span><span class="se">\"</span><span class="s2">"</span> 
   <span class="nt">-c</span> ~/_cookies
@@ -474,7 +475,7 @@ The cardsavr server, app key, app name, and the application username/password mu
 
 <p>In the example header at right sent to &#39;/cardsavr_cards&#39;, the second page of 25 results would be returned, sorted in descending order by PAR.</p>
 <h3 id='parameters'>Parameters</h3>
-<p>The paging header takes a JSON stringified object with the following properties. If a paging header is not included, the page of results will use the default values.</p>
+<p>The paging header takes a JSON stringified object with the following properties. If a paging header is not included, the page of results will use the default values. Results are returned as an array.</p>
 
 <table><thead>
 <tr>
