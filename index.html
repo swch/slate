@@ -247,10 +247,21 @@
               </ul>
           </li>
           <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
+            <a href="#api-usage" class="toc-h1 toc-link" data-title="API Usage">API Usage</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
+                    <a href="#get-filters" class="toc-h2 toc-link" data-title="GET Filters">GET Filters</a>
+                  </li>
+                  <li>
+                    <a href="#cascading-delete" class="toc-h2 toc-link" data-title="Cascading DELETE">Cascading DELETE</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#accounts" class="toc-h1 toc-link" data-title="Accounts">Accounts</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-accounts" class="toc-h2 toc-link" data-title="Get Accounts">Get Accounts</a>
                   </li>
                   <li>
                     <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
@@ -454,7 +465,7 @@ The cardsavr server, app key, app name, and the application username/password mu
 <p>Your client application name will appear in the CardSavr logs alongside each request and response for your app, making troubleshooting and any other information retrieval much easier. Choose a name that clearly identifies your specific app for improved log searching (e.g. &quot;acmebank-web-app&quot;).  When using the SDKs, the client-application defaults to the integrator name, and this is generally acceptable for most use cases.  This is an optional header, but recommended when not using the SDK.</p>
 <h2 id='paging'>Paging</h2>
 <blockquote>
-<p>Setting a custom application header (defaults to app name)</p>
+<p>Paging headers give you the flexibility to modify the number of results returned, and how they should be sorted.</p>
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="c1">//javascript SDK supports a json object as a paging header</span>
 <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getCards</span><span class="p">(</span><span class="mi">123</span><span class="p">,</span> <span class="p">{</span> <span class="na">page</span><span class="p">:</span> <span class="mi">1</span> <span class="p">});</span>
@@ -463,7 +474,7 @@ The cardsavr server, app key, app name, and the application username/password mu
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.INSTANCE.cardsavr.io/cardsavr_cards/123"</span> 
   <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">NlOFNNlKabi7Fn26CLw==</span><span class="se">\"</span><span class="s2">}"</span> 
   <span class="nt">-H</span> <span class="s2">"paging: </span><span class="se">\"</span><span class="s2">{</span><span class="se">\"</span><span class="s2">page</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">1</span><span class="se">\"</span><span class="s2">}</span><span class="se">\"</span><span class="s2">"</span> 
-  <span class="nt">-c</span> ~/_cookies
+  <span class="nt">-b</span> ~/_cookies
 </code></pre></div>
 <p><code>{&#39;paging&#39;: &#39;JSON-stringified paging object&#39;}</code></p>
 
@@ -512,8 +523,32 @@ The cardsavr server, app key, app name, and the application username/password mu
 </tbody></table>
 
 <p>*Check GET endpoint documentation to see which properties are sort-able</p>
+
+<p>const updated_body = { id: 1, cardholder_safe_key : new_cardholder_safe_key };
+const res = await my_session.updateUser(1, updated_body, new_cardholder_safe_key, cardholder_safe_key);</p>
 <h2 id='safe-key'>Safe key</h2>
-<p><code>{&#39;cardholder-safe-key&#39;: &#39;+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=&#39;}</code>
+<blockquote>
+<p>safe keys must be included to save data to the users&#39; safe - if Strivve is storing the safe key, it can be retrieved from the login response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">updated_body</span> <span class="o">=</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">cardholder_safe_key</span> <span class="p">:</span> <span class="nx">new_cardholder_safe_key</span> <span class="p">};</span>
+<span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">my_session</span><span class="p">.</span><span class="nx">updateUser</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">updated_body</span><span class="p">,</span> <span class="nx">new_cardholder_safe_key</span><span class="p">,</span> <span class="nx">cardholder_safe_key</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">HttpRequestHeaders</span> <span class="n">headers</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpRequestMessage</span><span class="p">().</span><span class="n">Headers</span><span class="p">;</span>
+<span class="nf">AddNewSafeKeyHeader</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">newSafeKey</span><span class="p">);</span>
+<span class="nf">AddSafeKeyHeader</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">safeKey</span><span class="p">);</span>
+
+<span class="n">PropertyBag</span> <span class="n">bag</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">PropertyBag</span><span class="p">();</span>
+<span class="n">bag</span><span class="p">[</span><span class="s">"id"</span><span class="p">]</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="n">bag</span><span class="p">[</span><span class="s">"cardholder_safe_key"</span><span class="p">]</span> <span class="p">=</span> <span class="n">newSafeKey</span><span class="p">;</span>
+<span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">UpdateUserAsync</span><span class="p">(</span><span class="n">bag</span><span class="p">.</span><span class="nf">GetString</span><span class="p">(</span><span class="s">"id"</span><span class="p">),</span> <span class="n">bag</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="n">headers</span><span class="p">);</span> <span class="c1">//no paging</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.INSTANCE.cardsavr.io/cardsavr_users/1"</span> 
+  <span class="nt">-X</span> PUT
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">NlOFNNlKabi7Fn26CLw==</span><span class="se">\"</span><span class="s2">}"</span> 
+  <span class="nt">-H</span> <span class="s2">"new-cardholder-safe-key: +h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=}"</span> 
+  <span class="nt">-H</span> <span class="s2">"cardholder-safe-key: rttYqkGPHLk2KeK6OD8612gSurKXu0X8W6BTWF3hhGM=}"</span> 
+  <span class="nt">-B</span> <span class="s2">"{ </span><span class="se">\"</span><span class="s2">id</span><span class="se">\"</span><span class="s2">: 1, </span><span class="se">\"</span><span class="s2">cardholder_safe_key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=</span><span class="se">\"</span><span class="s2"> }"</span> 
+  <span class="nt">-b</span> ~/_cookies
+</code></pre></div>
+<p><code>{&#39;cardholder-safe-key&#39;: &#39;rttYqkGPHLk2KeK6OD8612gSurKXu0X8W6BTWF3hhGM=&#39;}</code>
 <code>{&#39;new-cardholder-safe-key&#39;: &#39;+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=&#39;}</code></p>
 
 <p>You must send an encrypted cardholder safe key header for each request that involves safe-protected information. Saving users (/cardsavr_users), accounts (/cardsavr_accounts) and cards (/cardsavr_cards) require the key to write encrypted data like PANs and merchant site passwords to the server side safe.  Safe keys can be stored by the third party, or they can optionally be stored by Strivve within Cardsavr. Individual endpoint documentation will indicate if a safe key header is required.</p>
@@ -521,10 +556,107 @@ The cardsavr server, app key, app name, and the application username/password mu
 <p>When creating a user, or rotating a safe key, you must provide a &#39;new-cardholder-safe-key&#39; header.  In the case of rotating the safe key, both headers are required.</p>
 
 <p>See the [link] cardholder safe key section for more information on generating and using safe keys.</p>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2>
+<h1 id='api-usage'>API Usage</h1>
+<p>Query parameter filters can be used with GET requests that do not have an ID path parameter (i.e. &#39;/cardsavr_cards&#39; but not &#39;/cardsavr_cards/123&#39;). When using a query filter, you must place a &#39;?&#39; after the endpoint (preceding the first query filter). Mutiple query filters must be separated by an &#39;&amp;&#39;. There are six filter types in CardSavr:</p>
+<h2 id='get-filters'>GET Filters</h2>
+<blockquote>
+<p>Filters can be aggregated together to apply multiple filters</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">merchants</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getMerchants</span><span class="p">({</span> <span class="na">top_hosts</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">amazon.com,apple.com</span><span class="dl">"</span><span class="p">,</span> <span class="na">exclude_hosts</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">walmart.com</span><span class="dl">"</span> <span class="p">});</span>
+</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">MerchantSite</span><span class="p">&gt;&gt;</span> <span class="n">merchants</span> <span class="p">=</span> <span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">GetMerchantSitesAsync</span><span class="p">(</span>
+    <span class="k">new</span> <span class="nf">NameValueCollection</span><span class="p">()</span> <span class="p">{</span>
+        <span class="p">{</span> <span class="s">"top_hosts"</span><span class="p">,</span> <span class="s">"amazon.com,apple.com"</span><span class="p">},</span> <span class="p">{</span><span class="s">"exclude_hosts"</span><span class="p">,</span> <span class="s">"walmart.com"</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.INSTANCE.cardsavr.io/cardsavr_users?top_hosts=amazon.com,apple.com&amp;exclude_hosts=walmart.com"</span> 
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">NlOFNNlKabi7Fn26CLw==</span><span class="se">\"</span><span class="s2">}"</span> 
+  <span class="nt">-b</span> ~/_cookies
+</code></pre></div><h3 id='singular-filters'>Singular filters</h3>
+<p><strong>Singular filters</strong> select for results with one specific value. If the property has a unique constraint (e.g. &quot;username&quot; for &#39;/cardsavr_users&#39;), the singular filter can only select one object.</p>
+
+<p>For string properties, singular filters always use <strong>partial</strong> matching, meaning they will match any string that contains the filter value as a substring.</p>
+<h3 id='multiple-filters'>Multiple filters</h3>
+<p><strong>Multiple filters</strong> select for any object containing one of the specified values for a property. Multiple values must be separated by commas and no spaces. A single value can be submitted for multiple filter, as well.</p>
+
+<p>Multiple filters for string properties always use <strong>partial</strong> matching, meaning they will match any string that contains the filter value as a substring.</p>
+
+<aside class="success">
+"/cardsavr_accounts?cardholder_ids=1,2,3" would return accounts associated with the cardholders that have the IDs 1, 2, and 3.
+</aside>
+<h3 id='starts-with-filters'>Starts-with filters</h3>
+<p><strong>Starts-with</strong> filters select all objects where the property value begins with the provided query value.</p>
+
+<aside class="success">
+"/merchant_sites?name_starts_with=a" returns all sites with names beginning with A (e.g. names of "Apple", "Amazon", "Atlantis").
+</aside>
+<h3 id='top-filters'>Top filters</h3>
+<p><strong>Top filters</strong> select for objects with specified properties to be returned first, in the order specified.</p>
+
+<aside class="success">
+"/merchant_sites?top_ids=2,4,6" would return an array with sites with IDs 2,4,6 in the 1st, 2nd, and 3rd index positions, respectively, with any additional matching objects returned after.
+</aside>
+<h3 id='include-exclude-filters'>Include/exclude filters</h3>
+<p><strong>Include filters</strong> select for any objects that have the specified property value. Unlike multiple filters, include filters use exact matching.</p>
+
+<aside class="success">
+"/cardsavr_users?roles_include=developer,analysts" returns users with roles of developer and analyst.
+"/cardsavr_users?roles_include=dev,ana" would return no users, as "dev" and "ana" are not roles defined in CardSavr.
+</aside>
+
+<p><strong>Exclude filters</strong> select for any objects that do NOT have the specified property value.  Exclude filters use exact matching.</p>
+
+<aside class="success">
+"/cardsavr_users?roles_exclude=cardholder,admin" filters out users with the roles cardholder and admin.
+</aside>
+<h3 id='min-max-filters'>Min/Max filters</h3>
+<p><strong>Max filters</strong> select for objects that have a value equal to or less than the specified value.</p>
+
+<aside class="success">
+"/cardsavr_accounts?created_on_max=2018-04-20T23:10:36.657Z" returns accounts that were created on or before the date string 2018-04-20T23:10:36.657Z.
+</aside>
+
+<p><strong>Min filters</strong> select for any objects that have a value equal to or greater than the specified value.</p>
+
+<aside class="success">
+'/cardsavr_accounts?created_on_min=2018-04-20T23:10:36.657Z' returns accounts that were created on or after the date string 2018-04-20T23:10:36.657Z.
+</aside>
+<h2 id='cascading-delete'>Cascading DELETE</h2>
+<blockquote>
+<p>Deleting user 123 will delete their corresponding jobs, cards, and addresses.  Their job results will remain.</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">deleteUser</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span> 
+</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">DeleteUsserAsync</span><span class="p">(</span><span class="m">123</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.INSTANCE.cardsavr.io/cardsavr_users"</span> 
+  <span class="nt">-X</span> DELETE
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">NlOFNNlKabi7Fn26CLw==</span><span class="se">\"</span><span class="s2">}"</span> 
+  <span class="nt">-B</span> <span class="s2">"{ </span><span class="se">\"</span><span class="s2">id</span><span class="se">\"</span><span class="s2">: 123 }"</span> 
+  <span class="nt">-b</span> ~/_cookies
+</code></pre></div>
+<p>A successful DELETE request will also delete any object that references the deleted object. The additional object types that will be deleted for a particular DELETE endpoint are listed in the individual endpoint documentation.</p>
+
+<p>For example, a successful DELETE request to &#39;/cardsavr_accounts/123&#39; would also delete any single-site jobs that reference the account with ID 123, as single-site jobs contain a foreign key reference to an account.</p>
+<h1 id='accounts'>Accounts</h1>
+<p>An account object contains a CardSavr user&#39;s account information for a specific merchant site.</p>
+<h2 id='get-accounts'>Get Accounts</h2>
 <p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
+<h3 id='path'>Path</h3>
+<p><code>GET /cardsavr_accounts (batch) OR /cardsavr_accounts/:id (singular)</code></p>
+<h3 id='description'>Description</h3><h4 id='batch-get-requests'>Batch GET requests</h4>
+<p>Batch requests return the first page of all viewable accounts, filtered by any query filters listed in the path.</p>
+
+<p>Batch GET path format (if using filters):</p>
+
+<p>Prefix first filter statement with &#39;?&#39;
+Separate filter values with commas and no spaces
+If using multiple filters, separate filters with &#39;&amp;&#39;</p>
+
+<p>Example batch GET request path:
+<code>/cardsavr_accounts?ids=1,2</code></p>
+<h4 id='singular-get-requests'>Singular GET requests</h4>
+<p>Singular requests only return the account matching the id provided in the path.</p>
+
+<p>Example single GET request path:
+<code>/cardsavr_accounts/12</code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
 <tr>
@@ -577,7 +709,7 @@ Remember — a happy kitten is an authenticated kitten!
 <p>This endpoint retrieves a specific kitten.</p>
 
 <aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
+<h3 id='http-request'>HTTP Request</h3>
 <p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
@@ -616,7 +748,7 @@ Remember — a happy kitten is an authenticated kitten!
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint deletes a specific kitten.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
+<h3 id='http-request-2'>HTTP Request</h3>
 <p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
 <h3 id='url-parameters-2'>URL Parameters</h3>
 <table><thead>
