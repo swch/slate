@@ -150,7 +150,6 @@ A trace header can contain multiple trace IDs. It is up to the developer to mint
 > Setting a sample Hydration Header
 
 ```javascript
-//or per request
 await session.getCards(123, {}, { "hydration": JSON.stringify(["address"]) });
 ```
 
@@ -236,7 +235,7 @@ Your client application name will appear in the CardSavr logs alongside each req
 
 ## Paging
 
-> Setting a custom application header (defaults to app name)
+> Paging headers give you the flexibility to modify the number of results returned, and how they should be sorted.
 
 ```javascript
 //javascript SDK supports a json object as a paging header
@@ -244,13 +243,15 @@ await session.getCards(123, { page: 1 });
 ```
 
 ```csharp
+Paging paging = new Paging() { PageLength = 100 };
+CardSavrResponse<List<Card>> list = await http.getCardsAsync(null, paging);
 ```
 
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_cards/123" 
   -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
   -H "paging: \"{\"page\": \"1\"}\"" 
-  -c ~/_cookies
+  -b ~/_cookies
 ```
 
 `{'paging': 'JSON-stringified paging object'}`
@@ -264,7 +265,7 @@ If no paging header is submitted with the request, default values are applied (s
 In the example header at right sent to '/cardsavr_cards', the second page of 25 results would be returned, sorted in descending order by PAR.
 
 ### Parameters
-The paging header takes a JSON stringified object with the following properties. If a paging header is not included, the page of results will use the default values.
+The paging header takes a JSON stringified object with the following properties. If a paging header is not included, the page of results will use the default values. Results are returned as an array.
 
 Property name | Type | Description | Default value
 ------------- | -----| ----------- | -------------
@@ -275,9 +276,41 @@ descending | boolean | If true, sorts results in descending order; if false, sor
 
 *Check GET endpoint documentation to see which properties are sort-able
 
+const updated_body = { id: 1, cardholder_safe_key : new_cardholder_safe_key };
+const res = await my_session.updateUser(1, updated_body, new_cardholder_safe_key, cardholder_safe_key);
+
+
 ## Safe key
 
-`{'cardholder-safe-key': '+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw='}`
+> safe keys must be included to save data to the users' safe - if Strivve is storing the safe key, it can be retrieved from the login response
+
+```javascript
+const updated_body = { id: 1, cardholder_safe_key : new_cardholder_safe_key };
+const res = await my_session.updateUser(1, updated_body, new_cardholder_safe_key, cardholder_safe_key);
+```
+
+```csharp
+HttpRequestHeaders headers = new HttpRequestMessage().Headers;
+AddNewSafeKeyHeader(headers, newSafeKey);
+AddSafeKeyHeader(headers, safeKey);
+
+PropertyBag bag = new PropertyBag();
+bag["id"] = 1;
+bag["cardholder_safe_key"] = newSafeKey;
+await http.UpdateUserAsync(bag.GetString("id"), bag, null, headers); //no paging
+```
+
+```shell
+curl "https://api.INSTANCE.cardsavr.io/cardsavr_users/1" 
+  -X PUT
+  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -H "new-cardholder-safe-key: +h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=}" 
+  -H "cardholder-safe-key: rttYqkGPHLk2KeK6OD8612gSurKXu0X8W6BTWF3hhGM=}" 
+  -B "{ \"id\": 1, \"cardholder_safe_key\": \"+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=\" }" 
+  -b ~/_cookies
+```
+
+`{'cardholder-safe-key': 'rttYqkGPHLk2KeK6OD8612gSurKXu0X8W6BTWF3hhGM='}`
 `{'new-cardholder-safe-key': '+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw='}`
 
 You must send an encrypted cardholder safe key header for each request that involves safe-protected information. Saving users (/cardsavr_users), accounts (/cardsavr_accounts) and cards (/cardsavr_cards) require the key to write encrypted data like PANs and merchant site passwords to the server side safe.  Safe keys can be stored by the third party, or they can optionally be stored by Strivve within Cardsavr. Individual endpoint documentation will indicate if a safe key header is required.
@@ -286,15 +319,150 @@ When creating a user, or rotating a safe key, you must provide a 'new-cardholder
 
 See the [link] cardholder safe key section for more information on generating and using safe keys.
 
-# Kittens
+# API Usage 
 
-## Get All Kittens
+Query parameter filters can be used with GET requests that do not have an ID path parameter (i.e. '/cardsavr_cards' but not '/cardsavr_cards/123'). When using a query filter, you must place a '?' after the endpoint (preceding the first query filter). Mutiple query filters must be separated by an '&'. There are six filter types in CardSavr:
+
+## GET Filters
+
+> Filters can be aggregated together to apply multiple filters
+
+```javascript
+const merchants = await session.getMerchants({ top_hosts : "amazon.com,apple.com", exclude_hosts : "walmart.com" });
+```
+
+```csharp
+CardSavrResponse<List<MerchantSite>> merchants = await http.GetMerchantSitesAsync(
+    new NameValueCollection() {
+        { "top_hosts", "amazon.com,apple.com"}, {"exclude_hosts", "walmart.com" }
+    }
+);
+```
+
+```shell
+curl "https://api.INSTANCE.cardsavr.io/cardsavr_users?top_hosts=amazon.com,apple.com&exclude_hosts=walmart.com" 
+  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -b ~/_cookies
+```
+
+### Singular filters
+
+**Singular filters** select for results with one specific value. If the property has a unique constraint (e.g. "username" for '/cardsavr_users'), the singular filter can only select one object.
+
+For string properties, singular filters always use **partial** matching, meaning they will match any string that contains the filter value as a substring.
+
+### Multiple filters
+
+**Multiple filters** select for any object containing one of the specified values for a property. Multiple values must be separated by commas and no spaces. A single value can be submitted for multiple filter, as well.
+
+Multiple filters for string properties always use **partial** matching, meaning they will match any string that contains the filter value as a substring.
+
+<aside class="success">
+"/cardsavr_accounts?cardholder_ids=1,2,3" would return accounts associated with the cardholders that have the IDs 1, 2, and 3.
+</aside>
+
+### Starts-with filters
+
+**Starts-with** filters select all objects where the property value begins with the provided query value.
+
+<aside class="success">
+"/merchant_sites?name_starts_with=a" returns all sites with names beginning with A (e.g. names of "Apple", "Amazon", "Atlantis").
+</aside>
+
+### Top filters
+
+**Top filters** select for objects with specified properties to be returned first, in the order specified.
+
+<aside class="success">
+"/merchant_sites?top_ids=2,4,6" would return an array with sites with IDs 2,4,6 in the 1st, 2nd, and 3rd index positions, respectively, with any additional matching objects returned after.
+</aside>
+
+### Include/exclude filters
+
+**Include filters** select for any objects that have the specified property value. Unlike multiple filters, include filters use exact matching.
+
+<aside class="success">
+"/cardsavr_users?roles_include=developer,analysts" returns users with roles of developer and analyst.
+"/cardsavr_users?roles_include=dev,ana" would return no users, as "dev" and "ana" are not roles defined in CardSavr.
+</aside>
+
+**Exclude filters** select for any objects that do NOT have the specified property value.  Exclude filters use exact matching.
+
+<aside class="success">
+"/cardsavr_users?roles_exclude=cardholder,admin" filters out users with the roles cardholder and admin.
+</aside>
+
+### Min/Max filters
+
+**Max filters** select for objects that have a value equal to or less than the specified value.
+
+<aside class="success">
+"/cardsavr_accounts?created_on_max=2018-04-20T23:10:36.657Z" returns accounts that were created on or before the date string 2018-04-20T23:10:36.657Z.
+</aside>
+
+**Min filters** select for any objects that have a value equal to or greater than the specified value.
+
+<aside class="success">
+'/cardsavr_accounts?created_on_min=2018-04-20T23:10:36.657Z' returns accounts that were created on or after the date string 2018-04-20T23:10:36.657Z.
+</aside>
+
+## Cascading DELETE
+
+> Deleting user 123 will delete their corresponding jobs, cards, and addresses.  Their job results will remain.
+
+```javascript
+await session.deleteUser(123); 
+```
+
+```csharp
+await http.DeleteUsserAsync(123);
+```
+
+```shell
+curl "https://api.INSTANCE.cardsavr.io/cardsavr_users" 
+  -X DELETE
+  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -B "{ \"id\": 123 }" 
+  -b ~/_cookies
+```
+
+A successful DELETE request will also delete any object that references the deleted object. The additional object types that will be deleted for a particular DELETE endpoint are listed in the individual endpoint documentation.
+
+For example, a successful DELETE request to '/cardsavr_accounts/123' would also delete any single-site jobs that reference the account with ID 123, as single-site jobs contain a foreign key reference to an account.
+
+# Accounts
+
+An account object contains a CardSavr user's account information for a specific merchant site.
+
+## Get Accounts
 
 This endpoint retrieves all kittens.
 
-### HTTP Request
+### Path
 
-`GET http://example.com/api/kittens`
+`GET /cardsavr_accounts (batch) OR /cardsavr_accounts/:id (singular)`
+
+### Description
+
+#### Batch GET requests
+
+Batch requests return the first page of all viewable accounts, filtered by any query filters listed in the path.
+
+Batch GET path format (if using filters):
+
+Prefix first filter statement with '?'
+Separate filter values with commas and no spaces
+If using multiple filters, separate filters with '&'
+
+Example batch GET request path:
+`/cardsavr_accounts?ids=1,2`
+
+#### Singular GET requests
+
+Singular requests only return the account matching the id provided in the path.
+
+Example single GET request path:
+`/cardsavr_accounts/12`
 
 ### Query Parameters
 
