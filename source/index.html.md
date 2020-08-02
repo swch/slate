@@ -11,6 +11,7 @@ toc_footers:
   - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
 includes:
+  - rest
   - errors
 
 search: true
@@ -24,7 +25,7 @@ CardSavr responses and requests support JSON-formatted bodies only.
 
 # Authentication
 
-> To authorize, use this code:
+> To authorize, a session initialization followed by a login call is required:
 
 ```javascript
 const { CardsavrHelper } = require("@strivve/strivve-sdk/lib/cardsavr/CardsavrJSLibrary-2.0");
@@ -96,7 +97,20 @@ The cardsavr server, app key, app name, and the application username/password mu
 
 # Headers
 
-There is a set of required and optional headers.  The SDKs abstract most of these settings, but it's important to understand how they are used when making REST calls.
+There is a set of required and optional headers.  The SDKs abstract most of these settings, but it's important to understand how they are used when making REST calls. 
+
+REST calls support and/or require the following headers once the session is established.  
+
+Header | Default | Type | Description
+------ | ------- | ---- | -----------
+trace | required | stringified JSON object | [See trace](#trace)
+client-application | integrator name | string | unique per application, integrator name provided as default when using an SDK
+authorization | required | string | contains the [integrator name and a prefix](https://developers.strivve.com/resources/encryption), populated by SDK libraries.
+nonce | required | string (milliseconds) | contains the current UTC time in milliseconds, and therefore provides protection against [replay attacks](https://developers.strivve.com/resources/encryption).
+signature | required | string | The [string-to-sign format](https://developers.strivve.com/resources/encryption) requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the [SDK Libraries](https://developers.strivve.com/api-sdk/).
+hydration | (none) | stringified JSON object | [See hydration](#hydration) 
+paging | {"page": 1, "page_length": 25} | stringified JSON object | Only supported with GET calls. [See paging](#paging)
+cookie | required | cookie format | Generally constructed by SDK, but contains all cookies set by the server.
 
 ## Trace 
 
@@ -415,7 +429,7 @@ await session.deleteUser(123);
 ```
 
 ```csharp
-await http.DeleteUsserAsync(123);
+await http.DeleteUserAsync(123);
 ```
 
 ```shell
@@ -429,153 +443,4 @@ curl "https://api.INSTANCE.cardsavr.io/cardsavr_users"
 A successful DELETE request will also delete any object that references the deleted object. The additional object types that will be deleted for a particular DELETE endpoint are listed in the individual endpoint documentation.
 
 For example, a successful DELETE request to '/cardsavr_accounts/123' would also delete any single-site jobs that reference the account with ID 123, as single-site jobs contain a foreign key reference to an account.
-
-# Accounts
-
-An account object contains a CardSavr user's account information for a specific merchant site.
-
-## Get Accounts
-
-This endpoint retrieves all kittens.
-
-### Path
-
-`GET /cardsavr_accounts (batch) OR /cardsavr_accounts/:id (singular)`
-
-### Description
-
-#### Batch GET requests
-
-Batch requests return the first page of all viewable accounts, filtered by any query filters listed in the path.
-
-Batch GET path format (if using filters):
-
-Prefix first filter statement with '?'
-Separate filter values with commas and no spaces
-If using multiple filters, separate filters with '&'
-
-Example batch GET request path:
-`/cardsavr_accounts?ids=1,2`
-
-#### Singular GET requests
-
-Singular requests only return the account matching the id provided in the path.
-
-Example single GET request path:
-`/cardsavr_accounts/12`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```javascript
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```csharp
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```javascript
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```csharp
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
 
