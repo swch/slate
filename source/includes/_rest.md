@@ -72,6 +72,7 @@ Update a account and return the updated object.  An id is required on every upda
 
 Parameter | Type | Description 
 -------- | ---- | ---------
+id | integer |
 last_card_placed_id | integer |
 username | string |
 password | string |
@@ -166,6 +167,7 @@ Update a address and return the updated object.  An id is required on every upda
 
 Parameter | Type | Description 
 -------- | ---- | ---------
+id | integer |
 address1 | string |
 address2 | string |
 city | string |
@@ -263,6 +265,7 @@ Update a bin and return the updated object.  An id is required on every update r
 
 Parameter | Type | Description 
 -------- | ---- | ---------
+id | integer |
 financial_institution_id | integer |
 brand | string |
 issuer | string |
@@ -363,6 +366,7 @@ Update a card and return the updated object.  An id is required on every update 
 
 Parameter | Type | Description 
 -------- | ---- | ---------
+id | integer |
 address_id | integer |
 bin_id | integer |
 name_on_card | string |
@@ -473,6 +477,7 @@ Update a user and return the updated object.  An id is required on every update 
 
 Parameter | Type | Description 
 -------- | ---- | ---------
+id | integer |
 financial_institution_id | integer |
 last_password | base64 |
 password | base64 |
@@ -575,6 +580,7 @@ Update a financial institution and return the updated object.  An id is required
 
 Parameter | Type | Description 
 -------- | ---- | ---------
+id | integer |
 name | string |
 description | string |
 lookup_key | string |
@@ -669,6 +675,7 @@ Update a integrator and return the updated object.  An id is required on every u
 
 Parameter | Type | Description 
 -------- | ---- | ---------
+id | integer |
 name | string |
 integrator_type | enum |
 description | string |
@@ -802,6 +809,7 @@ Update a notification and return the updated object.  An id is required on every
 
 Parameter | Type | Description 
 -------- | ---- | ---------
+id | integer |
 name | string |
 type | enum |
 event | enum |
@@ -912,6 +920,7 @@ Update a single-site job and return the updated object.  An id is required on ev
 
 Parameter | Type | Description 
 -------- | ---- | ---------
+id | integer |
 card_placement_result_id | string |
 status | enum |
 safe_blob | string |
