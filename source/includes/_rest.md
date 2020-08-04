@@ -51,11 +51,11 @@ Create a account and return the created object.
 
 Parameter | Type | Required 
 -------- | ---- | ---------
-cardholder_id | integer | true
-merchant_site_id | integer | true
-last_card_placed_id | integer | false
-username | string | false
-password | string | false
+cardholder_id | integer | yes
+merchant_site_id | integer | yes
+last_card_placed_id | integer | no
+username | string | no
+password | string | no
 
 
 ## Update account
@@ -72,15 +72,9 @@ Update a account and return the updated object.  An id is required on every upda
 
 Parameter | Type | Description 
 -------- | ---- | ---------
-id | integer |
 last_card_placed_id | integer |
 username | string |
 password | string |
-last_login | date |
-last_password_update | date |
-last_saved_card | date |
-created_on | date |
-last_updated_on | date |
 
 
 ## Delete account
@@ -142,15 +136,15 @@ Create a address and return the created object.
 
 Parameter | Type | Required 
 -------- | ---- | ---------
-user_id | integer | false
-address1 | string | true
-address2 | string | false
-city | string | true
-subnational | string | true
-postal_code | string | true
-postal_other | string | false
-country | string | false
-is_primary | boolean | true
+user_id | integer | no
+address1 | string | yes
+address2 | string | no
+city | string | yes
+subnational | string | yes
+postal_code | string | yes
+postal_other | string | no
+country | string | no
+is_primary | boolean | yes
 
 
 ## Update address
@@ -167,7 +161,6 @@ Update a address and return the updated object.  An id is required on every upda
 
 Parameter | Type | Description 
 -------- | ---- | ---------
-id | integer |
 address1 | string |
 address2 | string |
 city | string |
@@ -176,8 +169,6 @@ postal_code | string |
 postal_other | string |
 country | string |
 is_primary | boolean |
-created_on | date |
-last_updated_on | date |
 
 
 ## Delete address
@@ -222,10 +213,6 @@ id | integer |
 ids | integer | 
 financial_institution_ids | integer | 
 bank_identification_numbers | integer | 
-brand | string | 
-issuer | string | 
-type | string | 
-level | string | 
 created_on_min /<br> created_on_max | date | 
 last_updated_on_min /<br> last_updated_on_max | date | 
 
@@ -243,12 +230,8 @@ Create a bin and return the created object.
 
 Parameter | Type | Required 
 -------- | ---- | ---------
-financial_institution_id | integer | true
-bank_identification_number | integer | false
-brand | string | false
-issuer | string | false
-type | string | false
-level | string | false
+financial_institution_id | integer | yes
+bank_identification_number | integer | yes
 
 
 ## Update bin
@@ -265,14 +248,7 @@ Update a bin and return the updated object.  An id is required on every update r
 
 Parameter | Type | Description 
 -------- | ---- | ---------
-id | integer |
 financial_institution_id | integer |
-brand | string |
-issuer | string |
-type | string |
-level | string |
-created_on | date |
-last_updated_on | date |
 
 
 ## Delete bin
@@ -339,17 +315,17 @@ Create a card and return the created object.
 
 Parameter | Type | Required 
 -------- | ---- | ---------
-cardholder_id | integer | true
-address_id | integer | false
-bin_id | integer | false
-par | string | true
-pan | string | true
-cvv | string | true
-expiration_month | string | true
-expiration_year | string | true
-name_on_card | string | true
-first_name | string | true
-last_name | string | true
+cardholder_id | integer | yes
+address_id | integer | no
+bin_id | integer | no
+par | string | yes
+pan | string | yes
+cvv | string | yes
+expiration_month | string | yes
+expiration_year | string | yes
+name_on_card | string | yes
+first_name | string | yes
+last_name | string | yes
 
 
 ## Update card
@@ -366,17 +342,11 @@ Update a card and return the updated object.  An id is required on every update 
 
 Parameter | Type | Description 
 -------- | ---- | ---------
-id | integer |
 address_id | integer |
 bin_id | integer |
 name_on_card | string |
 first_name | string |
 last_name | string |
-first_6 | string |
-first_7 | string |
-first_8 | string |
-created_on | date |
-last_updated_on | date |
 
 
 ## Delete card
@@ -447,20 +417,20 @@ Create a user and return the created object.
 
 Parameter | Type | Required 
 -------- | ---- | ---------
-financial_institution_id | integer | false
-username | string | true
-password | base64 | false
-next_password | base64 | false
-cardholder_safe_key | base64 | false
-first_name | string | false
-last_name | string | false
-password_lifetime | integer | false
-email | string | false
-is_password_update_required | boolean | false
-role | enum | true
-phone_number | string | false
-custom_data | object | false
-next_rotation_on | date | false
+financial_institution_id | integer | no
+username | string | yes
+password | base64 | no
+next_password | base64 | no
+cardholder_safe_key | base64 | no
+first_name | string | no
+last_name | string | no
+password_lifetime | integer | no
+email | string | no
+is_password_update_required | boolean | no
+role | enum | yes
+phone_number | string | no
+custom_data | object | no
+next_rotation_on | date | no
 
 
 ## Update user
@@ -477,18 +447,12 @@ Update a user and return the updated object.  An id is required on every update 
 
 Parameter | Type | Description 
 -------- | ---- | ---------
-id | integer |
 financial_institution_id | integer |
-last_password | base64 |
 password | base64 |
 next_password | base64 |
-expired_password_1 | base64 |
-expired_password_2 | base64 |
 cardholder_safe_key | base64 |
 first_name | string |
 last_name | string |
-last_login_time | date |
-is_locked | boolean |
 password_lifetime | integer |
 email | string |
 is_password_update_required | boolean |
@@ -496,8 +460,6 @@ role | enum |
 phone_number | string |
 custom_data | object |
 next_rotation_on | date |
-created_on | date |
-last_updated_on | date |
 
 
 ## Delete user
@@ -560,10 +522,10 @@ Create a financial institution and return the created object.
 
 Parameter | Type | Required 
 -------- | ---- | ---------
-name | string | true
-description | string | false
-lookup_key | string | true
-alternate_lookup_key | string | false
+name | string | yes
+description | string | no
+lookup_key | string | yes
+alternate_lookup_key | string | no
 
 
 ## Update financial institution
@@ -580,13 +542,10 @@ Update a financial institution and return the updated object.  An id is required
 
 Parameter | Type | Description 
 -------- | ---- | ---------
-id | integer |
 name | string |
 description | string |
 lookup_key | string |
 alternate_lookup_key | string |
-created_on | date |
-last_updated_on | date |
 
 
 ## Delete financial institution
@@ -651,14 +610,14 @@ Create a integrator and return the created object.
 
 Parameter | Type | Required 
 -------- | ---- | ---------
-name | string | true
-integrator_type | enum | true
-description | string | false
-last_key | base64 | false
-current_key | base64 | false
-next_key | base64 | false
-key_lifetime | integer | false
-next_rotation_on | date | false
+name | string | yes
+integrator_type | enum | yes
+description | string | no
+last_key | base64 | no
+current_key | base64 | no
+next_key | base64 | no
+key_lifetime | integer | no
+next_rotation_on | date | no
 
 
 ## Update integrator
@@ -675,7 +634,6 @@ Update a integrator and return the updated object.  An id is required on every u
 
 Parameter | Type | Description 
 -------- | ---- | ---------
-id | integer |
 name | string |
 integrator_type | enum |
 description | string |
@@ -684,8 +642,6 @@ current_key | base64 |
 next_key | base64 |
 key_lifetime | integer |
 next_rotation_on | date |
-created_on | date |
-last_updated_on | date |
 
 
 ## Delete integrator
@@ -788,11 +744,11 @@ Create a notification and return the created object.
 
 Parameter | Type | Required 
 -------- | ---- | ---------
-financial_institution_id | integer | true
-name | string | true
-type | enum | true
-event | enum | true
-config | object | false
+financial_institution_id | integer | yes
+name | string | yes
+type | enum | yes
+event | enum | yes
+config | object | no
 
 
 ## Update notification
@@ -809,13 +765,10 @@ Update a notification and return the updated object.  An id is required on every
 
 Parameter | Type | Description 
 -------- | ---- | ---------
-id | integer |
 name | string |
 type | enum |
 event | enum |
 config | object |
-created_on | date |
-last_updated_on | date |
 
 
 ## Delete notification
@@ -890,20 +843,20 @@ Create a single-site job and return the created object.
 
 Parameter | Type | Required 
 -------- | ---- | ---------
-user_id | integer | true
-card_id | integer | true
-account_id | integer | true
-status | enum | false
-queue_name | enum | false
-custom_data | object | false
-failure_reason | string | false
-current_state | string | false
-do_not_queue | boolean | false
-user_is_present | boolean | false
-time_elapsed | integer | false
-started_on | date | false
-completed_on | date | false
-expiration_date | date | false
+user_id | integer | yes
+card_id | integer | yes
+account_id | integer | yes
+status | enum | no
+queue_name | enum | no
+custom_data | object | no
+failure_reason | string | no
+current_state | string | no
+do_not_queue | boolean | no
+user_is_present | boolean | no
+time_elapsed | integer | no
+started_on | date | no
+completed_on | date | no
+expiration_date | date | no
 
 
 ## Update single-site job
@@ -920,25 +873,17 @@ Update a single-site job and return the updated object.  An id is required on ev
 
 Parameter | Type | Description 
 -------- | ---- | ---------
-id | integer |
-card_placement_result_id | string |
 status | enum |
-safe_blob | string |
-safe_nonce | string |
 queue_name | enum |
 custom_data | object |
 failure_reason | string |
-messaging_addresses | string |
 current_state | string |
 do_not_queue | boolean |
 user_is_present | boolean |
 time_elapsed | integer |
-job_ready_on | date |
 started_on | date |
 completed_on | date |
 expiration_date | date |
-created_on | date |
-last_updated_on | date |
 
 
 ## Delete single-site job
