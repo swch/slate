@@ -1101,7 +1101,24 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <p>Ends the current user session.</p>
 <h1 id='accounts'>Accounts</h1>
 <p>An account object contains a CardSavr user&#39;s account information for a specific merchant site.</p>
-<h2 id='get-account'>Get account</h2><h3 id='path'>Path</h3>
+<h2 id='get-account'>Get account</h2>
+<blockquote>
+<p>Sample response - not all properties are available to all roles (200 OK):</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1133161</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_card_placed_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1822467</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jsmith123"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_login"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1992-10-27T18:08:46.607Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_password_update"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2002-08-11T03:31:56.314Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_saved_card"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1993-12-04T13:23:15.988Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"created_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1974-04-19T09:48:36.764Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1972-03-11T21:56:49.849Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"cardholder_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">56338</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"merchant_site_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5374900</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path'>Path</h3>
 <p>GET /cardsavr_accounts <strong>(batch)</strong> or GET /cardsavr_accounts/:id <strong>(singular)</strong></p>
 <h3 id='description'>Description</h3>
 <p>Returns the account specified by the provided ID</p>
@@ -1172,7 +1189,18 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='create-account'>Create account</h2><h3 id='path-2'>Path</h3>
+<h2 id='create-account'>Create account</h2>
+<blockquote>
+<p>Sample request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"cardholder_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">56338</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"merchant_site_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5374900</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_card_placed_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1822467</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jsmith123"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pa$$w0rd"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-2'>Path</h3>
 <p>POST /cardsavr_accounts</p>
 <h3 id='description-2'>Description</h3>
 <p>Create a account and return the created object.</p>
@@ -1182,36 +1210,51 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <th>Parameter</th>
 <th>Type</th>
 <th>Required</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>cardholder_id</td>
 <td>integer</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>merchant_site_id</td>
 <td>integer</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>last_card_placed_id</td>
 <td>integer</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>username</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>password</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 </tbody></table>
-<h2 id='update-account'>Update account</h2><h3 id='path-3'>Path</h3>
-<p>PUT /cardsavr_accounts</p>
+<h2 id='update-account'>Update account</h2>
+<blockquote>
+<p>Sample request - /cardsavr_accounts/1133161 :</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"last_card_placed_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9341076</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jsmith123"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pa$$w0rd"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-3'>Path</h3>
+<p>PUT /cardsavr_accounts OR /cardsavr_accounts/{id}</p>
 <h3 id='description-3'>Description</h3>
 <p>Update a account and return the updated object.  An id is required on every update request.</p>
 <h3 id='body-parameters-2'>Body parameters</h3>
@@ -1244,7 +1287,26 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <p>Delete a account and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h1 id='addresses'>Addresses</h1>
 <p>Address objects contain billing address information for a particular user.</p>
-<h2 id='get-address'>Get address</h2><h3 id='path-5'>Path</h3>
+<h2 id='get-address'>Get address</h2>
+<blockquote>
+<p>Sample response - not all properties are available to all roles (200 OK):</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">259892</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"address1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NkxEtLQpPJuyRTTZqQsPAhaiFZLhoebwZdzQfiNjzKiKFQEGkjkbJMierToOeyllGCDMtYjmKOmnHgPZeMKLzwbaxVCdHhVQomH"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"address2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yFdfOxVYQLPwYKtDLqZjcYFDyRsNEjixcFntWEtjGwJoJIEklWeYXdsLZFhbrCsteqjyvOmeYLanaJQvvoKdDdzlbajRgMWUqcM"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Seattle"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"subnational"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WA"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98177"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"postal_other"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98177-0124"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USA"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"is_primary"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"created_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000-08-21T13:07:23.323Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-07T04:08:52.421Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7358952</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-5'>Path</h3>
 <p>GET /cardsavr_addresses <strong>(batch)</strong> or GET /cardsavr_addresses/:id <strong>(singular)</strong></p>
 <h3 id='description-5'>Description</h3>
 <p>Returns the address specified by the provided ID</p>
@@ -1295,7 +1357,22 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='create-address'>Create address</h2><h3 id='path-6'>Path</h3>
+<h2 id='create-address'>Create address</h2>
+<blockquote>
+<p>Sample request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7358952</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"address1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NkxEtLQpPJuyRTTZqQsPAhaiFZLhoebwZdzQfiNjzKiKFQEGkjkbJMierToOeyllGCDMtYjmKOmnHgPZeMKLzwbaxVCdHhVQomH"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"address2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yFdfOxVYQLPwYKtDLqZjcYFDyRsNEjixcFntWEtjGwJoJIEklWeYXdsLZFhbrCsteqjyvOmeYLanaJQvvoKdDdzlbajRgMWUqcM"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Seattle"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"subnational"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WA"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98177"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"postal_other"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98177-0124"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USA"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"is_primary"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-6'>Path</h3>
 <p>POST /cardsavr_addresses</p>
 <h3 id='description-6'>Description</h3>
 <p>Create a address and return the created object.</p>
@@ -1305,56 +1382,80 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <th>Parameter</th>
 <th>Type</th>
 <th>Required</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>user_id</td>
 <td>integer</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>address1</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>address2</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>city</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>subnational</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>postal_code</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>postal_other</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>country</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>is_primary</td>
 <td>boolean</td>
 <td>yes</td>
+<td></td>
 </tr>
 </tbody></table>
-<h2 id='update-address'>Update address</h2><h3 id='path-7'>Path</h3>
-<p>PUT /cardsavr_addresses</p>
+<h2 id='update-address'>Update address</h2>
+<blockquote>
+<p>Sample request - /cardsavr_addresses/259892 :</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"address1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PUBnGadDjWLeYRUtdAitvENNGYaxlpaOjuWgrPmioLmFdbqXmWjCEzdPkcAfiKGKskQePNEVEuBkiAZgLuaEcueTuCNkTCdLjVm"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"address2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pdjRDDlQsVPpomytiovIwcqSNTSIOodluyKKJQMlpSBfTjPkKCuQxETpYmZDaawEaAiAZjDiZPTiuwVhxIInIdVdEjrpRMXBDBj"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Seattle"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"subnational"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WA"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98177"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"postal_other"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98177-0124"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USA"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"is_primary"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-7'>Path</h3>
+<p>PUT /cardsavr_addresses OR /cardsavr_addresses/{id}</p>
 <h3 id='description-7'>Description</h3>
 <p>Update a address and return the updated object.  An id is required on every update request.</p>
 <h3 id='body-parameters-4'>Body parameters</h3>
@@ -1412,7 +1513,23 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <p>Delete a address and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h1 id='bins'>Bins</h1>
 <p>A cardsavr_bin object</p>
-<h2 id='get-bin'>Get bin</h2><h3 id='path-9'>Path</h3>
+<h2 id='get-bin'>Get bin</h2>
+<blockquote>
+<p>Sample response - not all properties are available to all roles (200 OK):</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7268197</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"financial_institution_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4148297</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"brand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ibtdEYMoswZUoRPCTJD"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"issuer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HStBmOsPfzDhJFDWjaCZDfuOefGBIRsCIMGRkDbvhmUONJooRTNJTdVtqlzjbfQKKDFXPiKWhNutqLrOZfSsCQiiVSBYxaKgPgp"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"QQxBWCjEfrWPBi"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lhylfLoaCUomZEJhDXHfzGdSYQNRZroxGDpRdfpUGdpeClvpMINGioiUquvWcgzayLLLbwLzjDdHTXdhgXwOwqbTcYnOMJXQJgR"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"created_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1988-09-22T05:46:23.039Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-12-08T10:51:57.504Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"bank_identification_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"40659210"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-9'>Path</h3>
 <p>GET /cardsavr_bins <strong>(batch)</strong> or GET /cardsavr_bins/:id <strong>(singular)</strong></p>
 <h3 id='description-9'>Description</h3>
 <p>Returns the bin specified by the provided ID</p>
@@ -1463,7 +1580,19 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='create-bin'>Create bin</h2><h3 id='path-10'>Path</h3>
+<h2 id='create-bin'>Create bin</h2>
+<blockquote>
+<p>Sample request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"financial_institution_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4148297</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"bank_identification_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"40659210"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"brand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ibtdEYMoswZUoRPCTJD"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"issuer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HStBmOsPfzDhJFDWjaCZDfuOefGBIRsCIMGRkDbvhmUONJooRTNJTdVtqlzjbfQKKDFXPiKWhNutqLrOZfSsCQiiVSBYxaKgPgp"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"QQxBWCjEfrWPBi"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lhylfLoaCUomZEJhDXHfzGdSYQNRZroxGDpRdfpUGdpeClvpMINGioiUquvWcgzayLLLbwLzjDdHTXdhgXwOwqbTcYnOMJXQJgR"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-10'>Path</h3>
 <p>POST /cardsavr_bins</p>
 <h3 id='description-10'>Description</h3>
 <p>Create a bin and return the created object.</p>
@@ -1473,21 +1602,35 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <th>Parameter</th>
 <th>Type</th>
 <th>Required</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>financial_institution_id</td>
 <td>integer</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>bank_identification_number</td>
 <td>integer</td>
 <td>yes</td>
+<td></td>
 </tr>
 </tbody></table>
-<h2 id='update-bin'>Update bin</h2><h3 id='path-11'>Path</h3>
-<p>PUT /cardsavr_bins</p>
+<h2 id='update-bin'>Update bin</h2>
+<blockquote>
+<p>Sample request - /cardsavr_bins/7268197 :</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"financial_institution_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9476000</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"brand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LpXJiSPXQgqJJiFpNZX"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"issuer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZPeJnUyaXAMZMHIFldTOQXoapxempWPigLVzWptbNangrdYoBwluJUmJLSIUeUyrnqDGBXRsYTzvmZMryhtUyMgMSAMsmprUHCy"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EvPgHbNfRpLmoH"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AuUJYSrVpBpuswEjsVmwEEaSecxcMUibQQbpSBhlJJuCUWwGsjLahSHLTMlUDzaCkzcBTXYyuVkVjeMwiwhjVixBDVVqMmVfERJ"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-11'>Path</h3>
+<p>PUT /cardsavr_bins OR /cardsavr_bins/{id}</p>
 <h3 id='description-11'>Description</h3>
 <p>Update a bin and return the updated object.  An id is required on every update request.</p>
 <h3 id='body-parameters-6'>Body parameters</h3>
@@ -1510,7 +1653,31 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <p>Delete a bin and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h1 id='cards'>Cards</h1>
 <p>Card objects contain information about a payment card belonging to a single cardholder. Card objects are used to populate users&#39; payment information on merchant sites.</p>
-<h2 id='get-card'>Get card</h2><h3 id='path-13'>Path</h3>
+<h2 id='get-card'>Get card</h2>
+<blockquote>
+<p>Sample response - not all properties are available to all roles (200 OK):</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5306051</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"address_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3087022</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"bin_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2564497</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name_on_card"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe C Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"first_6"</span><span class="p">:</span><span class="w"> </span><span class="s2">"obpOEnBDByazIDwnyWiYdTsZsGPtokru"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"first_7"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tAcEsUdzjhbIhnMTBclACIHCrnPCsnlv"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"first_8"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WjyjVgHCKLMpuNxBNCOEBxGsazcEvcsj"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"created_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2010-12-02T23:43:18.418Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2005-07-24T02:29:59.595Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expiration_month"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expiration_year"</span><span class="p">:</span><span class="w"> </span><span class="mi">31</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"cardholder_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">533114</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"par"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pctsGOBKQZqIntSJhdzXikpvQCRFb"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"pan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TktEBOUPHWoQZos"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"cvv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GXm"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-13'>Path</h3>
 <p>GET /cardsavr_cards <strong>(batch)</strong> or GET /cardsavr_cards/:id <strong>(singular)</strong></p>
 <h3 id='description-13'>Description</h3>
 <p>Returns the card specified by the provided ID</p>
@@ -1586,7 +1753,24 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='create-card'>Create card</h2><h3 id='path-14'>Path</h3>
+<h2 id='create-card'>Create card</h2>
+<blockquote>
+<p>Sample request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"cardholder_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">533114</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"address_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3087022</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"bin_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2564497</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"par"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pctsGOBKQZqIntSJhdzXikpvQCRFb"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"pan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TktEBOUPHWoQZos"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"cvv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GXm"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expiration_month"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expiration_year"</span><span class="p">:</span><span class="w"> </span><span class="mi">31</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name_on_card"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe C Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-14'>Path</h3>
 <p>POST /cardsavr_cards</p>
 <h3 id='description-14'>Description</h3>
 <p>Create a card and return the created object.</p>
@@ -1596,66 +1780,91 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <th>Parameter</th>
 <th>Type</th>
 <th>Required</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>cardholder_id</td>
 <td>integer</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>address_id</td>
 <td>integer</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>bin_id</td>
 <td>integer</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>par</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>pan</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>cvv</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>expiration_month</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>expiration_year</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>name_on_card</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>first_name</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>last_name</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 </tbody></table>
-<h2 id='update-card'>Update card</h2><h3 id='path-15'>Path</h3>
-<p>PUT /cardsavr_cards</p>
+<h2 id='update-card'>Update card</h2>
+<blockquote>
+<p>Sample request - /cardsavr_cards/5306051 :</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"address_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8572843</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"bin_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8737732</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name_on_card"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe C Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expiration_month"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expiration_year"</span><span class="p">:</span><span class="w"> </span><span class="mi">31</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-15'>Path</h3>
+<p>PUT /cardsavr_cards OR /cardsavr_cards/{id}</p>
 <h3 id='description-15'>Description</h3>
 <p>Update a card and return the updated object.  An id is required on every update request.</p>
 <h3 id='body-parameters-8'>Body parameters</h3>
@@ -1698,7 +1907,39 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <p>Delete a card and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h1 id='users'>Users</h1>
 <p>User objects correspond to a single CardSavr user.</p>
-<h2 id='get-user'>Get user</h2><h3 id='path-17'>Path</h3>
+<h2 id='get-user'>Get user</h2>
+<blockquote>
+<p>Sample response - not all properties are available to all roles (200 OK):</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7408104</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"financial_institution_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7821878</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hVaGwR133rxGXZznBh+XIH8omOypk9/6Wun+eftW6+A="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"next_password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xPX8PrtCJSewUBrkgD0ntLjutqZZhfgRdjOaeFXqKSw="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expired_password_1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GpjqtmBG/9BqBq80JuJZM1ggCxgQUF31kGCJSOCH9bY="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expired_password_2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"K7bCPoo1r4HoiFA9/8HCDjzwZfC2K6KKrYc+8xT0G80="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"cardholder_safe_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cJV6lNovsl+FdU27pUBTsEP9MlVugj1UrGEPuVL0d2I="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_login_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1993-04-27T13:33:19.594Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password_lifetime"</span><span class="p">:</span><span class="w"> </span><span class="mi">113</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test_email@strivve.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"is_password_update_required"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"developer"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UtUuwzgUcIrXfJ"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"custom_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"oopCMPpaDsWq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4kYyV(&amp;hd.3(sHTLb=azen0DdZwE"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"rtBfGOzkxXoo"</span><span class="p">:</span><span class="w"> </span><span class="mi">44</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"FKjIWXnwnIeU"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"next_rotation_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1990-01-12T08:35:49.011Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"created_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1977-04-23T08:55:25.724Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1998-12-24T09:48:39.689Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jsmith123"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-17'>Path</h3>
 <p>GET /cardsavr_users <strong>(batch)</strong> or GET /cardsavr_users/:id <strong>(singular)</strong></p>
 <h3 id='description-17'>Description</h3>
 <p>Returns the user specified by the provided ID</p>
@@ -1794,7 +2035,31 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='create-user'>Create user</h2><h3 id='path-18'>Path</h3>
+<h2 id='create-user'>Create user</h2>
+<blockquote>
+<p>Sample request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"financial_institution_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7821878</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jsmith123"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pa$$w0rd"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"next_password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xPX8PrtCJSewUBrkgD0ntLjutqZZhfgRdjOaeFXqKSw="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"cardholder_safe_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cJV6lNovsl+FdU27pUBTsEP9MlVugj1UrGEPuVL0d2I="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password_lifetime"</span><span class="p">:</span><span class="w"> </span><span class="mi">113</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test_email@strivve.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"is_password_update_required"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"developer"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UtUuwzgUcIrXfJ"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"custom_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"oopCMPpaDsWq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4kYyV(&amp;hd.3(sHTLb=azen0DdZwE"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"rtBfGOzkxXoo"</span><span class="p">:</span><span class="w"> </span><span class="mi">44</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"FKjIWXnwnIeU"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"next_rotation_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1990-01-12T08:35:49.011Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-18'>Path</h3>
 <p>POST /cardsavr_users</p>
 <h3 id='description-18'>Description</h3>
 <p>Create a user and return the created object.</p>
@@ -1804,81 +2069,120 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <th>Parameter</th>
 <th>Type</th>
 <th>Required</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>financial_institution_id</td>
 <td>integer</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>username</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>password</td>
 <td>base64</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>next_password</td>
 <td>base64</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>cardholder_safe_key</td>
 <td>base64</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>first_name</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>last_name</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>password_lifetime</td>
 <td>integer</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>email</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>is_password_update_required</td>
 <td>boolean</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>role</td>
 <td>enum</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>phone_number</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>custom_data</td>
 <td>object</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>next_rotation_on</td>
 <td>date</td>
 <td>no</td>
+<td></td>
 </tr>
 </tbody></table>
-<h2 id='update-user'>Update user</h2><h3 id='path-19'>Path</h3>
-<p>PUT /cardsavr_users</p>
+<h2 id='update-user'>Update user</h2>
+<blockquote>
+<p>Sample request - /cardsavr_users/7408104 :</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"financial_institution_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">387589</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pa$$w0rd"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"next_password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lmIm2764SjObr/Q1PmWEyjAwzPY/mZnrdtiURJe9spY="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"cardholder_safe_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"n/gsdoGyMbubsUtmpc6glhue23fSqOyAEJD6fqaYHjg="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password_lifetime"</span><span class="p">:</span><span class="w"> </span><span class="mi">345</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test_email@strivve.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"is_password_update_required"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"analyst"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LEHBncxSEirviu"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"custom_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"ujaDjAYzySfs"</span><span class="p">:</span><span class="w"> </span><span class="s2">"L!F3h%Lb*Rs@XzO}K"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"DzsUeWlGRpNW"</span><span class="p">:</span><span class="w"> </span><span class="mi">55</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"LOIiqdqkmODN"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"next_rotation_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-04-03T14:17:41.653Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jsmith123"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-19'>Path</h3>
+<p>PUT /cardsavr_users OR /cardsavr_users/{id}</p>
 <h3 id='description-19'>Description</h3>
 <p>Update a user and return the updated object.  An id is required on every update request.</p>
 <h3 id='body-parameters-10'>Body parameters</h3>
@@ -1961,7 +2265,21 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <p>Delete a user and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h1 id='financial-institutions'>Financial Institutions</h1>
 <p>A CardSavr Financial Institution that can be associated with jobs and users.</p>
-<h2 id='get-financial-institution'>Get financial institution</h2><h3 id='path-21'>Path</h3>
+<h2 id='get-financial-institution'>Get financial institution</h2>
+<blockquote>
+<p>Sample response - not all properties are available to all roles (200 OK):</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">948153</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sUJzLqMGspQAVsGaIfnEhiTnENbnLdXtjdazAYoBMwNpOIRRkeAKTuevcnSAfVS"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pnmzFPwBhegdFEAoyzuNVbHxdBWhX"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"lookup_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"POlCIJvMMPSweDGMvhPDVdelNGZqlBFUyLUifjQAUIbXQedCtrAyQPKCeGGzvZg"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"alternate_lookup_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MCfAALULVJLReCROQANTVxsYNvzVOQRXBtlmypPElRfIlWxkRrwCHjyiGXtyLev"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"created_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2004-06-13T18:18:33.830Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-06-10T14:00:56.824Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-21'>Path</h3>
 <p>GET /financial_institutions <strong>(batch)</strong> or GET /financial_institutions/:id <strong>(singular)</strong></p>
 <h3 id='description-21'>Description</h3>
 <p>Returns the financial institution specified by the provided ID</p>
@@ -2017,7 +2335,17 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='create-financial-institution'>Create financial institution</h2><h3 id='path-22'>Path</h3>
+<h2 id='create-financial-institution'>Create financial institution</h2>
+<blockquote>
+<p>Sample request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sUJzLqMGspQAVsGaIfnEhiTnENbnLdXtjdazAYoBMwNpOIRRkeAKTuevcnSAfVS"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pnmzFPwBhegdFEAoyzuNVbHxdBWhX"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"lookup_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"POlCIJvMMPSweDGMvhPDVdelNGZqlBFUyLUifjQAUIbXQedCtrAyQPKCeGGzvZg"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"alternate_lookup_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MCfAALULVJLReCROQANTVxsYNvzVOQRXBtlmypPElRfIlWxkRrwCHjyiGXtyLev"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-22'>Path</h3>
 <p>POST /financial_institutions</p>
 <h3 id='description-22'>Description</h3>
 <p>Create a financial institution and return the created object.</p>
@@ -2027,31 +2355,46 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <th>Parameter</th>
 <th>Type</th>
 <th>Required</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>name</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>description</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>lookup_key</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>alternate_lookup_key</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 </tbody></table>
-<h2 id='update-financial-institution'>Update financial institution</h2><h3 id='path-23'>Path</h3>
-<p>PUT /financial_institutions</p>
+<h2 id='update-financial-institution'>Update financial institution</h2>
+<blockquote>
+<p>Sample request - /financial_institutions/948153 :</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MJDLEeaMeLrDALAORhypsiVFYOVfXhfIxLwJVwizbGKnxVApDEhceebNpMbLAwP"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cSCHmRBoJUMjgrtUVlGnoooSaUhuU"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"lookup_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ckXXWGOGcyfRWdqaeHGWViKEtwxYVyqKKvvdMrEdmbvenMmZeBFGGQjeIlIqYlH"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"alternate_lookup_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LLfZGLBvDPNYlBCOzOOrGfPHxfMFchmagGhTMTalkSwXRqABlJpkTRXVLcHBeLn"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-23'>Path</h3>
+<p>PUT /financial_institutions OR /financial_institutions/{id}</p>
 <h3 id='description-23'>Description</h3>
 <p>Update a financial institution and return the updated object.  An id is required on every update request.</p>
 <h3 id='body-parameters-12'>Body parameters</h3>
@@ -2089,7 +2432,25 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <p>Delete a financial institution and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h1 id='integrators'>Integrators</h1>
 <p>An integrator object represents an integrator that implements CardSavr.</p>
-<h2 id='get-integrator'>Get integrator</h2><h3 id='path-25'>Path</h3>
+<h2 id='get-integrator'>Get integrator</h2>
+<blockquote>
+<p>Sample response - not all properties are available to all roles (200 OK):</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7302814</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wDrWZimjVFoTyzxxzdENIkhXORuFhOQIeqRpaMvNLjhCaWiKC"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"integrator_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cust_internal"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SwVbEij"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BdUl/G65xxOoMmwO4ZHiDK2HXQXjMWcG4bn7pXX5iRA="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"current_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JUWo10x4IBGbdAiYCRc0YXZ7Wzo2MPtGJoz1+1EdDX0="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"next_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3irQfmwKax9A1hmYHZh51wuZnqxepmu2VGEcHh+rKz0="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"key_lifetime"</span><span class="p">:</span><span class="w"> </span><span class="mi">139</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"next_rotation_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1992-09-14T08:57:34.772Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"created_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2002-07-04T01:02:15.102Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2011-05-28T08:58:15.499Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-25'>Path</h3>
 <p>GET /integrators <strong>(batch)</strong> or GET /integrators/:id <strong>(singular)</strong></p>
 <h3 id='description-25'>Description</h3>
 <p>Returns the integrator specified by the provided ID</p>
@@ -2155,7 +2516,21 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='create-integrator'>Create integrator</h2><h3 id='path-26'>Path</h3>
+<h2 id='create-integrator'>Create integrator</h2>
+<blockquote>
+<p>Sample request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wDrWZimjVFoTyzxxzdENIkhXORuFhOQIeqRpaMvNLjhCaWiKC"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"integrator_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cust_internal"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SwVbEij"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BdUl/G65xxOoMmwO4ZHiDK2HXQXjMWcG4bn7pXX5iRA="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"current_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JUWo10x4IBGbdAiYCRc0YXZ7Wzo2MPtGJoz1+1EdDX0="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"next_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3irQfmwKax9A1hmYHZh51wuZnqxepmu2VGEcHh+rKz0="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"key_lifetime"</span><span class="p">:</span><span class="w"> </span><span class="mi">139</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"next_rotation_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1992-09-14T08:57:34.772Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-26'>Path</h3>
 <p>POST /integrators</p>
 <h3 id='description-26'>Description</h3>
 <p>Create a integrator and return the created object.</p>
@@ -2165,51 +2540,74 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <th>Parameter</th>
 <th>Type</th>
 <th>Required</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>name</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>integrator_type</td>
 <td>enum</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>description</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>last_key</td>
 <td>base64</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>current_key</td>
 <td>base64</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>next_key</td>
 <td>base64</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>key_lifetime</td>
 <td>integer</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>next_rotation_on</td>
 <td>date</td>
 <td>no</td>
+<td></td>
 </tr>
 </tbody></table>
-<h2 id='update-integrator'>Update integrator</h2><h3 id='path-27'>Path</h3>
-<p>PUT /integrators</p>
+<h2 id='update-integrator'>Update integrator</h2>
+<blockquote>
+<p>Sample request - /integrators/7302814 :</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"QwLWzaBpkBQAwdbOaqVtiTBBSYRhFPSzZfAYDnOHMrvhzPhEi"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"integrator_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jdUaAsuVQLOJKinMwECwwjn"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0BHEuKy0yBc4G099agJbRXnHZ26nHw6x/ieTHeBerfc="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"current_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hE6YlglNNrHNdJZmeDVrCMlHD04Zmi4YHVzit2jZpPA="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"next_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LLkYTTIPnjjf3ymr26k4SkP4Uj1LHUhadlpaQqynuro="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"key_lifetime"</span><span class="p">:</span><span class="w"> </span><span class="mi">353</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"next_rotation_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2009-09-09T09:43:35.536Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-27'>Path</h3>
+<p>PUT /integrators OR /integrators/{id}</p>
 <h3 id='description-27'>Description</h3>
 <p>Update a integrator and return the updated object.  An id is required on every update request.</p>
 <h3 id='body-parameters-14'>Body parameters</h3>
@@ -2267,7 +2665,42 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <p>Delete a integrator and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h1 id='merchant-sites'>Merchant Sites</h1>
 <p>Merchant site objects contain information about CardSavr-supported merchant sites.</p>
-<h2 id='get-merchant-site'>Get merchant site</h2><h3 id='path-29'>Path</h3>
+<h2 id='get-merchant-site'>Get merchant site</h2>
+<blockquote>
+<p>Sample response - not all properties are available to all roles (200 OK):</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9984429</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XmaxjlVUaOCMpMdcjUTRCHDNq"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"zWHETLuyDWRVvEWbuMCozDPD"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"image_lookup_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dJnwzGuNKhYwlNoIPp"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"images"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"vpGljWqgZeIQ"</span><span class="p">:</span><span class="w"> </span><span class="s2">"]b^4X/EqPP{u#Ez5QH8v-{H^AykEII"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"zrDyFIqriKhX"</span><span class="p">:</span><span class="w"> </span><span class="mi">84</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tvvHkgXUNFXN"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"wqyAaAuonlCF"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&amp;y&gt;6[ZHvHff41{%]scUv),ID)[8"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"lipwrVRRVQTK"</span><span class="p">:</span><span class="w"> </span><span class="mi">56</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"vTmhcOwCMrDe"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"ugBGiosgPGRO"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6wS5zIL8/eEns=u!"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"RYEbEihbepbn"</span><span class="p">:</span><span class="w"> </span><span class="mi">43</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"AGDmfaRxEdoD"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"mfa"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rUNwUpkjDGPPH"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"login"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"TxbboHcbFQSl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"]s)2"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"RyOxYbEsKZRf"</span><span class="p">:</span><span class="w"> </span><span class="mi">83</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"FycnKKdXBpbm"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-29'>Path</h3>
 <p>GET /merchant_sites <strong>(batch)</strong> or GET /merchant_sites/:id <strong>(singular)</strong></p>
 <h3 id='description-29'>Description</h3>
 <p>Returns the merchant site specified by the provided ID</p>
@@ -2335,7 +2768,25 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 </tbody></table>
 <h1 id='notifications'>Notifications</h1>
 <p>A noficiation record that defines how to take action CardSavr events like jobs completing or sessions ending.</p>
-<h2 id='get-notification'>Get notification</h2><h3 id='path-30'>Path</h3>
+<h2 id='get-notification'>Get notification</h2>
+<blockquote>
+<p>Sample response - not all properties are available to all roles (200 OK):</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4170112</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UqQuHMVGSwmzjGepFdiczpcBZLuaDUHrjUueZNFdxNGvUzcOdPOCKXUDUcVPVoJ"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"webhook"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"OJiARJSKnfed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TIf,qZ7N=1Cs,X^sBL~#3^N,8{("</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"mHjTGTgBPwyZ"</span><span class="p">:</span><span class="w"> </span><span class="mi">54</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"daAMrDuSmEce"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"created_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1989-12-29T01:28:28.755Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1989-08-03T01:16:22.468Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"financial_institution_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1616096</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-30'>Path</h3>
 <p>GET /notifications <strong>(batch)</strong> or GET /notifications/:id <strong>(singular)</strong></p>
 <h3 id='description-30'>Description</h3>
 <p>Returns the notification specified by the provided ID</p>
@@ -2396,7 +2847,21 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='create-notification'>Create notification</h2><h3 id='path-31'>Path</h3>
+<h2 id='create-notification'>Create notification</h2>
+<blockquote>
+<p>Sample request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"financial_institution_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1616096</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UqQuHMVGSwmzjGepFdiczpcBZLuaDUHrjUueZNFdxNGvUzcOdPOCKXUDUcVPVoJ"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"webhook"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"OJiARJSKnfed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TIf,qZ7N=1Cs,X^sBL~#3^N,8{("</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"mHjTGTgBPwyZ"</span><span class="p">:</span><span class="w"> </span><span class="mi">54</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"daAMrDuSmEce"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-31'>Path</h3>
 <p>POST /notifications</p>
 <h3 id='description-31'>Description</h3>
 <p>Create a notification and return the created object.</p>
@@ -2406,36 +2871,55 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <th>Parameter</th>
 <th>Type</th>
 <th>Required</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>financial_institution_id</td>
 <td>integer</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>name</td>
 <td>string</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>type</td>
 <td>enum</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>event</td>
 <td>enum</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>config</td>
 <td>object</td>
 <td>no</td>
+<td></td>
 </tr>
 </tbody></table>
-<h2 id='update-notification'>Update notification</h2><h3 id='path-32'>Path</h3>
-<p>PUT /notifications</p>
+<h2 id='update-notification'>Update notification</h2>
+<blockquote>
+<p>Sample request - /notifications/4170112 :</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BgyDKEnNaTTNSYYAPQLEzYkqRZOIEzYpIGoMSqsThJSXHjqBiAZoJTnnwMUFjzP"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"webhook"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"nlRlbHaasfgV"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nKSMQN3xx,nZ*~dC$B&lt;oWK[l,,f"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"SsSGXbeCxDql"</span><span class="p">:</span><span class="w"> </span><span class="mi">89</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"yjINyVXyXSwe"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-32'>Path</h3>
+<p>PUT /notifications OR /notifications/{id}</p>
 <h3 id='description-32'>Description</h3>
 <p>Update a notification and return the updated object.  An id is required on every update request.</p>
 <h3 id='body-parameters-16'>Body parameters</h3>
@@ -2473,7 +2957,40 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <p>Delete a notification and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h1 id='single-site-jobs'>Single-site jobs</h1>
 <p>A place_card_on_single_site_job object</p>
-<h2 id='get-single-site-job'>Get single-site job</h2><h3 id='path-34'>Path</h3>
+<h2 id='get-single-site-job'>Get single-site job</h2>
+<blockquote>
+<p>Sample response - not all properties are available to all roles (200 OK):</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2433487</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"card_placement_result_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wztaQGCcdS"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TOO_MANY_LOGIN_FAILURES"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"safe_blob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZjNEEJJwD"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"safe_nonce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SmsWZvWuhlHZX"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"custom_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"wYdOOXCkCTfw"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s+v9[p-Fd}KquapCnBVY^n.PY[u8[*"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"WKEwqBMUTqra"</span><span class="p">:</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"WlsLHBQYlUwN"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"failure_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GPwuRZipEAAAQ"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"messaging_addresses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lu"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"current_state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BlbjLanEZvKzjxDrHjQjIpvIdJogoBvxnLOgVJkvEvgmhPLkXWRSoFnvKgKLfcU"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"do_not_queue"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"user_is_present"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"time_elapsed"</span><span class="p">:</span><span class="w"> </span><span class="mi">4725768</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"job_ready_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1979-12-13T14:40:18.589Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"started_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1992-04-21T17:09:00.468Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"completed_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-09-02T09:08:45.440Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expiration_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-02-09T08:16:23.707Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"created_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-12T02:32:39.255Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1971-05-14T04:41:50.612Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"place_card_on_multiple_sites_job_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1455640</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6784662</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"card_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">966112</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7781302</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-34'>Path</h3>
 <p>GET /place_card_on_single_site_jobs <strong>(batch)</strong> or GET /place_card_on_single_site_jobs/:id <strong>(singular)</strong></p>
 <h3 id='description-34'>Description</h3>
 <p>Returns the single-site job specified by the provided ID</p>
@@ -2589,7 +3106,31 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='create-single-site-job'>Create single-site job</h2><h3 id='path-35'>Path</h3>
+<h2 id='create-single-site-job'>Create single-site job</h2>
+<blockquote>
+<p>Sample request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"place_card_on_multiple_sites_job_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1455640</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6784662</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"card_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">966112</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7781302</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TOO_MANY_LOGIN_FAILURES"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"custom_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"wYdOOXCkCTfw"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s+v9[p-Fd}KquapCnBVY^n.PY[u8[*"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"WKEwqBMUTqra"</span><span class="p">:</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"WlsLHBQYlUwN"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"failure_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GPwuRZipEAAAQ"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"current_state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BlbjLanEZvKzjxDrHjQjIpvIdJogoBvxnLOgVJkvEvgmhPLkXWRSoFnvKgKLfcU"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"do_not_queue"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"user_is_present"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"time_elapsed"</span><span class="p">:</span><span class="w"> </span><span class="mi">4725768</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"started_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1992-04-21T17:09:00.468Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"completed_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-09-02T09:08:45.440Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expiration_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-02-09T08:16:23.707Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-35'>Path</h3>
 <p>POST /place_card_on_single_site_jobs</p>
 <h3 id='description-35'>Description</h3>
 <p>Create a single-site job and return the created object.</p>
@@ -2599,81 +3140,116 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <th>Parameter</th>
 <th>Type</th>
 <th>Required</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>user_id</td>
 <td>integer</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>card_id</td>
 <td>integer</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>account_id</td>
 <td>integer</td>
 <td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>status</td>
 <td>enum</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>queue_name</td>
 <td>enum</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>custom_data</td>
 <td>object</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>failure_reason</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>current_state</td>
 <td>string</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>do_not_queue</td>
 <td>boolean</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>user_is_present</td>
 <td>boolean</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>time_elapsed</td>
 <td>integer</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>started_on</td>
 <td>date</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>completed_on</td>
 <td>date</td>
 <td>no</td>
+<td></td>
 </tr>
 <tr>
 <td>expiration_date</td>
 <td>date</td>
 <td>no</td>
+<td></td>
 </tr>
 </tbody></table>
-<h2 id='update-single-site-job'>Update single-site job</h2><h3 id='path-36'>Path</h3>
-<p>PUT /place_card_on_single_site_jobs</p>
+<h2 id='update-single-site-job'>Update single-site job</h2>
+<blockquote>
+<p>Sample request - /place_card_on_single_site_jobs/2433487 :</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UNSUCCESSFUL"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"custom_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"BKddZUfjItJj"</span><span class="p">:</span><span class="w"> </span><span class="s2">"q6vHJ7QRi8L@oXk("</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"nmbUDWmhFfgW"</span><span class="p">:</span><span class="w"> </span><span class="mi">95</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"BKcJzGRYmNNd"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"failure_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NCdaAonmGXqrQHHqQopYRCEOBNKRQKrH"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"current_state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yLpWOPYomkqkkTspVVkuiPxNUoyBYurIdcTIowfsGyvZqRFoUgUVxiWIVPsFjww"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"do_not_queue"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"user_is_present"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"time_elapsed"</span><span class="p">:</span><span class="w"> </span><span class="mi">4077803</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"started_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1971-08-12T12:12:22.921Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"completed_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2001-03-12T02:20:29.216Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expiration_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1993-09-02T23:48:56.134Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='path-36'>Path</h3>
+<p>PUT /place_card_on_single_site_jobs OR /place_card_on_single_site_jobs/{id}</p>
 <h3 id='description-36'>Description</h3>
 <p>Update a single-site job and return the updated object.  An id is required on every update request.</p>
 <h3 id='body-parameters-18'>Body parameters</h3>
