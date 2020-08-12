@@ -372,7 +372,7 @@ For string properties, singular filters always use **partial** matching, meaning
 
 Multiple filters for string properties always use **partial** matching, meaning they will match any string that contains the filter value as a substring.
 
-<aside class="success">
+<aside class="notice">
 "/cardsavr_accounts?cardholder_ids=1,2,3" would return accounts associated with the cardholders that have the IDs 1, 2, and 3.
 </aside>
 
@@ -380,7 +380,7 @@ Multiple filters for string properties always use **partial** matching, meaning 
 
 **Starts-with** filters select all objects where the property value begins with the provided query value.
 
-<aside class="success">
+<aside class="notice">
 "/merchant_sites?name_starts_with=a" returns all sites with names beginning with A (e.g. names of "Apple", "Amazon", "Atlantis").
 </aside>
 
@@ -388,7 +388,7 @@ Multiple filters for string properties always use **partial** matching, meaning 
 
 **Top filters** select for objects with specified properties to be returned first, in the order specified.
 
-<aside class="success">
+<aside class="notice">
 "/merchant_sites?top_ids=2,4,6" would return an array with sites with IDs 2,4,6 in the 1st, 2nd, and 3rd index positions, respectively, with any additional matching objects returned after.
 </aside>
 
@@ -396,14 +396,14 @@ Multiple filters for string properties always use **partial** matching, meaning 
 
 **Include filters** select for any objects that have the specified property value. Unlike multiple filters, include filters use exact matching.
 
-<aside class="success">
+<aside class="notice">
 "/cardsavr_users?roles_include=developer,analysts" returns users with roles of developer and analyst.
 "/cardsavr_users?roles_include=dev,ana" would return no users, as "dev" and "ana" are not roles defined in CardSavr.
 </aside>
 
 **Exclude filters** select for any objects that do NOT have the specified property value.  Exclude filters use exact matching.
 
-<aside class="success">
+<aside class="notice">
 "/cardsavr_users?roles_exclude=cardholder,admin" filters out users with the roles cardholder and admin.
 </aside>
 
@@ -411,13 +411,13 @@ Multiple filters for string properties always use **partial** matching, meaning 
 
 **Max filters** select for objects that have a value equal to or less than the specified value.
 
-<aside class="success">
+<aside class="notice">
 "/cardsavr_accounts?created_on_max=2018-04-20T23:10:36.657Z" returns accounts that were created on or before the date string 2018-04-20T23:10:36.657Z.
 </aside>
 
 **Min filters** select for any objects that have a value equal to or greater than the specified value.
 
-<aside class="success">
+<aside class="notice">
 '/cardsavr_accounts?created_on_min=2018-04-20T23:10:36.657Z' returns accounts that were created on or after the date string 2018-04-20T23:10:36.657Z.
 </aside>
 
