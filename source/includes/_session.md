@@ -100,7 +100,9 @@ old_password | string | not always | Privileged accounts can reset users' passwo
 
 Session endpoints are used for session initiation, login, and termination.
 
-> All sessions must first be started to initialize with the salt:
+## Start a CardSavr session
+
+> All sessions must first be started to receive a session salt for initialization:
 
 ```javascript
 const { CardsavrSession } = require() "@strivve/strivve-sdk/lib/cardsavr/CardsavrJSLibrary-2.0";
@@ -136,8 +138,6 @@ curl "https://api.INSTANCE.cardsavr.io/session/start"
   "sessionSalt": "kz2R3qexAkZqhoCalnNX9+6CLAMZ+"
 }
 ```
-
-## Start a CardSavr session
 
 ### Path
 GET /session/start/
