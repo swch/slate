@@ -985,15 +985,16 @@ curl <span class="s2">"https://api.INSTANCE.cardsavr.io/session/start"</span>
   <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-c</span> ~/_cookies  
 </code></pre></div>
 <blockquote>
-<p>The SDK calls save the sessionSalt for future use</p>
+<p>The SDK will save and manage both the session salt and session token for all future session calls.</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"sessionSalt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kz2R3qexAkZqhoCalnNX9+6CLAMZ+"</span><span class="w">
-</span><span class="p">}</span><span class="w">
+  </span><span class="nl">"sessionSalt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kz2R3qexAkZqhoCalnNX9+6CLAMZ+"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"sessionToken"</span><span class="p">:</span><span class="w"> </span><span class="err">eyJhbGciOiJIUzI</span><span class="mi">1</span><span class="err">NiIsInR</span><span class="mi">5</span><span class="err">cCI</span><span class="mi">6</span><span class="err">IkpXVCJ</span><span class="mi">9</span><span class="err">.eyJqdGkiOiI</span><span class="mi">4</span><span class="err">ZjJkYjQ</span><span class="mi">1</span><span class="err">OS</span><span class="mi">1</span><span class="err">kODMzLTQ</span><span class="mi">2</span><span class="err">NmItOGE</span><span class="mi">0</span><span class="err">MS</span><span class="mi">1</span><span class="err">mYzcwMzA</span><span class="mi">1</span><span class="err">M</span><span class="mi">2</span><span class="err">QwZGIiLCJpc</span><span class="mi">3</span><span class="err">MiOiJhcGkuZ</span><span class="mi">3</span><span class="err">RvbWxpbnNvbi</span><span class="mi">5</span><span class="err">jYXJkc</span><span class="mi">2</span><span class="err">F</span><span class="mi">2</span><span class="err">ci</span><span class="mi">5</span><span class="err">pbyIsImF</span><span class="mi">1</span><span class="err">ZCI</span><span class="mi">6</span><span class="err">ImFwaS</span><span class="mi">5</span><span class="err">ndG</span><span class="mi">9</span><span class="err">tbGluc</span><span class="mi">29</span><span class="err">uLmNhcmRzYXZyLmlvIiwiaWF</span><span class="mi">0</span><span class="err">IjoxNTk</span><span class="mi">5</span><span class="err">NzY</span><span class="mi">5</span><span class="err">NDQ</span><span class="mi">2</span><span class="err">fQ.slI</span><span class="mi">13</span><span class="err">GGNot</span><span class="mi">8</span><span class="err">SU_hPdzXzZrjcv</span><span class="mi">90</span><span class="err">G</span><span class="mi">43</span><span class="err">etofgh</span><span class="mi">9</span><span class="err">HotNj</span><span class="mi">0</span><span class="s2">"
+}
 </span></code></pre></div><h3 id='path-3'>Path</h3>
 <p>GET /session/start/</p>
 <h3 id='description-3'>Description</h3>
-<p>Starts new CardSavr session. Returns a session salt to be used for <a href="#login">user-login</a>.</p>
+<p>Starts new CardSavr session. Returns a session salt to be used for <a href="#login">user-login</a>. Return a session token to be used with all subsequent calls on the session.  This value is sent with the &quot;x-cardsavr-session-jwt&quot; header. If you are debugging with cURL or Postman, cookies are used in lieu of session tokens.</p>
 <h2 id='user-login'>User login</h2>
 <blockquote>
 <p>To authorize, a session initialization followed by a login call is required:</p>
