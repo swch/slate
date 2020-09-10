@@ -297,7 +297,7 @@ const res = await my_session.updateUser(1, updated_body, new_cardholder_safe_key
 
 ## Safe key
 
-> safe keys must be included to save data to the users' safe - if Strivve is storing the safe key, it can be retrieved from the login response
+> safe keys are included to save data to the users' safe - if Strivve is storing the safe key, safe keys do not be inlcuded as a request header. If a customer uses a remote safe key store, it must be included with all safe managed properties (accounts, jobs, and cards), and it is the customer's responsibility to rotate them.  If a user is going to persist for a significant length of time (longer than a one and done job), then it is advised to use a thrid party safe key store.
 
 ```javascript
 const updated_body = { id: 1, cardholder_safe_key : new_cardholder_safe_key };
