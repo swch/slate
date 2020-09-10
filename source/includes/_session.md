@@ -131,11 +131,12 @@ curl "https://api.INSTANCE.cardsavr.io/session/start"
   -H "trace: {\"key\": \"my_trace\"}" -c ~/_cookies  
 ```
 
-> The SDK calls save the sessionSalt for future use
+> The SDK will save and manage both the session salt and session token for all future session calls.
 
 ```json
 {
-  "sessionSalt": "kz2R3qexAkZqhoCalnNX9+6CLAMZ+"
+  "sessionSalt": "kz2R3qexAkZqhoCalnNX9+6CLAMZ+",
+  "sessionToken": eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4ZjJkYjQ1OS1kODMzLTQ2NmItOGE0MS1mYzcwMzA1M2QwZGIiLCJpc3MiOiJhcGkuZ3RvbWxpbnNvbi5jYXJkc2F2ci5pbyIsImF1ZCI6ImFwaS5ndG9tbGluc29uLmNhcmRzYXZyLmlvIiwiaWF0IjoxNTk5NzY5NDQ2fQ.slI13GGNot8SU_hPdzXzZrjcv90G43etofgh9HotNj0"
 }
 ```
 
@@ -144,7 +145,7 @@ GET /session/start/
 
 ### Description
 
-Starts new CardSavr session. Returns a session salt to be used for [user-login](#login).
+Starts new CardSavr session. Returns a session salt to be used for [user-login](#login). Return a session token to be used with all subsequent calls on the session.  This value is sent with the "x-cardsavr-session-jwt" header. If you are debugging with cURL or Postman, cookies are used in lieu of session tokens.
 
 ## User login
 
