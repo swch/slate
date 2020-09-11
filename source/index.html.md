@@ -112,7 +112,7 @@ signature | required | string | The [string-to-sign format](https://developers.s
 hydration | (none) | stringified JSON object | [See hydration](#hydration) 
 paging | {"page": 1, "page_length": 25} | stringified JSON object | Only supported with GET calls. [See paging](#paging)
 x-cardsavr-session-jwt | preferred | string | Std RFC-7519 JSON Web Token. This header is set to emtpy value on /session/start request which will cause a token to be returned in the body.  All subsequent requests on a session must have this value set in this header.
-cookie | alternative | cookie format | Not used by the SDK nor recommended for production use.  Use is needed for cURL and Postman testing. Cookie will be set and used by server if x-cardsavr-session-jwt token header is not used.
+cookie | alternative | cookie format | Not used by the SDK nor recommended for production use.  Use is needed for cURL and Postman testing. Cookie named "CardSavrSession" will be set and used by server if "x-cardsavr-session-jwt" token header is not used.
 
 ## Trace 
 
