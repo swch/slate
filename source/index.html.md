@@ -120,9 +120,11 @@ cookie | alternative | cookie format | [See cookie note] (#cookie-note)
 CardSavr needs to maintain an API session for state management including authentication, session key, replay prevention, etc.  Standard RFC-7519 JWT tokens are preferred for session persistence and cookies are used as a backup mechanism. The x-cardsavr-session-jwt header is used with token based session. The x-cardsavr-session-jwt header is managed transparently within the Strivve SDK.  It is the responsibility of applications directly using the direct REST protocol to set this header or provide cookies for each request.
 
 With GET /session/start to begin a new session
+
   "x-cardsavr-session-token": "" 
 
 With all subsequent requests on a session
+
   "x-cardsavr-session-token": "value-returned-from-session-start"
 
 ### cookie-note
