@@ -112,7 +112,8 @@ nonce | required | string (milliseconds) | contains the current UTC time in mill
 signature | required | string | The [string-to-sign format](https://developers.strivve.com/resources/encryption) requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the [SDK Libraries](https://developers.strivve.com/api-sdk/).
 hydration | (none) | stringified JSON object | [See hydration](#hydration) 
 paging | {"page": 1, "page_length": 25} | stringified JSON object | Only supported with GET calls. [See paging](#paging)
-cookie | required | cookie format | Generally constructed by SDK, but contains all cookies set by the server.
+x-cardsavr-session-jwt | preferred | string | Std RFC-7519 JSON Web Token. This header is set to emtpy value on /session/start request which will cause a token to be returned in the body.  All subsequent requests on a session must have this value set in this header.
+cookie | alternative | cookie format | Not used by the SDK nor recommended for production use.  Use is needed for cURL and Postman testing. Cookie named "CardSavrSession" will be set and used by server if "x-cardsavr-session-jwt" token header is not used.
 
 ## Trace 
 
