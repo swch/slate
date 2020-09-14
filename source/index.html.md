@@ -13,6 +13,7 @@ toc_footers:
 includes:
   - session
   - rest
+  - messages
   - errors
 
 search: true
