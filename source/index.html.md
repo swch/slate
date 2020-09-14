@@ -111,8 +111,22 @@ nonce | required | string (milliseconds) | contains the current UTC time in mill
 signature | required | string | The [string-to-sign format](https://developers.strivve.com/resources/encryption) requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the [SDK Libraries](https://developers.strivve.com/api-sdk/).
 hydration | (none) | stringified JSON object | [See hydration](#hydration) 
 paging | {"page": 1, "page_length": 25} | stringified JSON object | Only supported with GET calls. [See paging](#paging)
-x-cardsavr-session-jwt | preferred | string | Std RFC-7519 JSON Web Token. This header is set to emtpy value on /session/start request which will cause a token to be returned in the body.  All subsequent requests on a session must have this value set in this header.
-cookie | alternative | cookie format | Not used by the SDK nor recommended for production use.  Use is needed for cURL and Postman testing. Cookie named "CardSavrSession" will be set and used by server if "x-cardsavr-session-jwt" token header is not used.
+x-cardsavr-session-jwt | preferred | string | [See session tokens] (#session-tokens)
+cookie | alternative | cookie format | [See cookie note] (#cookie-note)
+
+## session-tokens
+
+CardSavr needs to maintain an API session for state management including authentication, session key, replay prevention, etc.  Standard RFC-7519 JWT tokens are preferred for session persistence and cookies are used as a backup mechanism. The x-cardsavr-session-jwt header is used with token based session. The x-cardsavr-session-jwt header is managed transparently within the Strivve SDK.  It is the responsibility of applications directly using the direct REST protocol to set this header or provide cookies for each request.
+
+With GET /session/start to begin a new session
+  "x-cardsavr-session-token": "" 
+
+With all subsequent requests on a session
+  "x-cardsavr-session-token": "value-returned-from-session-start"
+
+### cookie-note
+
+When the x-cardsavr-session-jwt header is not present in a request, CardSavr will fall back to setting and using a cookie named "CardSavrSession" for session persistence. This support is intended for use with cURL and Postman for testing and debugging. 
 
 ## Trace 
 
