@@ -5,30 +5,30 @@ An account object contains a CardSavr user's account information for a specific 
 
 ```shell
 curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_accounts/1323586494
+https://api.INSTANCE.cardsavr.io/cardsavr_accounts/1767173014
 ```
 
 ```javascript
-const accounts = await session.getAccounts(1323586494);
+const accounts = await session.getAccounts(1767173014);
 ```
 
 ```csharp
-CardSavrResponse<Accounts> accounts = await session.GetAccountsAsync(1323586494);
+CardSavrResponse<Accounts> accounts = await session.GetAccountsAsync(1767173014);
 ```
 
 > Sample response - not all properties are available to all roles (200 OK):
 
 ```json
 {
-  "id": 1323586494,
-  "last_card_placed_id": 2054970278,
-  "last_login": "2003-05-30T05:24:32.118Z",
-  "last_password_update": "2018-09-02T16:07:45.015Z",
-  "last_saved_card": "1994-07-18T06:22:42.181Z",
-  "created_on": "1992-11-24T00:14:46.570Z",
-  "last_updated_on": "1976-05-09T04:33:05.899Z",
-  "cardholder_id": 873608744,
-  "merchant_site_id": 481636656
+  "id": 1767173014,
+  "last_card_placed_id": 1840566664,
+  "last_login": "1979-09-01T01:32:16.638Z",
+  "last_password_update": "2006-04-04T07:03:00.034Z",
+  "last_saved_card": "2017-01-11T02:56:49.886Z",
+  "created_on": "2019-10-27T19:53:59.139Z",
+  "last_updated_on": "1991-08-26T23:24:38.946Z",
+  "cardholder_id": 769265424,
+  "merchant_site_id": 65959158
 }
 ```
 
@@ -50,7 +50,7 @@ Returns the account specified by the provided ID
 
 **Singular requests** only return the account matching the id provided in the path.
 
-**Example batch GET request path:**<br>`/cardsavr_accounts/12`
+**Example GET request path:**<br>`/cardsavr_accounts/1767173014`
 
 ### <a name="response-cardsavr_account"></a>Response attributes
 
@@ -83,9 +83,9 @@ NOTE: All foreign key parameters (fk) can be [hydrated](#hydration) and support 
 
 ```javascript
 const account = await session.createAccount({
-  "cardholder_id": 873608744,
-  "merchant_site_id": 481636656,
-  "last_card_placed_id": 2054970278,
+  "cardholder_id": 769265424,
+  "merchant_site_id": 65959158,
+  "last_card_placed_id": 1840566664,
   "username": "jsmith123",
   "password": "BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI="
 }, CARDHOLDER_SAFE_KEY);
@@ -94,9 +94,9 @@ const account = await session.createAccount({
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "cardholder_id", 873608744 },
-	{ "merchant_site_id", 481636656 },
-	{ "last_card_placed_id", 2054970278 },
+	{ "cardholder_id", 769265424 },
+	{ "merchant_site_id", 65959158 },
+	{ "last_card_placed_id", 1840566664 },
 	{ "username", "jsmith123" },
 	{ "password", "BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=" }
 };
@@ -105,7 +105,7 @@ CardSavrResponse<Account> account = await http.CreateAccountAsync(body, CARDHOLD
 ```
 
 ```shell
-curl -d "{\"cardholder_id\":873608744,\"merchant_site_id\":481636656,\"last_card_placed_id\":2054970278,\"username\":\"jsmith123\",\"password\":\"BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=\"}"
+curl -d "{\"cardholder_id\":769265424,\"merchant_site_id\":65959158,\"last_card_placed_id\":1840566664,\"username\":\"jsmith123\",\"password\":\"BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=\"}"
 -X POST -H "Content-Type: application/json"
 -H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
@@ -138,7 +138,7 @@ See [account response attributes](#response-cardsavr_account).
 
 ```javascript
 const account = await session.updateAccount({
-  "last_card_placed_id": 1872706233,
+  "last_card_placed_id": 765859657,
   "username": "jsmith123",
   "password": "BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI="
 }, CARDHOLDER_SAFE_KEY);
@@ -147,7 +147,7 @@ const account = await session.updateAccount({
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "last_card_placed_id", 1872706233 },
+	{ "last_card_placed_id", 765859657 },
 	{ "username", "jsmith123" },
 	{ "password", "BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=" }
 };
@@ -156,11 +156,11 @@ CardSavrResponse<Account> account = await http.UpdateAccountAsync(body, CARDHOLD
 ```
 
 ```shell
-curl -d "{\"last_card_placed_id\":1872706233,\"username\":\"jsmith123\",\"password\":\"BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=\"}"
+curl -d "{\"last_card_placed_id\":765859657,\"username\":\"jsmith123\",\"password\":\"BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=\"}"
 -X PUT -H "Content-Type: application/json"
 -H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_accounts/1323586494
+https://api.INSTANCE.cardsavr.io/cardsavr_accounts/1767173014
 ```
 
 ### Path
@@ -189,15 +189,15 @@ See [account response parameters](#response-cardsavr_account).
 curl -X DELETE
 -H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_accounts/1323586494
+https://api.INSTANCE.cardsavr.io/cardsavr_accounts/1767173014
 ```
 
 ```javascript
-await session.deleteAccount(1323586494, CARDHOLDER_SAFE_KEY);
+await session.deleteAccount(1767173014, CARDHOLDER_SAFE_KEY);
 ```
 
 ```csharp
-CardSavrResponse<Account> account = await http.DeleteAccountAsync(1323586494, CARDHOLDER_SAFE_KEY);
+CardSavrResponse<Account> account = await http.DeleteAccountAsync(1767173014, CARDHOLDER_SAFE_KEY);
 ```
 
 ### Path
@@ -219,33 +219,33 @@ Address objects contain billing address information for a particular user.
 
 ```shell
 curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_addresses/2011943011
+https://api.INSTANCE.cardsavr.io/cardsavr_addresses/1767844842
 ```
 
 ```javascript
-const addresses = await session.getAddresses(2011943011);
+const addresses = await session.getAddresses(1767844842);
 ```
 
 ```csharp
-CardSavrResponse<Addresses> addresses = await session.GetAddressesAsync(2011943011);
+CardSavrResponse<Addresses> addresses = await session.GetAddressesAsync(1767844842);
 ```
 
 > Sample response - not all properties are available to all roles (200 OK):
 
 ```json
 {
-  "id": 2011943011,
-  "address1": "RUwWABnADHNCpoRbuasTlTubQYLmMvZqpkSOMdhIAGEvDQlFCuwsPFDgqyebIpKfNRYqZOFhyBoNwUjqAwiWCCVEjKyXHsHsUqG",
-  "address2": "DpDzXZLwbRcwWIpvWuWaLpZDVHwgiWaqnlRANhDvwqfGbVOieKErPJqrqtxVHvbbupxSuDyccZLdZfOaxtWokyHJttCQaWSwAkf",
+  "id": 1767844842,
+  "address1": "IWxYfXBwJuZSQhSMMcnPBfffIvPNeoaKMxNYTXxbHIBFnyrJtGLSzCweOvjGdUQPQgzqVDTNZolgAvvpSuYXVTXjYFEyauCBHCN",
+  "address2": "otWdWjIkTAzqXlrPhtQDYcMaoqFCeEeCSSAFYXYjrooSYMmNtACUqGoosOTFRjcBDixZQHbJAXIPTinEyuPdLdgEpNjUgVMcKhm",
   "city": "Seattle",
   "subnational": "WA",
   "postal_code": "98177",
   "postal_other": "98177-0124",
   "country": "USA",
   "is_primary": true,
-  "created_on": "2010-12-14T11:20:21.505Z",
-  "last_updated_on": "2012-04-27T17:38:08.126Z",
-  "user_id": 2128665774
+  "created_on": "1970-09-23T00:34:32.437Z",
+  "last_updated_on": "2015-07-15T03:51:03.756Z",
+  "user_id": 1827023952
 }
 ```
 
@@ -267,7 +267,7 @@ Returns the address specified by the provided ID
 
 **Singular requests** only return the address matching the id provided in the path.
 
-**Example batch GET request path:**<br>`/cardsavr_addresses/12`
+**Example GET request path:**<br>`/cardsavr_addresses/1767844842`
 
 ### <a name="response-cardsavr_address"></a>Response attributes
 
@@ -299,9 +299,9 @@ NOTE: All foreign key parameters (fk) can be [hydrated](#hydration) and support 
 
 ```javascript
 const address = await session.createAddress({
-  "user_id": 2128665774,
-  "address1": "RUwWABnADHNCpoRbuasTlTubQYLmMvZqpkSOMdhIAGEvDQlFCuwsPFDgqyebIpKfNRYqZOFhyBoNwUjqAwiWCCVEjKyXHsHsUqG",
-  "address2": "DpDzXZLwbRcwWIpvWuWaLpZDVHwgiWaqnlRANhDvwqfGbVOieKErPJqrqtxVHvbbupxSuDyccZLdZfOaxtWokyHJttCQaWSwAkf",
+  "user_id": 1827023952,
+  "address1": "IWxYfXBwJuZSQhSMMcnPBfffIvPNeoaKMxNYTXxbHIBFnyrJtGLSzCweOvjGdUQPQgzqVDTNZolgAvvpSuYXVTXjYFEyauCBHCN",
+  "address2": "otWdWjIkTAzqXlrPhtQDYcMaoqFCeEeCSSAFYXYjrooSYMmNtACUqGoosOTFRjcBDixZQHbJAXIPTinEyuPdLdgEpNjUgVMcKhm",
   "city": "Seattle",
   "subnational": "WA",
   "postal_code": "98177",
@@ -314,9 +314,9 @@ const address = await session.createAddress({
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "user_id", 2128665774 },
-	{ "address1", "RUwWABnADHNCpoRbuasTlTubQYLmMvZqpkSOMdhIAGEvDQlFCuwsPFDgqyebIpKfNRYqZOFhyBoNwUjqAwiWCCVEjKyXHsHsUqG" },
-	{ "address2", "DpDzXZLwbRcwWIpvWuWaLpZDVHwgiWaqnlRANhDvwqfGbVOieKErPJqrqtxVHvbbupxSuDyccZLdZfOaxtWokyHJttCQaWSwAkf" },
+	{ "user_id", 1827023952 },
+	{ "address1", "IWxYfXBwJuZSQhSMMcnPBfffIvPNeoaKMxNYTXxbHIBFnyrJtGLSzCweOvjGdUQPQgzqVDTNZolgAvvpSuYXVTXjYFEyauCBHCN" },
+	{ "address2", "otWdWjIkTAzqXlrPhtQDYcMaoqFCeEeCSSAFYXYjrooSYMmNtACUqGoosOTFRjcBDixZQHbJAXIPTinEyuPdLdgEpNjUgVMcKhm" },
 	{ "city", "Seattle" },
 	{ "subnational", "WA" },
 	{ "postal_code", "98177" },
@@ -329,7 +329,7 @@ CardSavrResponse<Address> address = await http.CreateAddressAsync(body);
 ```
 
 ```shell
-curl -d "{\"user_id\":2128665774,\"address1\":\"RUwWABnADHNCpoRbuasTlTubQYLmMvZqpkSOMdhIAGEvDQlFCuwsPFDgqyebIpKfNRYqZOFhyBoNwUjqAwiWCCVEjKyXHsHsUqG\",\"address2\":\"DpDzXZLwbRcwWIpvWuWaLpZDVHwgiWaqnlRANhDvwqfGbVOieKErPJqrqtxVHvbbupxSuDyccZLdZfOaxtWokyHJttCQaWSwAkf\",\"city\":\"Seattle\",\"subnational\":\"WA\",\"postal_code\":\"98177\",\"postal_other\":\"98177-0124\",\"country\":\"USA\",\"is_primary\":true}"
+curl -d "{\"user_id\":1827023952,\"address1\":\"IWxYfXBwJuZSQhSMMcnPBfffIvPNeoaKMxNYTXxbHIBFnyrJtGLSzCweOvjGdUQPQgzqVDTNZolgAvvpSuYXVTXjYFEyauCBHCN\",\"address2\":\"otWdWjIkTAzqXlrPhtQDYcMaoqFCeEeCSSAFYXYjrooSYMmNtACUqGoosOTFRjcBDixZQHbJAXIPTinEyuPdLdgEpNjUgVMcKhm\",\"city\":\"Seattle\",\"subnational\":\"WA\",\"postal_code\":\"98177\",\"postal_other\":\"98177-0124\",\"country\":\"USA\",\"is_primary\":true}"
 -X POST -H "Content-Type: application/json"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_addresses/
@@ -364,38 +364,38 @@ See [address response attributes](#response-cardsavr_address).
 
 ```javascript
 const address = await session.updateAddress({
-  "address1": "JGZGVtRoJDMYWxAXdHthwLFseCIFwUahxpvcuNsmAZOutopuiUwSnhDSzKtAyZPRrGeQBSBBtCLNHfJSudRUBxKxkJInOgvUdJE",
-  "address2": "DhqitxlFAHODUWNNlxDQtEAsOsQpMDEZNYcoCWautLscAVIpEgpDAKsqBZbMyUHGesRbwDuaxAIYSOdFjrvGIOurtFYErnjhCYq",
+  "address1": "VoMigeXHcyMZvhTpjJrTMkFUkZpzyTCqzkPjekxzFtQQPDBBGvkQHYWYmQNUBkyikgebwYiulHgGzWscFeUqxQVoMynRkMvMLhB",
+  "address2": "vanOsSZlWdFHxZXfHWfNiSbjnjKtvsAMFxLdbEAtPBNxbnXBWusxPrrNTlDXuXXLLHcuapraPkDSoDltStaGvskaCaGPxlhnbeF",
   "city": "Seattle",
   "subnational": "WA",
   "postal_code": "98177",
   "postal_other": "98177-0124",
   "country": "USA",
-  "is_primary": false
+  "is_primary": true
 });
 ```
 
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "address1", "JGZGVtRoJDMYWxAXdHthwLFseCIFwUahxpvcuNsmAZOutopuiUwSnhDSzKtAyZPRrGeQBSBBtCLNHfJSudRUBxKxkJInOgvUdJE" },
-	{ "address2", "DhqitxlFAHODUWNNlxDQtEAsOsQpMDEZNYcoCWautLscAVIpEgpDAKsqBZbMyUHGesRbwDuaxAIYSOdFjrvGIOurtFYErnjhCYq" },
+	{ "address1", "VoMigeXHcyMZvhTpjJrTMkFUkZpzyTCqzkPjekxzFtQQPDBBGvkQHYWYmQNUBkyikgebwYiulHgGzWscFeUqxQVoMynRkMvMLhB" },
+	{ "address2", "vanOsSZlWdFHxZXfHWfNiSbjnjKtvsAMFxLdbEAtPBNxbnXBWusxPrrNTlDXuXXLLHcuapraPkDSoDltStaGvskaCaGPxlhnbeF" },
 	{ "city", "Seattle" },
 	{ "subnational", "WA" },
 	{ "postal_code", "98177" },
 	{ "postal_other", "98177-0124" },
 	{ "country", "USA" },
-	{ "is_primary", false }
+	{ "is_primary", true }
 };
 
 CardSavrResponse<Address> address = await http.UpdateAddressAsync(body);
 ```
 
 ```shell
-curl -d "{\"address1\":\"JGZGVtRoJDMYWxAXdHthwLFseCIFwUahxpvcuNsmAZOutopuiUwSnhDSzKtAyZPRrGeQBSBBtCLNHfJSudRUBxKxkJInOgvUdJE\",\"address2\":\"DhqitxlFAHODUWNNlxDQtEAsOsQpMDEZNYcoCWautLscAVIpEgpDAKsqBZbMyUHGesRbwDuaxAIYSOdFjrvGIOurtFYErnjhCYq\",\"city\":\"Seattle\",\"subnational\":\"WA\",\"postal_code\":\"98177\",\"postal_other\":\"98177-0124\",\"country\":\"USA\",\"is_primary\":false}"
+curl -d "{\"address1\":\"VoMigeXHcyMZvhTpjJrTMkFUkZpzyTCqzkPjekxzFtQQPDBBGvkQHYWYmQNUBkyikgebwYiulHgGzWscFeUqxQVoMynRkMvMLhB\",\"address2\":\"vanOsSZlWdFHxZXfHWfNiSbjnjKtvsAMFxLdbEAtPBNxbnXBWusxPrrNTlDXuXXLLHcuapraPkDSoDltStaGvskaCaGPxlhnbeF\",\"city\":\"Seattle\",\"subnational\":\"WA\",\"postal_code\":\"98177\",\"postal_other\":\"98177-0124\",\"country\":\"USA\",\"is_primary\":true}"
 -X PUT -H "Content-Type: application/json"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_addresses/2011943011
+https://api.INSTANCE.cardsavr.io/cardsavr_addresses/1767844842
 ```
 
 ### Path
@@ -427,15 +427,15 @@ See [address response parameters](#response-cardsavr_address).
 ```shell
 curl -X DELETE
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_addresses/2011943011
+https://api.INSTANCE.cardsavr.io/cardsavr_addresses/1767844842
 ```
 
 ```javascript
-await session.deleteAddress(2011943011);
+await session.deleteAddress(1767844842);
 ```
 
 ```csharp
-CardSavrResponse<Address> address = await http.DeleteAddressAsync(2011943011);
+CardSavrResponse<Address> address = await http.DeleteAddressAsync(1767844842);
 ```
 
 ### Path
@@ -455,26 +455,31 @@ A cardsavr_bin object
 
 ```shell
 curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_bins/1198524001
+https://api.INSTANCE.cardsavr.io/cardsavr_bins/286275215
 ```
 
 ```javascript
-const bins = await session.getBins(1198524001);
+const bins = await session.getBins(286275215);
 ```
 
 ```csharp
-CardSavrResponse<Bins> bins = await session.GetBinsAsync(1198524001);
+CardSavrResponse<Bins> bins = await session.GetBinsAsync(286275215);
 ```
 
 > Sample response - not all properties are available to all roles (200 OK):
 
 ```json
 {
-  "id": 1198524001,
-  "financial_institution_id": 990309234,
-  "created_on": "2010-10-17T17:00:01.799Z",
-  "last_updated_on": "2011-10-19T12:27:59.516Z",
-  "bank_identification_number": "25860060"
+  "id": 286275215,
+  "financial_institution_id": 2147081497,
+  "custom_data": {
+    "ZDmeWPsxzfoH": "Vji0s>JGn7)c",
+    "zkKfiOlmoKMk": 30,
+    "MRyQutGMsHzV": true
+  },
+  "created_on": "2015-05-18T09:42:52.227Z",
+  "last_updated_on": "2011-10-08T13:36:54.330Z",
+  "bank_identification_number": "91917177"
 }
 ```
 
@@ -496,7 +501,7 @@ Returns the bin specified by the provided ID
 
 **Singular requests** only return the bin matching the id provided in the path.
 
-**Example batch GET request path:**<br>`/cardsavr_bins/12`
+**Example GET request path:**<br>`/cardsavr_bins/286275215`
 
 ### <a name="response-cardsavr_bin"></a>Response attributes
 
@@ -504,6 +509,7 @@ Attribute | Type | Description
 ------ | ---- | -----------
 id | number | 
 financial_institution_id | number (fk) | 
+custom_data | object | 
 created_on | date | Date this site was created on
 last_updated_on | date | Date this site was last updated on
 bank_identification_number | string | 
@@ -521,23 +527,28 @@ NOTE: All foreign key parameters (fk) can be [hydrated](#hydration) and support 
 
 ```javascript
 const bin = await session.createBin({
-  "financial_institution_id": 990309234,
-  "bank_identification_number": "25860060"
+  "financial_institution_id": 2147081497,
+  "bank_identification_number": "91917177",
+  "custom_data": {
+    "ZDmeWPsxzfoH": "Vji0s>JGn7)c",
+    "zkKfiOlmoKMk": 30,
+    "MRyQutGMsHzV": true
+  }
 });
 ```
 
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "financial_institution_id", 990309234 },
-	{ "bank_identification_number", "25860060" }
+	{ "financial_institution_id", 2147081497 },
+	{ "bank_identification_number", "91917177" }
 };
 
 CardSavrResponse<Bin> bin = await http.CreateBinAsync(body);
 ```
 
 ```shell
-curl -d "{\"financial_institution_id\":990309234,\"bank_identification_number\":\"25860060\"}"
+curl -d "{\"financial_institution_id\":2147081497,\"bank_identification_number\":\"91917177\",\"custom_data\":{\"ZDmeWPsxzfoH\":\"Vji0s>JGn7)c\",\"zkKfiOlmoKMk\":30,\"MRyQutGMsHzV\":true}}"
 -X POST -H "Content-Type: application/json"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_bins/
@@ -557,6 +568,7 @@ Parameter | Type | Required | Description
 -------- | ---- | --------- | ----------
 financial_institution_id | number | yes
 bank_identification_number | string | yes
+custom_data | object | no
 
 See [bin response attributes](#response-cardsavr_bin).
 
@@ -565,24 +577,29 @@ See [bin response attributes](#response-cardsavr_bin).
 
 ```javascript
 const bin = await session.updateBin({
-  "financial_institution_id": 1221462697
+  "financial_institution_id": 342668772,
+  "custom_data": {
+    "FRiJgcqFFXpT": "R7fQ83%J",
+    "zHIzMRBGoEFC": 5,
+    "xURVOLtDrrtH": true
+  }
 });
 ```
 
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "financial_institution_id", 1221462697 }
+	{ "financial_institution_id", 342668772 }
 };
 
 CardSavrResponse<Bin> bin = await http.UpdateBinAsync(body);
 ```
 
 ```shell
-curl -d "{\"financial_institution_id\":1221462697}"
+curl -d "{\"financial_institution_id\":342668772,\"custom_data\":{\"FRiJgcqFFXpT\":\"R7fQ83%J\",\"zHIzMRBGoEFC\":5,\"xURVOLtDrrtH\":true}}"
 -X PUT -H "Content-Type: application/json"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_bins/1198524001
+https://api.INSTANCE.cardsavr.io/cardsavr_bins/286275215
 ```
 
 ### Path
@@ -598,6 +615,7 @@ Update a bin and return the updated object.  An id is required on every update r
 Parameter | Type | Description 
 -------- | ---- | ---------
 financial_institution_id | number |
+custom_data | object |
 
 See [bin response parameters](#response-cardsavr_bin).
 
@@ -607,15 +625,15 @@ See [bin response parameters](#response-cardsavr_bin).
 ```shell
 curl -X DELETE
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_bins/1198524001
+https://api.INSTANCE.cardsavr.io/cardsavr_bins/286275215
 ```
 
 ```javascript
-await session.deleteBin(1198524001);
+await session.deleteBin(286275215);
 ```
 
 ```csharp
-CardSavrResponse<Bin> bin = await http.DeleteBinAsync(1198524001);
+CardSavrResponse<Bin> bin = await http.DeleteBinAsync(286275215);
 ```
 
 ### Path
@@ -635,36 +653,36 @@ Card objects contain information about a payment card belonging to a single card
 
 ```shell
 curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_cards/1622084841
+https://api.INSTANCE.cardsavr.io/cardsavr_cards/1731148776
 ```
 
 ```javascript
-const cards = await session.getCards(1622084841);
+const cards = await session.getCards(1731148776);
 ```
 
 ```csharp
-CardSavrResponse<Cards> cards = await session.GetCardsAsync(1622084841);
+CardSavrResponse<Cards> cards = await session.GetCardsAsync(1731148776);
 ```
 
 > Sample response - not all properties are available to all roles (200 OK):
 
 ```json
 {
-  "id": 1622084841,
-  "address_id": 847988075,
-  "bin_id": 1189319232,
+  "id": 1731148776,
+  "address_id": 605935990,
+  "bin_id": 712147951,
   "name_on_card": "Joe C Smith",
   "first_name": "Joe",
   "last_name": "Smith",
   "first_6": "000000",
   "first_7": "0000000",
   "first_8": "00000000",
-  "created_on": "1972-12-15T06:08:39.015Z",
-  "last_updated_on": "1986-10-06T00:41:19.287Z",
+  "created_on": "1978-02-20T06:23:35.151Z",
+  "last_updated_on": "1983-05-06T04:44:26.470Z",
   "expiration_month": 12,
   "expiration_year": 24,
-  "cardholder_id": 1773112016,
-  "par": "ASxJsElKFGVtokFSxmAyhhtWRxQmo"
+  "cardholder_id": 2048383684,
+  "par": "TZqHuvKKJAJOtDTyqJOdnDpxXmGWX"
 }
 ```
 
@@ -686,7 +704,7 @@ Returns the card specified by the provided ID
 
 **Singular requests** only return the card matching the id provided in the path.
 
-**Example batch GET request path:**<br>`/cardsavr_cards/12`
+**Example GET request path:**<br>`/cardsavr_cards/1731148776`
 
 ### <a name="response-cardsavr_card"></a>Response attributes
 
@@ -726,10 +744,10 @@ NOTE: All foreign key parameters (fk) can be [hydrated](#hydration) and support 
 
 ```javascript
 const card = await session.createCard({
-  "cardholder_id": 1773112016,
-  "address_id": 847988075,
-  "bin_id": 1189319232,
-  "par": "ASxJsElKFGVtokFSxmAyhhtWRxQmo",
+  "cardholder_id": 2048383684,
+  "address_id": 605935990,
+  "bin_id": 712147951,
+  "par": "TZqHuvKKJAJOtDTyqJOdnDpxXmGWX",
   "pan": "4111111111111111",
   "cvv": "111",
   "expiration_month": 12,
@@ -746,10 +764,10 @@ const card = await session.createCard({
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "cardholder_id", 1773112016 },
-	{ "address_id", 847988075 },
-	{ "bin_id", 1189319232 },
-	{ "par", "ASxJsElKFGVtokFSxmAyhhtWRxQmo" },
+	{ "cardholder_id", 2048383684 },
+	{ "address_id", 605935990 },
+	{ "bin_id", 712147951 },
+	{ "par", "TZqHuvKKJAJOtDTyqJOdnDpxXmGWX" },
 	{ "pan", "4111111111111111" },
 	{ "cvv", "111" },
 	{ "expiration_month", 12 },
@@ -766,7 +784,7 @@ CardSavrResponse<Card> card = await http.CreateCardAsync(body, CARDHOLDER_SAFE_K
 ```
 
 ```shell
-curl -d "{\"cardholder_id\":1773112016,\"address_id\":847988075,\"bin_id\":1189319232,\"par\":\"ASxJsElKFGVtokFSxmAyhhtWRxQmo\",\"pan\":\"4111111111111111\",\"cvv\":\"111\",\"expiration_month\":12,\"expiration_year\":24,\"name_on_card\":\"Joe C Smith\",\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"first_6\":\"000000\",\"first_7\":\"0000000\",\"first_8\":\"00000000\"}"
+curl -d "{\"cardholder_id\":2048383684,\"address_id\":605935990,\"bin_id\":712147951,\"par\":\"TZqHuvKKJAJOtDTyqJOdnDpxXmGWX\",\"pan\":\"4111111111111111\",\"cvv\":\"111\",\"expiration_month\":12,\"expiration_year\":24,\"name_on_card\":\"Joe C Smith\",\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"first_6\":\"000000\",\"first_7\":\"0000000\",\"first_8\":\"00000000\"}"
 -X POST -H "Content-Type: application/json"
 -H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
@@ -805,8 +823,8 @@ See [card response attributes](#response-cardsavr_card).
 
 ```javascript
 const card = await session.updateCard({
-  "address_id": 1089948691,
-  "bin_id": 1062811705,
+  "address_id": 1070180329,
+  "bin_id": 1421399525,
   "name_on_card": "Joe C Smith",
   "first_name": "Joe",
   "last_name": "Smith",
@@ -823,8 +841,8 @@ const card = await session.updateCard({
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "address_id", 1089948691 },
-	{ "bin_id", 1062811705 },
+	{ "address_id", 1070180329 },
+	{ "bin_id", 1421399525 },
 	{ "name_on_card", "Joe C Smith" },
 	{ "first_name", "Joe" },
 	{ "last_name", "Smith" },
@@ -841,10 +859,10 @@ CardSavrResponse<Card> card = await http.UpdateCardAsync(body, CARDHOLDER_SAFE_K
 ```
 
 ```shell
-curl -d "{\"address_id\":1089948691,\"bin_id\":1062811705,\"name_on_card\":\"Joe C Smith\",\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"pan\":\"4111111111111111\",\"cvv\":\"111\",\"expiration_month\":12,\"expiration_year\":24,\"first_6\":\"000000\",\"first_7\":\"0000000\",\"first_8\":\"00000000\"}"
+curl -d "{\"address_id\":1070180329,\"bin_id\":1421399525,\"name_on_card\":\"Joe C Smith\",\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"pan\":\"4111111111111111\",\"cvv\":\"111\",\"expiration_month\":12,\"expiration_year\":24,\"first_6\":\"000000\",\"first_7\":\"0000000\",\"first_8\":\"00000000\"}"
 -X PUT -H "Content-Type: application/json"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_cards/1622084841
+https://api.INSTANCE.cardsavr.io/cardsavr_cards/1731148776
 ```
 
 ### Path
@@ -874,15 +892,15 @@ See [card response parameters](#response-cardsavr_card).
 curl -X DELETE
 -H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_cards/1622084841
+https://api.INSTANCE.cardsavr.io/cardsavr_cards/1731148776
 ```
 
 ```javascript
-await session.deleteCard(1622084841, CARDHOLDER_SAFE_KEY);
+await session.deleteCard(1731148776, CARDHOLDER_SAFE_KEY);
 ```
 
 ```csharp
-CardSavrResponse<Card> card = await http.DeleteCardAsync(1622084841, CARDHOLDER_SAFE_KEY);
+CardSavrResponse<Card> card = await http.DeleteCardAsync(1731148776, CARDHOLDER_SAFE_KEY);
 ```
 
 ### Path
@@ -904,40 +922,40 @@ User objects correspond to a single CardSavr user.
 
 ```shell
 curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_users/336332035
+https://api.INSTANCE.cardsavr.io/cardsavr_users/1025967282
 ```
 
 ```javascript
-const users = await session.getUsers(336332035);
+const users = await session.getUsers(1025967282);
 ```
 
 ```csharp
-CardSavrResponse<Users> users = await session.GetUsersAsync(336332035);
+CardSavrResponse<Users> users = await session.GetUsersAsync(1025967282);
 ```
 
 > Sample response - not all properties are available to all roles (200 OK):
 
 ```json
 {
-  "id": 336332035,
-  "financial_institution_id": 2146693797,
+  "id": 1025967282,
+  "financial_institution_id": 1470905032,
   "first_name": "Joe",
   "last_name": "Smith",
-  "last_login_time": "1988-05-18T13:31:20.254Z",
+  "last_login_time": "1972-12-29T00:35:37.581Z",
   "is_locked": false,
-  "password_lifetime": 365,
+  "password_lifetime": 33,
   "email": "test_email@strivve.com",
   "is_password_update_required": false,
-  "role": "debugger",
-  "phone_number": "kWpoilzojouyfW",
+  "role": "admin",
+  "phone_number": "OoiiyztCiIzNBe",
   "custom_data": {
-    "aHJZoKDlcWnb": "YPf$gCElwY%ZoYrgo7$dQ[",
-    "aMKpcslsaoDn": 28,
-    "jjEfkQPCPMEK": true
+    "zJZYnZLchaNu": "Nj$_1)%pn3x",
+    "RgxaylmBkbad": 40,
+    "BkoUMMVigjGE": false
   },
-  "next_rotation_on": "1989-07-09T01:35:43.261Z",
-  "created_on": "1976-04-19T03:25:07.153Z",
-  "last_updated_on": "1989-04-20T10:30:21.497Z",
+  "next_rotation_on": "1993-11-10T13:21:58.485Z",
+  "created_on": "1971-02-24T01:17:21.516Z",
+  "last_updated_on": "2007-02-19T11:10:15.942Z",
   "username": "jsmith123"
 }
 ```
@@ -960,7 +978,7 @@ Returns the user specified by the provided ID
 
 **Singular requests** only return the user matching the id provided in the path.
 
-**Example batch GET request path:**<br>`/cardsavr_users/12`
+**Example GET request path:**<br>`/cardsavr_users/1025967282`
 
 ### <a name="response-cardsavr_user"></a>Response attributes
 
@@ -1005,56 +1023,56 @@ NOTE: All foreign key parameters (fk) can be [hydrated](#hydration) and support 
 
 ```javascript
 const user = await session.createUser({
-  "financial_institution_id": 2146693797,
+  "financial_institution_id": 1470905032,
   "username": "jsmith123",
-  "last_password": "WYBDWlGb22PdkWf/HAfO73OY1GcUX1GvbtnN3X0JNyo=",
+  "last_password": "MrDpFmj7VFpnIAZ+OUMF3P8QjNoALus4Rq+R/CDqwIE=",
   "password": "BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=",
-  "next_password": "D5KC4quBEZL/S3dQP9qjBq/XdD0BA3EerdzrPBslWGM=",
-  "expired_password_1": "PD8i1VS8t9s5rbzhYofDmftWtaD25suIyVVmRIEzn1c=",
-  "expired_password_2": "sLl8B/vNvD57k6NTe42hhukVqgWyPqw/HDIMv2EShAI=",
-  "cardholder_safe_key": "cqeoQRpzYv6GKNwOmHa7P6PzlrBycRyl1YRefDnu8dc=",
+  "next_password": "LJHWSxD2HpL/e0uIP03AQfu49tTQpofiwABY5ThpJPU=",
+  "expired_password_1": "k1fWvK227+M2KrOnRWXCBIX2vCvlDT7LPIvgUfAKk5A=",
+  "expired_password_2": "LcmMy4ByYWkXf/+qBYxrl+MwOL7OUEhI1NPAOawtsy8=",
+  "cardholder_safe_key": "8kJ+CCJ941raEAQMGZC0fx3bqxXC9nN+rH4g8KshZlA=",
   "first_name": "Joe",
   "last_name": "Smith",
-  "password_lifetime": 365,
+  "password_lifetime": 33,
   "email": "test_email@strivve.com",
   "is_password_update_required": false,
-  "role": "debugger",
-  "phone_number": "kWpoilzojouyfW",
+  "role": "admin",
+  "phone_number": "OoiiyztCiIzNBe",
   "custom_data": {
-    "aHJZoKDlcWnb": "YPf$gCElwY%ZoYrgo7$dQ[",
-    "aMKpcslsaoDn": 28,
-    "jjEfkQPCPMEK": true
+    "zJZYnZLchaNu": "Nj$_1)%pn3x",
+    "RgxaylmBkbad": 40,
+    "BkoUMMVigjGE": false
   },
-  "next_rotation_on": "1989-07-09T01:35:43.261Z"
+  "next_rotation_on": "1993-11-10T13:21:58.485Z"
 }, NEW_CARDHODLER_SAFE_KEY);
 ```
 
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "financial_institution_id", 2146693797 },
+	{ "financial_institution_id", 1470905032 },
 	{ "username", "jsmith123" },
-	{ "last_password", "WYBDWlGb22PdkWf/HAfO73OY1GcUX1GvbtnN3X0JNyo=" },
+	{ "last_password", "MrDpFmj7VFpnIAZ+OUMF3P8QjNoALus4Rq+R/CDqwIE=" },
 	{ "password", "BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=" },
-	{ "next_password", "D5KC4quBEZL/S3dQP9qjBq/XdD0BA3EerdzrPBslWGM=" },
-	{ "expired_password_1", "PD8i1VS8t9s5rbzhYofDmftWtaD25suIyVVmRIEzn1c=" },
-	{ "expired_password_2", "sLl8B/vNvD57k6NTe42hhukVqgWyPqw/HDIMv2EShAI=" },
-	{ "cardholder_safe_key", "cqeoQRpzYv6GKNwOmHa7P6PzlrBycRyl1YRefDnu8dc=" },
+	{ "next_password", "LJHWSxD2HpL/e0uIP03AQfu49tTQpofiwABY5ThpJPU=" },
+	{ "expired_password_1", "k1fWvK227+M2KrOnRWXCBIX2vCvlDT7LPIvgUfAKk5A=" },
+	{ "expired_password_2", "LcmMy4ByYWkXf/+qBYxrl+MwOL7OUEhI1NPAOawtsy8=" },
+	{ "cardholder_safe_key", "8kJ+CCJ941raEAQMGZC0fx3bqxXC9nN+rH4g8KshZlA=" },
 	{ "first_name", "Joe" },
 	{ "last_name", "Smith" },
-	{ "password_lifetime", 365 },
+	{ "password_lifetime", 33 },
 	{ "email", "test_email@strivve.com" },
 	{ "is_password_update_required", false },
-	{ "role", "debugger" },
-	{ "phone_number", "kWpoilzojouyfW" },
-	{ "next_rotation_on", "1989-07-09T01:35:43.261Z" }
+	{ "role", "admin" },
+	{ "phone_number", "OoiiyztCiIzNBe" },
+	{ "next_rotation_on", "1993-11-10T13:21:58.485Z" }
 };
 
 CardSavrResponse<User> user = await http.CreateUserAsync(body, NEW_CARDHODLER_SAFE_KEY);
 ```
 
 ```shell
-curl -d "{\"financial_institution_id\":2146693797,\"username\":\"jsmith123\",\"last_password\":\"WYBDWlGb22PdkWf/HAfO73OY1GcUX1GvbtnN3X0JNyo=\",\"password\":\"BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=\",\"next_password\":\"D5KC4quBEZL/S3dQP9qjBq/XdD0BA3EerdzrPBslWGM=\",\"expired_password_1\":\"PD8i1VS8t9s5rbzhYofDmftWtaD25suIyVVmRIEzn1c=\",\"expired_password_2\":\"sLl8B/vNvD57k6NTe42hhukVqgWyPqw/HDIMv2EShAI=\",\"cardholder_safe_key\":\"cqeoQRpzYv6GKNwOmHa7P6PzlrBycRyl1YRefDnu8dc=\",\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"password_lifetime\":365,\"email\":\"test_email@strivve.com\",\"is_password_update_required\":false,\"role\":\"debugger\",\"phone_number\":\"kWpoilzojouyfW\",\"custom_data\":{\"aHJZoKDlcWnb\":\"YPf$gCElwY%ZoYrgo7$dQ[\",\"aMKpcslsaoDn\":28,\"jjEfkQPCPMEK\":true},\"next_rotation_on\":\"1989-07-09T01:35:43.261Z\"}"
+curl -d "{\"financial_institution_id\":1470905032,\"username\":\"jsmith123\",\"last_password\":\"MrDpFmj7VFpnIAZ+OUMF3P8QjNoALus4Rq+R/CDqwIE=\",\"password\":\"BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=\",\"next_password\":\"LJHWSxD2HpL/e0uIP03AQfu49tTQpofiwABY5ThpJPU=\",\"expired_password_1\":\"k1fWvK227+M2KrOnRWXCBIX2vCvlDT7LPIvgUfAKk5A=\",\"expired_password_2\":\"LcmMy4ByYWkXf/+qBYxrl+MwOL7OUEhI1NPAOawtsy8=\",\"cardholder_safe_key\":\"8kJ+CCJ941raEAQMGZC0fx3bqxXC9nN+rH4g8KshZlA=\",\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"password_lifetime\":33,\"email\":\"test_email@strivve.com\",\"is_password_update_required\":false,\"role\":\"admin\",\"phone_number\":\"OoiiyztCiIzNBe\",\"custom_data\":{\"zJZYnZLchaNu\":\"Nj$_1)%pn3x\",\"RgxaylmBkbad\":40,\"BkoUMMVigjGE\":false},\"next_rotation_on\":\"1993-11-10T13:21:58.485Z\"}"
 -X POST -H "Content-Type: application/json"
 -H "new-cardholder-safe-key: NEW_CARDHODLER_SAFE_KEY"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
@@ -1108,26 +1126,26 @@ See [user response attributes](#response-cardsavr_user).
 
 ```javascript
 const user = await session.updateUser({
-  "financial_institution_id": 696544774,
-  "last_password": "aRxj8hwDZ+YviXB0Q/7ygBuSWIkdBiKKEIC82r2f+ag=",
+  "financial_institution_id": 2058704806,
+  "last_password": "CCmHo+Bon7AEyrdVTfC/ZMIBteY45rf8aXynG2yabPk=",
   "password": "BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=",
-  "next_password": "8MmRi5pHu01LTUmZTNVOEk9eAoPgbWkrVYj7e+g+lso=",
-  "expired_password_1": "EMHz+QRwOLoOgQNNzrbVJj/ycu0HgjX5WxuzqHqRZZk=",
-  "expired_password_2": "LK8ABtrPaoPw+xDCz3oC/Dp/gW5I8d6cq018MQzp8XE=",
-  "cardholder_safe_key": "+6yY41m8r2JYx1HLyyrbmjpG7tkD/DKSaAczb+zDKNs=",
+  "next_password": "TToyhYyF+Q0MDnJOSms8HkGEwMQmU6xm8IMmENzesJk=",
+  "expired_password_1": "hSVht25vuqnIwPrDCBcieXv56fKNEnXgPpC6s8hVAaI=",
+  "expired_password_2": "3ajb1oOHM48zD+LZxnZuFe80I0SrCPpRHIwT7p505bI=",
+  "cardholder_safe_key": "qeaKP4KU28Zxep98yomKjT91hEjhz9OkgM9iywEdtXs=",
   "first_name": "Joe",
   "last_name": "Smith",
-  "password_lifetime": 78,
+  "password_lifetime": 155,
   "email": "test_email@strivve.com",
-  "is_password_update_required": false,
+  "is_password_update_required": true,
   "role": "swch_auditor",
-  "phone_number": "sybdxFoSPZJCdb",
+  "phone_number": "HQAJanSQjTynPy",
   "custom_data": {
-    "NCTABBzeyAzV": "YA2",
-    "GtfottcyUWrX": 17,
-    "wXYwGiYanCKK": true
+    "pdmIefeJwnPN": "F(p)n5PLdcGpu7mct$",
+    "WRfOQUtqOIGK": 85,
+    "bzVGULvcHyJW": true
   },
-  "next_rotation_on": "1970-09-16T20:24:59.302Z",
+  "next_rotation_on": "1988-07-17T12:24:50.754Z",
   "username": "jsmith123"
 }, NEW_CARDHODLER_SAFE_KEY, CARDHOLDER_SAFE_KEY);
 ```
@@ -1135,21 +1153,21 @@ const user = await session.updateUser({
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "financial_institution_id", 696544774 },
-	{ "last_password", "aRxj8hwDZ+YviXB0Q/7ygBuSWIkdBiKKEIC82r2f+ag=" },
+	{ "financial_institution_id", 2058704806 },
+	{ "last_password", "CCmHo+Bon7AEyrdVTfC/ZMIBteY45rf8aXynG2yabPk=" },
 	{ "password", "BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=" },
-	{ "next_password", "8MmRi5pHu01LTUmZTNVOEk9eAoPgbWkrVYj7e+g+lso=" },
-	{ "expired_password_1", "EMHz+QRwOLoOgQNNzrbVJj/ycu0HgjX5WxuzqHqRZZk=" },
-	{ "expired_password_2", "LK8ABtrPaoPw+xDCz3oC/Dp/gW5I8d6cq018MQzp8XE=" },
-	{ "cardholder_safe_key", "+6yY41m8r2JYx1HLyyrbmjpG7tkD/DKSaAczb+zDKNs=" },
+	{ "next_password", "TToyhYyF+Q0MDnJOSms8HkGEwMQmU6xm8IMmENzesJk=" },
+	{ "expired_password_1", "hSVht25vuqnIwPrDCBcieXv56fKNEnXgPpC6s8hVAaI=" },
+	{ "expired_password_2", "3ajb1oOHM48zD+LZxnZuFe80I0SrCPpRHIwT7p505bI=" },
+	{ "cardholder_safe_key", "qeaKP4KU28Zxep98yomKjT91hEjhz9OkgM9iywEdtXs=" },
 	{ "first_name", "Joe" },
 	{ "last_name", "Smith" },
-	{ "password_lifetime", 78 },
+	{ "password_lifetime", 155 },
 	{ "email", "test_email@strivve.com" },
-	{ "is_password_update_required", false },
+	{ "is_password_update_required", true },
 	{ "role", "swch_auditor" },
-	{ "phone_number", "sybdxFoSPZJCdb" },
-	{ "next_rotation_on", "1970-09-16T20:24:59.302Z" },
+	{ "phone_number", "HQAJanSQjTynPy" },
+	{ "next_rotation_on", "1988-07-17T12:24:50.754Z" },
 	{ "username", "jsmith123" }
 };
 
@@ -1157,12 +1175,12 @@ CardSavrResponse<User> user = await http.UpdateUserAsync(body, NEW_CARDHODLER_SA
 ```
 
 ```shell
-curl -d "{\"financial_institution_id\":696544774,\"last_password\":\"aRxj8hwDZ+YviXB0Q/7ygBuSWIkdBiKKEIC82r2f+ag=\",\"password\":\"BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=\",\"next_password\":\"8MmRi5pHu01LTUmZTNVOEk9eAoPgbWkrVYj7e+g+lso=\",\"expired_password_1\":\"EMHz+QRwOLoOgQNNzrbVJj/ycu0HgjX5WxuzqHqRZZk=\",\"expired_password_2\":\"LK8ABtrPaoPw+xDCz3oC/Dp/gW5I8d6cq018MQzp8XE=\",\"cardholder_safe_key\":\"+6yY41m8r2JYx1HLyyrbmjpG7tkD/DKSaAczb+zDKNs=\",\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"password_lifetime\":78,\"email\":\"test_email@strivve.com\",\"is_password_update_required\":false,\"role\":\"swch_auditor\",\"phone_number\":\"sybdxFoSPZJCdb\",\"custom_data\":{\"NCTABBzeyAzV\":\"YA2\",\"GtfottcyUWrX\":17,\"wXYwGiYanCKK\":true},\"next_rotation_on\":\"1970-09-16T20:24:59.302Z\",\"username\":\"jsmith123\"}"
+curl -d "{\"financial_institution_id\":2058704806,\"last_password\":\"CCmHo+Bon7AEyrdVTfC/ZMIBteY45rf8aXynG2yabPk=\",\"password\":\"BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=\",\"next_password\":\"TToyhYyF+Q0MDnJOSms8HkGEwMQmU6xm8IMmENzesJk=\",\"expired_password_1\":\"hSVht25vuqnIwPrDCBcieXv56fKNEnXgPpC6s8hVAaI=\",\"expired_password_2\":\"3ajb1oOHM48zD+LZxnZuFe80I0SrCPpRHIwT7p505bI=\",\"cardholder_safe_key\":\"qeaKP4KU28Zxep98yomKjT91hEjhz9OkgM9iywEdtXs=\",\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"password_lifetime\":155,\"email\":\"test_email@strivve.com\",\"is_password_update_required\":true,\"role\":\"swch_auditor\",\"phone_number\":\"HQAJanSQjTynPy\",\"custom_data\":{\"pdmIefeJwnPN\":\"F(p)n5PLdcGpu7mct$\",\"WRfOQUtqOIGK\":85,\"bzVGULvcHyJW\":true},\"next_rotation_on\":\"1988-07-17T12:24:50.754Z\",\"username\":\"jsmith123\"}"
 -X PUT -H "Content-Type: application/json"
 -H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
 -H "new-cardholder-safe-key: NEW_CARDHODLER_SAFE_KEY"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_users/336332035
+https://api.INSTANCE.cardsavr.io/cardsavr_users/1025967282
 ```
 
 ### Path
@@ -1198,15 +1216,15 @@ See [user response parameters](#response-cardsavr_user).
 ```shell
 curl -X DELETE
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/cardsavr_users/336332035
+https://api.INSTANCE.cardsavr.io/cardsavr_users/1025967282
 ```
 
 ```javascript
-await session.deleteUser(336332035);
+await session.deleteUser(1025967282);
 ```
 
 ```csharp
-CardSavrResponse<User> user = await http.DeleteUserAsync(336332035);
+CardSavrResponse<User> user = await http.DeleteUserAsync(1025967282);
 ```
 
 ### Path
@@ -1226,28 +1244,28 @@ A CardSavr Financial Institution that can be associated with jobs and users.
 
 ```shell
 curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/financial_institutions/1701284200
+https://api.INSTANCE.cardsavr.io/financial_institutions/794669063
 ```
 
 ```javascript
-const financialinstitutions = await session.getFinancialInstitutions(1701284200);
+const financialinstitutions = await session.getFinancialInstitutions(794669063);
 ```
 
 ```csharp
-CardSavrResponse<FinancialInstitutions> financialinstitutions = await session.GetFinancialInstitutionsAsync(1701284200);
+CardSavrResponse<FinancialInstitutions> financialinstitutions = await session.GetFinancialInstitutionsAsync(794669063);
 ```
 
 > Sample response - not all properties are available to all roles (200 OK):
 
 ```json
 {
-  "id": 1701284200,
-  "name": "gQnjntiapUrTaMbSqQrYbUlzCtgOrXuHPrPyGKCiRINzvTdbAgFwBLvHKLjtNwO",
-  "description": "dbKfqYcObMbpaKHwvZHQVRUP",
-  "lookup_key": "fUpfNCIUxnPDwGaYWhHoZBVlnzQfThfAPndXdOjoyGtDmXgXnGmmdcrccZOPrsH",
-  "alternate_lookup_key": "lYmHvJeLdxlLHTOnuorczuXDZbphbOUtQhJrMGqcaWQnUjLoiBOpMvKbABBCXJv",
-  "created_on": "1989-06-07T19:23:58.941Z",
-  "last_updated_on": "1984-01-08T03:47:41.733Z"
+  "id": 794669063,
+  "name": "UfXEsbnKnwkDxoNECFsVZcFIskWQZmzTKaUTnlnshxZGRyeIpMZrNKVYkTicXYX",
+  "description": "zuOVaBEmotbIaWDhLwdoVa",
+  "lookup_key": "SQfHABNGGMDkWGrnaEVEDrjnojMFIlwPyXYqlaShvPAfkSSiafeHvuCVbBlPcEo",
+  "alternate_lookup_key": "IyhekdPYakqGymHhYEBqGHNoJScMgiyvrKNIshvpasReXomcQFAlakRWFaMDCBe",
+  "created_on": "2003-05-13T20:04:18.806Z",
+  "last_updated_on": "1986-06-09T02:42:22.159Z"
 }
 ```
 
@@ -1269,7 +1287,7 @@ Returns the financial institution specified by the provided ID
 
 **Singular requests** only return the financial institution matching the id provided in the path.
 
-**Example batch GET request path:**<br>`/financial_institutions/12`
+**Example GET request path:**<br>`/financial_institutions/794669063`
 
 ### <a name="response-financial_institution"></a>Response attributes
 
@@ -1297,27 +1315,27 @@ NOTE: All foreign key parameters (fk) can be [hydrated](#hydration) and support 
 
 ```javascript
 const financialinstitution = await session.createFinancialInstitution({
-  "name": "gQnjntiapUrTaMbSqQrYbUlzCtgOrXuHPrPyGKCiRINzvTdbAgFwBLvHKLjtNwO",
-  "description": "dbKfqYcObMbpaKHwvZHQVRUP",
-  "lookup_key": "fUpfNCIUxnPDwGaYWhHoZBVlnzQfThfAPndXdOjoyGtDmXgXnGmmdcrccZOPrsH",
-  "alternate_lookup_key": "lYmHvJeLdxlLHTOnuorczuXDZbphbOUtQhJrMGqcaWQnUjLoiBOpMvKbABBCXJv"
+  "name": "UfXEsbnKnwkDxoNECFsVZcFIskWQZmzTKaUTnlnshxZGRyeIpMZrNKVYkTicXYX",
+  "description": "zuOVaBEmotbIaWDhLwdoVa",
+  "lookup_key": "SQfHABNGGMDkWGrnaEVEDrjnojMFIlwPyXYqlaShvPAfkSSiafeHvuCVbBlPcEo",
+  "alternate_lookup_key": "IyhekdPYakqGymHhYEBqGHNoJScMgiyvrKNIshvpasReXomcQFAlakRWFaMDCBe"
 });
 ```
 
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "name", "gQnjntiapUrTaMbSqQrYbUlzCtgOrXuHPrPyGKCiRINzvTdbAgFwBLvHKLjtNwO" },
-	{ "description", "dbKfqYcObMbpaKHwvZHQVRUP" },
-	{ "lookup_key", "fUpfNCIUxnPDwGaYWhHoZBVlnzQfThfAPndXdOjoyGtDmXgXnGmmdcrccZOPrsH" },
-	{ "alternate_lookup_key", "lYmHvJeLdxlLHTOnuorczuXDZbphbOUtQhJrMGqcaWQnUjLoiBOpMvKbABBCXJv" }
+	{ "name", "UfXEsbnKnwkDxoNECFsVZcFIskWQZmzTKaUTnlnshxZGRyeIpMZrNKVYkTicXYX" },
+	{ "description", "zuOVaBEmotbIaWDhLwdoVa" },
+	{ "lookup_key", "SQfHABNGGMDkWGrnaEVEDrjnojMFIlwPyXYqlaShvPAfkSSiafeHvuCVbBlPcEo" },
+	{ "alternate_lookup_key", "IyhekdPYakqGymHhYEBqGHNoJScMgiyvrKNIshvpasReXomcQFAlakRWFaMDCBe" }
 };
 
 CardSavrResponse<FinancialInstitution> financialinstitution = await http.CreateFinancialInstitutionAsync(body);
 ```
 
 ```shell
-curl -d "{\"name\":\"gQnjntiapUrTaMbSqQrYbUlzCtgOrXuHPrPyGKCiRINzvTdbAgFwBLvHKLjtNwO\",\"description\":\"dbKfqYcObMbpaKHwvZHQVRUP\",\"lookup_key\":\"fUpfNCIUxnPDwGaYWhHoZBVlnzQfThfAPndXdOjoyGtDmXgXnGmmdcrccZOPrsH\",\"alternate_lookup_key\":\"lYmHvJeLdxlLHTOnuorczuXDZbphbOUtQhJrMGqcaWQnUjLoiBOpMvKbABBCXJv\"}"
+curl -d "{\"name\":\"UfXEsbnKnwkDxoNECFsVZcFIskWQZmzTKaUTnlnshxZGRyeIpMZrNKVYkTicXYX\",\"description\":\"zuOVaBEmotbIaWDhLwdoVa\",\"lookup_key\":\"SQfHABNGGMDkWGrnaEVEDrjnojMFIlwPyXYqlaShvPAfkSSiafeHvuCVbBlPcEo\",\"alternate_lookup_key\":\"IyhekdPYakqGymHhYEBqGHNoJScMgiyvrKNIshvpasReXomcQFAlakRWFaMDCBe\"}"
 -X POST -H "Content-Type: application/json"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/financial_institutions/
@@ -1347,30 +1365,30 @@ See [financial institution response attributes](#response-financial_institution)
 
 ```javascript
 const financialinstitution = await session.updateFinancialInstitution({
-  "name": "YBzzLlwqXtSZOZgTQygWwohTwwxMXNXIGetvGFrJOzCTjFgrWMhHFOZNwiFZpyK",
-  "description": "nnQMzuVEGXXKuuXmkshYYBCYUaIskxr",
-  "lookup_key": "mceyUUDcjwjyknXkiiJGlzrMfVQOXLCEecbwsCxTSbEjnbITzlrcSQFWCMhwXWg",
-  "alternate_lookup_key": "DMtVPfBELECmaMoAATIEgLoeQImglfxbUnmOMRvAufVsepYpJepzeyqMedGWGeL"
+  "name": "YABdXXqSqnLyRHZhsAIXdpxPTsPpuBgBLPsyohyaGTsOwbZMoyQearWenfVhvoE",
+  "description": "WeIVbtzebCjZCwiWsskxK",
+  "lookup_key": "hEtWVNhkvvpKhNQTlRCrTuIFZeZZivnRgMbwcdbVDsTzQKzDARgbYDteohCTHXm",
+  "alternate_lookup_key": "YGjTmXKtUcesrOeAXUgliWnLDzqAfGdbZNgEfalEYNHCsJtsTyxynfqxjbyxHNG"
 });
 ```
 
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "name", "YBzzLlwqXtSZOZgTQygWwohTwwxMXNXIGetvGFrJOzCTjFgrWMhHFOZNwiFZpyK" },
-	{ "description", "nnQMzuVEGXXKuuXmkshYYBCYUaIskxr" },
-	{ "lookup_key", "mceyUUDcjwjyknXkiiJGlzrMfVQOXLCEecbwsCxTSbEjnbITzlrcSQFWCMhwXWg" },
-	{ "alternate_lookup_key", "DMtVPfBELECmaMoAATIEgLoeQImglfxbUnmOMRvAufVsepYpJepzeyqMedGWGeL" }
+	{ "name", "YABdXXqSqnLyRHZhsAIXdpxPTsPpuBgBLPsyohyaGTsOwbZMoyQearWenfVhvoE" },
+	{ "description", "WeIVbtzebCjZCwiWsskxK" },
+	{ "lookup_key", "hEtWVNhkvvpKhNQTlRCrTuIFZeZZivnRgMbwcdbVDsTzQKzDARgbYDteohCTHXm" },
+	{ "alternate_lookup_key", "YGjTmXKtUcesrOeAXUgliWnLDzqAfGdbZNgEfalEYNHCsJtsTyxynfqxjbyxHNG" }
 };
 
 CardSavrResponse<FinancialInstitution> financialinstitution = await http.UpdateFinancialInstitutionAsync(body);
 ```
 
 ```shell
-curl -d "{\"name\":\"YBzzLlwqXtSZOZgTQygWwohTwwxMXNXIGetvGFrJOzCTjFgrWMhHFOZNwiFZpyK\",\"description\":\"nnQMzuVEGXXKuuXmkshYYBCYUaIskxr\",\"lookup_key\":\"mceyUUDcjwjyknXkiiJGlzrMfVQOXLCEecbwsCxTSbEjnbITzlrcSQFWCMhwXWg\",\"alternate_lookup_key\":\"DMtVPfBELECmaMoAATIEgLoeQImglfxbUnmOMRvAufVsepYpJepzeyqMedGWGeL\"}"
+curl -d "{\"name\":\"YABdXXqSqnLyRHZhsAIXdpxPTsPpuBgBLPsyohyaGTsOwbZMoyQearWenfVhvoE\",\"description\":\"WeIVbtzebCjZCwiWsskxK\",\"lookup_key\":\"hEtWVNhkvvpKhNQTlRCrTuIFZeZZivnRgMbwcdbVDsTzQKzDARgbYDteohCTHXm\",\"alternate_lookup_key\":\"YGjTmXKtUcesrOeAXUgliWnLDzqAfGdbZNgEfalEYNHCsJtsTyxynfqxjbyxHNG\"}"
 -X PUT -H "Content-Type: application/json"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/financial_institutions/1701284200
+https://api.INSTANCE.cardsavr.io/financial_institutions/794669063
 ```
 
 ### Path
@@ -1398,15 +1416,15 @@ See [financial institution response parameters](#response-financial_institution)
 ```shell
 curl -X DELETE
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/financial_institutions/1701284200
+https://api.INSTANCE.cardsavr.io/financial_institutions/794669063
 ```
 
 ```javascript
-await session.deleteFinancialInstitution(1701284200);
+await session.deleteFinancialInstitution(794669063);
 ```
 
 ```csharp
-CardSavrResponse<FinancialInstitution> financialinstitution = await http.DeleteFinancialInstitutionAsync(1701284200);
+CardSavrResponse<FinancialInstitution> financialinstitution = await http.DeleteFinancialInstitutionAsync(794669063);
 ```
 
 ### Path
@@ -1426,32 +1444,32 @@ An integrator object represents an integrator that implements CardSavr.
 
 ```shell
 curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/integrators/646604047
+https://api.INSTANCE.cardsavr.io/integrators/2135136323
 ```
 
 ```javascript
-const integrators = await session.getIntegrators(646604047);
+const integrators = await session.getIntegrators(2135136323);
 ```
 
 ```csharp
-CardSavrResponse<Integrators> integrators = await session.GetIntegratorsAsync(646604047);
+CardSavrResponse<Integrators> integrators = await session.GetIntegratorsAsync(2135136323);
 ```
 
 > Sample response - not all properties are available to all roles (200 OK):
 
 ```json
 {
-  "id": 646604047,
-  "name": "aAlddNsCvXcmWAIDtTiDAGLzSyVkuvyZZUGkeunDdNXCaEhHP",
-  "integrator_type": "swch_internal",
-  "description": "vOHQfLqDDarhMrJwwMgBXLWPXrSPv",
-  "last_key": "SoenMNfdaKBgOAEYuSNlAT/12QtqkNE99Nt29X5oloc=",
-  "current_key": "HRUgcnoc5atjiYS6dH7bCfVxxsB54DDob99b1SY/urg=",
-  "next_key": "439cr+RfqA41AyLfljlBixSU1q73wTN9nM07l1+1FGo=",
-  "key_lifetime": 81,
-  "next_rotation_on": "1987-10-31T17:17:41.300Z",
-  "created_on": "1990-06-27T02:07:53.436Z",
-  "last_updated_on": "1997-09-03T08:16:56.856Z"
+  "id": 2135136323,
+  "name": "BdLaTDqVQLCXEYMSBOoZvALtUMtpBcmqzeyeyshqSDDsiGlUX",
+  "integrator_type": "cust_internal",
+  "description": "RptbprgjAdpaWPVrXB",
+  "last_key": "FCRE+3xVbmjf5kLOBJ9LAsEpRaYtbT8f1npzGsFaMDU=",
+  "current_key": "NYLVamMGnZYDQ96n8UGhYDBilSOijfFxBtmdl9EQxzY=",
+  "next_key": "155GjKW+oUssfGCJSfWAvo+PfVeawJYI7ZPX41RzfDo=",
+  "key_lifetime": 8,
+  "next_rotation_on": "2014-07-15T02:45:16.157Z",
+  "created_on": "2003-08-28T17:15:27.057Z",
+  "last_updated_on": "2009-02-21T09:45:00.131Z"
 }
 ```
 
@@ -1473,7 +1491,7 @@ Returns the integrator specified by the provided ID
 
 **Singular requests** only return the integrator matching the id provided in the path.
 
-**Example batch GET request path:**<br>`/integrators/12`
+**Example GET request path:**<br>`/integrators/2135136323`
 
 ### <a name="response-integrator"></a>Response attributes
 
@@ -1507,35 +1525,35 @@ NOTE: All foreign key parameters (fk) can be [hydrated](#hydration) and support 
 
 ```javascript
 const integrator = await session.createIntegrator({
-  "name": "aAlddNsCvXcmWAIDtTiDAGLzSyVkuvyZZUGkeunDdNXCaEhHP",
-  "integrator_type": "swch_internal",
-  "description": "vOHQfLqDDarhMrJwwMgBXLWPXrSPv",
-  "last_key": "SoenMNfdaKBgOAEYuSNlAT/12QtqkNE99Nt29X5oloc=",
-  "current_key": "HRUgcnoc5atjiYS6dH7bCfVxxsB54DDob99b1SY/urg=",
-  "next_key": "439cr+RfqA41AyLfljlBixSU1q73wTN9nM07l1+1FGo=",
-  "key_lifetime": 81,
-  "next_rotation_on": "1987-10-31T17:17:41.300Z"
+  "name": "BdLaTDqVQLCXEYMSBOoZvALtUMtpBcmqzeyeyshqSDDsiGlUX",
+  "integrator_type": "cust_internal",
+  "description": "RptbprgjAdpaWPVrXB",
+  "last_key": "FCRE+3xVbmjf5kLOBJ9LAsEpRaYtbT8f1npzGsFaMDU=",
+  "current_key": "NYLVamMGnZYDQ96n8UGhYDBilSOijfFxBtmdl9EQxzY=",
+  "next_key": "155GjKW+oUssfGCJSfWAvo+PfVeawJYI7ZPX41RzfDo=",
+  "key_lifetime": 8,
+  "next_rotation_on": "2014-07-15T02:45:16.157Z"
 });
 ```
 
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "name", "aAlddNsCvXcmWAIDtTiDAGLzSyVkuvyZZUGkeunDdNXCaEhHP" },
-	{ "integrator_type", "swch_internal" },
-	{ "description", "vOHQfLqDDarhMrJwwMgBXLWPXrSPv" },
-	{ "last_key", "SoenMNfdaKBgOAEYuSNlAT/12QtqkNE99Nt29X5oloc=" },
-	{ "current_key", "HRUgcnoc5atjiYS6dH7bCfVxxsB54DDob99b1SY/urg=" },
-	{ "next_key", "439cr+RfqA41AyLfljlBixSU1q73wTN9nM07l1+1FGo=" },
-	{ "key_lifetime", 81 },
-	{ "next_rotation_on", "1987-10-31T17:17:41.300Z" }
+	{ "name", "BdLaTDqVQLCXEYMSBOoZvALtUMtpBcmqzeyeyshqSDDsiGlUX" },
+	{ "integrator_type", "cust_internal" },
+	{ "description", "RptbprgjAdpaWPVrXB" },
+	{ "last_key", "FCRE+3xVbmjf5kLOBJ9LAsEpRaYtbT8f1npzGsFaMDU=" },
+	{ "current_key", "NYLVamMGnZYDQ96n8UGhYDBilSOijfFxBtmdl9EQxzY=" },
+	{ "next_key", "155GjKW+oUssfGCJSfWAvo+PfVeawJYI7ZPX41RzfDo=" },
+	{ "key_lifetime", 8 },
+	{ "next_rotation_on", "2014-07-15T02:45:16.157Z" }
 };
 
 CardSavrResponse<Integrator> integrator = await http.CreateIntegratorAsync(body);
 ```
 
 ```shell
-curl -d "{\"name\":\"aAlddNsCvXcmWAIDtTiDAGLzSyVkuvyZZUGkeunDdNXCaEhHP\",\"integrator_type\":\"swch_internal\",\"description\":\"vOHQfLqDDarhMrJwwMgBXLWPXrSPv\",\"last_key\":\"SoenMNfdaKBgOAEYuSNlAT/12QtqkNE99Nt29X5oloc=\",\"current_key\":\"HRUgcnoc5atjiYS6dH7bCfVxxsB54DDob99b1SY/urg=\",\"next_key\":\"439cr+RfqA41AyLfljlBixSU1q73wTN9nM07l1+1FGo=\",\"key_lifetime\":81,\"next_rotation_on\":\"1987-10-31T17:17:41.300Z\"}"
+curl -d "{\"name\":\"BdLaTDqVQLCXEYMSBOoZvALtUMtpBcmqzeyeyshqSDDsiGlUX\",\"integrator_type\":\"cust_internal\",\"description\":\"RptbprgjAdpaWPVrXB\",\"last_key\":\"FCRE+3xVbmjf5kLOBJ9LAsEpRaYtbT8f1npzGsFaMDU=\",\"current_key\":\"NYLVamMGnZYDQ96n8UGhYDBilSOijfFxBtmdl9EQxzY=\",\"next_key\":\"155GjKW+oUssfGCJSfWAvo+PfVeawJYI7ZPX41RzfDo=\",\"key_lifetime\":8,\"next_rotation_on\":\"2014-07-15T02:45:16.157Z\"}"
 -X POST -H "Content-Type: application/json"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/integrators/
@@ -1574,38 +1592,38 @@ See [integrator response attributes](#response-integrator).
 
 ```javascript
 const integrator = await session.updateIntegrator({
-  "name": "CgMlIcjusAIrEdmJpbdwxqXmAcsyzrEACWDsFOSAvZQhuOOaW",
-  "integrator_type": "application",
-  "description": "dntlZdmzoNTDzihWvNpzLGl",
-  "last_key": "YEiHFcpa0W6vMeRuZxFwPqoKBzZitLZt5lsOoBwJ+Tw=",
-  "current_key": "fmRjHBDG27jOT1a034O2OrEi7imXf7YDOmuviygpvl0=",
-  "next_key": "Gs3qRKn/BD8nwNBRG+H+zfZCbZauDjVgrPmIyfamR4A=",
-  "key_lifetime": 203,
-  "next_rotation_on": "2010-04-10T03:39:51.915Z"
+  "name": "lqrnMjNJXnbkHKDUvdbUBpwksHBloTbhinwVaRMCQqTcrfABA",
+  "integrator_type": "swch_internal",
+  "description": "skVRVuq",
+  "last_key": "MwSCxbyW8Xak0sfGds/43q2cdYvFNNTNXKHZMn7TaWg=",
+  "current_key": "dmDRbAcOSntbF38uf5oWxgT4XlD/IPqk5mmzooPHAto=",
+  "next_key": "C+cFOKlrJB8uAimNv2YaN5RHPKOoaRX56o2a9vbY07w=",
+  "key_lifetime": 182,
+  "next_rotation_on": "2008-07-15T06:00:50.941Z"
 });
 ```
 
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "name", "CgMlIcjusAIrEdmJpbdwxqXmAcsyzrEACWDsFOSAvZQhuOOaW" },
-	{ "integrator_type", "application" },
-	{ "description", "dntlZdmzoNTDzihWvNpzLGl" },
-	{ "last_key", "YEiHFcpa0W6vMeRuZxFwPqoKBzZitLZt5lsOoBwJ+Tw=" },
-	{ "current_key", "fmRjHBDG27jOT1a034O2OrEi7imXf7YDOmuviygpvl0=" },
-	{ "next_key", "Gs3qRKn/BD8nwNBRG+H+zfZCbZauDjVgrPmIyfamR4A=" },
-	{ "key_lifetime", 203 },
-	{ "next_rotation_on", "2010-04-10T03:39:51.915Z" }
+	{ "name", "lqrnMjNJXnbkHKDUvdbUBpwksHBloTbhinwVaRMCQqTcrfABA" },
+	{ "integrator_type", "swch_internal" },
+	{ "description", "skVRVuq" },
+	{ "last_key", "MwSCxbyW8Xak0sfGds/43q2cdYvFNNTNXKHZMn7TaWg=" },
+	{ "current_key", "dmDRbAcOSntbF38uf5oWxgT4XlD/IPqk5mmzooPHAto=" },
+	{ "next_key", "C+cFOKlrJB8uAimNv2YaN5RHPKOoaRX56o2a9vbY07w=" },
+	{ "key_lifetime", 182 },
+	{ "next_rotation_on", "2008-07-15T06:00:50.941Z" }
 };
 
 CardSavrResponse<Integrator> integrator = await http.UpdateIntegratorAsync(body);
 ```
 
 ```shell
-curl -d "{\"name\":\"CgMlIcjusAIrEdmJpbdwxqXmAcsyzrEACWDsFOSAvZQhuOOaW\",\"integrator_type\":\"application\",\"description\":\"dntlZdmzoNTDzihWvNpzLGl\",\"last_key\":\"YEiHFcpa0W6vMeRuZxFwPqoKBzZitLZt5lsOoBwJ+Tw=\",\"current_key\":\"fmRjHBDG27jOT1a034O2OrEi7imXf7YDOmuviygpvl0=\",\"next_key\":\"Gs3qRKn/BD8nwNBRG+H+zfZCbZauDjVgrPmIyfamR4A=\",\"key_lifetime\":203,\"next_rotation_on\":\"2010-04-10T03:39:51.915Z\"}"
+curl -d "{\"name\":\"lqrnMjNJXnbkHKDUvdbUBpwksHBloTbhinwVaRMCQqTcrfABA\",\"integrator_type\":\"swch_internal\",\"description\":\"skVRVuq\",\"last_key\":\"MwSCxbyW8Xak0sfGds/43q2cdYvFNNTNXKHZMn7TaWg=\",\"current_key\":\"dmDRbAcOSntbF38uf5oWxgT4XlD/IPqk5mmzooPHAto=\",\"next_key\":\"C+cFOKlrJB8uAimNv2YaN5RHPKOoaRX56o2a9vbY07w=\",\"key_lifetime\":182,\"next_rotation_on\":\"2008-07-15T06:00:50.941Z\"}"
 -X PUT -H "Content-Type: application/json"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/integrators/646604047
+https://api.INSTANCE.cardsavr.io/integrators/2135136323
 ```
 
 ### Path
@@ -1637,15 +1655,15 @@ See [integrator response parameters](#response-integrator).
 ```shell
 curl -X DELETE
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/integrators/646604047
+https://api.INSTANCE.cardsavr.io/integrators/2135136323
 ```
 
 ```javascript
-await session.deleteIntegrator(646604047);
+await session.deleteIntegrator(2135136323);
 ```
 
 ```csharp
-CardSavrResponse<Integrator> integrator = await http.DeleteIntegratorAsync(646604047);
+CardSavrResponse<Integrator> integrator = await http.DeleteIntegratorAsync(2135136323);
 ```
 
 ### Path
@@ -1665,48 +1683,48 @@ Merchant site objects contain information and images related to CardSavr-support
 
 ```shell
 curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/merchant_sites/1137304726
+https://api.INSTANCE.cardsavr.io/merchant_sites/2023842094
 ```
 
 ```javascript
-const merchantsites = await session.getMerchantSites(1137304726);
+const merchantsites = await session.getMerchantSites(2023842094);
 ```
 
 ```csharp
-CardSavrResponse<MerchantSites> merchantsites = await session.GetMerchantSitesAsync(1137304726);
+CardSavrResponse<MerchantSites> merchantsites = await session.GetMerchantSitesAsync(2023842094);
 ```
 
 > Sample response - not all properties are available to all roles (200 OK):
 
 ```json
 {
-  "id": 1137304726,
-  "name": "nNNvxgBRcOErUJJiTOPKEWNyHBswrk",
-  "host": "sSeqXUkxaagEDWRHYGEPLhwYdMlkzUz",
-  "image_lookup_key": "GYybckychLEoFpWu",
+  "id": 2023842094,
+  "name": "KHIDN",
+  "host": "jdhPiSMqYBCtybOjwHPmswzdY",
+  "image_lookup_key": "ZOtSUdlttiguAY",
   "images": [
     {
-      "PIpTnXZROHtN": "/*qRRVq[-GXt!vnk]&seDv",
-      "HDYhuxmTiSor": 41,
-      "vJRfLFbwtznp": false
+      "dKGiMsOFjaEt": "E}[",
+      "BEnWfiGowSnc": 89,
+      "tssVPCfbBUPU": true
     },
     {
-      "MwaKWEaYBoKN": "xkdI#E}bNJas6N*p~{}<Df^sA3xnct",
-      "GdvErjxBDpPX": 51,
-      "KQbfTugBqzYr": true
+      "jGOgOaLzcQVl": "HC_",
+      "YDElShtQvizj": 47,
+      "nZRhwwyOlbZB": true
     },
     {
-      "JNsqbCAboUVX": "x<",
-      "JarLQkkJxBOA": 7,
-      "qziJDlKjMasW": false
+      "SqtTwrRXNGZu": ">Ow&Q^]KO=c2{3ZQhRZQ5&j6r1RX)W^",
+      "RAcgRmRupXcI": 68,
+      "UKGGOwNBJITY": true
     }
   ],
-  "mfa": true,
-  "tags": "nbfHbLvrUNZBQtigA",
+  "mfa": false,
+  "tags": "fBONzsrLnUISDRDvkk",
   "login": {
-    "YKHEnLQRsTSx": "!ya",
-    "AiBMUmyztEfo": 49,
-    "OxZaGlWJQqTS": false
+    "iqKfeOZYzMHi": "#2xjAI]W+WIyH",
+    "MVdiKMICKgrX": 59,
+    "XIThWLMaaEmC": true
   }
 }
 ```
@@ -1729,7 +1747,7 @@ Returns the merchant site specified by the provided ID
 
 **Singular requests** only return the merchant site matching the id provided in the path.
 
-**Example batch GET request path:**<br>`/merchant_sites/12`
+**Example GET request path:**<br>`/merchant_sites/2023842094`
 
 ### <a name="response-merchant_site"></a>Response attributes
 
@@ -1762,32 +1780,32 @@ A notification record that defines how to take action on CardSavr events like jo
 
 ```shell
 curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/notifications/375723508
+https://api.INSTANCE.cardsavr.io/notifications/841805412
 ```
 
 ```javascript
-const notifications = await session.getNotifications(375723508);
+const notifications = await session.getNotifications(841805412);
 ```
 
 ```csharp
-CardSavrResponse<Notifications> notifications = await session.GetNotificationsAsync(375723508);
+CardSavrResponse<Notifications> notifications = await session.GetNotificationsAsync(841805412);
 ```
 
 > Sample response - not all properties are available to all roles (200 OK):
 
 ```json
 {
-  "id": 375723508,
-  "name": "datWYpLoLfVnRjMaAFbagaNLlYzeHQAOvkmTTfhEDyZgkYUEsGiiXtcDpyGiQAF",
+  "id": 841805412,
+  "name": "UoZaslHLKovAkeDMvlBxLdOFWUuekGTiULPrrOeyQKzpwGZAZRtCoqXalXgqaZC",
   "type": "email",
   "config": {
-    "BlviQsideIew": "_9&+aL!<#",
-    "EEueflGGCOJx": 60,
-    "QmNuDdKyqyrH": true
+    "oPTRqvXoqpei": "2i!v})cjLU/sj6gO6DyG7mJhhR}KE9wM",
+    "EsbqqJtVxYAj": 62,
+    "DZiflQvcROPY": false
   },
-  "created_on": "2012-03-16T05:57:36.402Z",
-  "last_updated_on": "2013-02-16T19:30:17.267Z",
-  "financial_institution_id": 1758859646
+  "created_on": "1997-01-10T07:51:08.158Z",
+  "last_updated_on": "1981-04-28T21:12:32.028Z",
+  "financial_institution_id": 1821272350
 }
 ```
 
@@ -1809,7 +1827,7 @@ Returns the notification specified by the provided ID
 
 **Singular requests** only return the notification matching the id provided in the path.
 
-**Example batch GET request path:**<br>`/notifications/12`
+**Example GET request path:**<br>`/notifications/841805412`
 
 ### <a name="response-notification"></a>Response attributes
 
@@ -1839,13 +1857,13 @@ NOTE: All foreign key parameters (fk) can be [hydrated](#hydration) and support 
 
 ```javascript
 const notification = await session.createNotification({
-  "financial_institution_id": 1758859646,
-  "name": "datWYpLoLfVnRjMaAFbagaNLlYzeHQAOvkmTTfhEDyZgkYUEsGiiXtcDpyGiQAF",
+  "financial_institution_id": 1821272350,
+  "name": "UoZaslHLKovAkeDMvlBxLdOFWUuekGTiULPrrOeyQKzpwGZAZRtCoqXalXgqaZC",
   "type": "email",
   "config": {
-    "BlviQsideIew": "_9&+aL!<#",
-    "EEueflGGCOJx": 60,
-    "QmNuDdKyqyrH": true
+    "oPTRqvXoqpei": "2i!v})cjLU/sj6gO6DyG7mJhhR}KE9wM",
+    "EsbqqJtVxYAj": 62,
+    "DZiflQvcROPY": false
   }
 });
 ```
@@ -1853,8 +1871,8 @@ const notification = await session.createNotification({
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "financial_institution_id", 1758859646 },
-	{ "name", "datWYpLoLfVnRjMaAFbagaNLlYzeHQAOvkmTTfhEDyZgkYUEsGiiXtcDpyGiQAF" },
+	{ "financial_institution_id", 1821272350 },
+	{ "name", "UoZaslHLKovAkeDMvlBxLdOFWUuekGTiULPrrOeyQKzpwGZAZRtCoqXalXgqaZC" },
 	{ "type", "email" }
 };
 
@@ -1862,7 +1880,7 @@ CardSavrResponse<Notification> notification = await http.CreateNotificationAsync
 ```
 
 ```shell
-curl -d "{\"financial_institution_id\":1758859646,\"name\":\"datWYpLoLfVnRjMaAFbagaNLlYzeHQAOvkmTTfhEDyZgkYUEsGiiXtcDpyGiQAF\",\"type\":\"email\",\"config\":{\"BlviQsideIew\":\"_9&+aL!<#\",\"EEueflGGCOJx\":60,\"QmNuDdKyqyrH\":true}}"
+curl -d "{\"financial_institution_id\":1821272350,\"name\":\"UoZaslHLKovAkeDMvlBxLdOFWUuekGTiULPrrOeyQKzpwGZAZRtCoqXalXgqaZC\",\"type\":\"email\",\"config\":{\"oPTRqvXoqpei\":\"2i!v})cjLU/sj6gO6DyG7mJhhR}KE9wM\",\"EsbqqJtVxYAj\":62,\"DZiflQvcROPY\":false}}"
 -X POST -H "Content-Type: application/json"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/notifications/
@@ -1900,12 +1918,12 @@ See [notification response attributes](#response-notification).
 
 ```javascript
 const notification = await session.updateNotification({
-  "name": "sytUcFmJoVnGZBROQDeZNBJeARBYZszRtGKWmjfTsDIlRXZmjsPXDQMbGXgeXnH",
-  "type": "webhook",
+  "name": "ALBuTLoGnNTTmpBIDlUJFHeNqPGWCiwaJdAphjvrguhUpaGzdiXDpySqGQdjkRy",
+  "type": "email",
   "config": {
-    "fxyhunnpMYno": "d_Q88VoBXHf0w}xe+BUDGa%fSsvl",
-    "qEjLolVEJkZc": 37,
-    "kXTorfIKqkaM": true
+    "QeGoKBYZhGlE": "I!^i,4OJ+hfe>b",
+    "WBxaOdpLkNKk": 23,
+    "XkscXDnXYuzc": true
   }
 });
 ```
@@ -1913,18 +1931,18 @@ const notification = await session.updateNotification({
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "name", "sytUcFmJoVnGZBROQDeZNBJeARBYZszRtGKWmjfTsDIlRXZmjsPXDQMbGXgeXnH" },
-	{ "type", "webhook" }
+	{ "name", "ALBuTLoGnNTTmpBIDlUJFHeNqPGWCiwaJdAphjvrguhUpaGzdiXDpySqGQdjkRy" },
+	{ "type", "email" }
 };
 
 CardSavrResponse<Notification> notification = await http.UpdateNotificationAsync(body);
 ```
 
 ```shell
-curl -d "{\"name\":\"sytUcFmJoVnGZBROQDeZNBJeARBYZszRtGKWmjfTsDIlRXZmjsPXDQMbGXgeXnH\",\"type\":\"webhook\",\"config\":{\"fxyhunnpMYno\":\"d_Q88VoBXHf0w}xe+BUDGa%fSsvl\",\"qEjLolVEJkZc\":37,\"kXTorfIKqkaM\":true}}"
+curl -d "{\"name\":\"ALBuTLoGnNTTmpBIDlUJFHeNqPGWCiwaJdAphjvrguhUpaGzdiXDpySqGQdjkRy\",\"type\":\"email\",\"config\":{\"QeGoKBYZhGlE\":\"I!^i,4OJ+hfe>b\",\"WBxaOdpLkNKk\":23,\"XkscXDnXYuzc\":true}}"
 -X PUT -H "Content-Type: application/json"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/notifications/375723508
+https://api.INSTANCE.cardsavr.io/notifications/841805412
 ```
 
 ### Path
@@ -1952,15 +1970,15 @@ See [notification response parameters](#response-notification).
 ```shell
 curl -X DELETE
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/notifications/375723508
+https://api.INSTANCE.cardsavr.io/notifications/841805412
 ```
 
 ```javascript
-await session.deleteNotification(375723508);
+await session.deleteNotification(841805412);
 ```
 
 ```csharp
-CardSavrResponse<Notification> notification = await http.DeleteNotificationAsync(375723508);
+CardSavrResponse<Notification> notification = await http.DeleteNotificationAsync(841805412);
 ```
 
 ### Path
@@ -1980,44 +1998,44 @@ A place_card_on_single_site_job object
 
 ```shell
 curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/2098779728
+https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/1657709819
 ```
 
 ```javascript
-const singlesitejobs = await session.getSingleSiteJobs(2098779728);
+const singlesitejobs = await session.getSingleSiteJobs(1657709819);
 ```
 
 ```csharp
-CardSavrResponse<SingleSiteJobs> singlesitejobs = await session.GetSingleSiteJobsAsync(2098779728);
+CardSavrResponse<SingleSiteJobs> singlesitejobs = await session.GetSingleSiteJobsAsync(1657709819);
 ```
 
 > Sample response - not all properties are available to all roles (200 OK):
 
 ```json
 {
-  "id": 2098779728,
-  "card_placement_result_id": "eudZUaltxidFZcyijdVyqVrs",
-  "status": "INVALID_CVV",
+  "id": 1657709819,
+  "card_placement_result_id": "EsZZfCnTJHFRDAPutYfJCHWOYRFzgX",
+  "status": "IN_PROGRESS",
   "custom_data": {
-    "OIPpByzALkos": "nqVyq2Jfp%c>8%CtK-$n6hiP#o6h5>",
-    "bQGbDWkCoThk": 0,
-    "nytACDIyfvEN": true
+    "mQcKhfOrliTH": "z",
+    "mMvvIVHYbCDE": 28,
+    "FJvGusNyYtGg": false
   },
-  "failure_reason": "NwRAMw",
-  "messaging_addresses": "pgLwJYlyLUAAHsPASXCHtdbgXiJbm",
-  "current_state": "pdaMKxdrxesmUXQpbTPLWStqrmwRgSOxIDwNrcpHKZKZVXbgvYZSFVpvEENKoMK",
+  "failure_reason": "dcpw",
+  "messaging_addresses": "ZKNFYeOGCryHJxyjX",
+  "current_state": "iVehoGsjieTjWjEQvwDJulbTKVsmGGZyUfZQmSvXcdUTzJiYVCyVSwZnZQWBVfp",
   "do_not_queue": true,
-  "user_is_present": false,
-  "time_elapsed": 88558525,
-  "job_ready_on": "1972-01-17T07:07:13.681Z",
-  "started_on": "1971-02-16T04:46:05.229Z",
-  "completed_on": "1973-04-04T06:28:14.753Z",
-  "expiration_date": "1987-07-09T12:41:15.423Z",
-  "created_on": "1995-11-27T00:18:01.339Z",
-  "last_updated_on": "2002-02-07T13:44:12.319Z",
-  "user_id": 1983581417,
-  "card_id": 956774473,
-  "account_id": 1641269600
+  "user_is_present": true,
+  "time_elapsed": 543836749,
+  "job_ready_on": "2005-03-14T06:13:38.227Z",
+  "started_on": "1998-12-08T09:13:06.504Z",
+  "completed_on": "2010-05-13T04:39:07.186Z",
+  "expiration_date": "2014-12-02T05:01:31.741Z",
+  "created_on": "1978-10-28T08:36:09.970Z",
+  "last_updated_on": "2019-04-01T11:15:25.912Z",
+  "user_id": 391803332,
+  "card_id": 746827490,
+  "account_id": 366509156
 }
 ```
 
@@ -2039,7 +2057,7 @@ Returns the single-site job specified by the provided ID
 
 **Singular requests** only return the single-site job matching the id provided in the path.
 
-**Example batch GET request path:**<br>`/place_card_on_single_site_jobs/12`
+**Example GET request path:**<br>`/place_card_on_single_site_jobs/1657709819`
 
 ### <a name="response-place_card_on_single_site_job"></a>Response attributes
 
@@ -2090,50 +2108,50 @@ NOTE: All foreign key parameters (fk) can be [hydrated](#hydration) and support 
 
 ```javascript
 const singlesitejob = await session.createSingleSiteJob({
-  "place_card_on_multiple_sites_job_id": 1858338258,
-  "user_id": 1983581417,
-  "card_id": 956774473,
-  "account_id": 1641269600,
-  "status": "INVALID_CVV",
+  "place_card_on_multiple_sites_job_id": 1441439773,
+  "user_id": 391803332,
+  "card_id": 746827490,
+  "account_id": 366509156,
+  "status": "IN_PROGRESS",
   "custom_data": {
-    "OIPpByzALkos": "nqVyq2Jfp%c>8%CtK-$n6hiP#o6h5>",
-    "bQGbDWkCoThk": 0,
-    "nytACDIyfvEN": true
+    "mQcKhfOrliTH": "z",
+    "mMvvIVHYbCDE": 28,
+    "FJvGusNyYtGg": false
   },
-  "failure_reason": "NwRAMw",
-  "current_state": "pdaMKxdrxesmUXQpbTPLWStqrmwRgSOxIDwNrcpHKZKZVXbgvYZSFVpvEENKoMK",
+  "failure_reason": "dcpw",
+  "current_state": "iVehoGsjieTjWjEQvwDJulbTKVsmGGZyUfZQmSvXcdUTzJiYVCyVSwZnZQWBVfp",
   "do_not_queue": true,
-  "user_is_present": false,
-  "time_elapsed": 88558525,
-  "started_on": "1971-02-16T04:46:05.229Z",
-  "completed_on": "1973-04-04T06:28:14.753Z",
-  "expiration_date": "1987-07-09T12:41:15.423Z"
+  "user_is_present": true,
+  "time_elapsed": 543836749,
+  "started_on": "1998-12-08T09:13:06.504Z",
+  "completed_on": "2010-05-13T04:39:07.186Z",
+  "expiration_date": "2014-12-02T05:01:31.741Z"
 }, CARDHOLDER_SAFE_KEY);
 ```
 
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "place_card_on_multiple_sites_job_id", 1858338258 },
-	{ "user_id", 1983581417 },
-	{ "card_id", 956774473 },
-	{ "account_id", 1641269600 },
-	{ "status", "INVALID_CVV" },
-	{ "failure_reason", "NwRAMw" },
-	{ "current_state", "pdaMKxdrxesmUXQpbTPLWStqrmwRgSOxIDwNrcpHKZKZVXbgvYZSFVpvEENKoMK" },
+	{ "place_card_on_multiple_sites_job_id", 1441439773 },
+	{ "user_id", 391803332 },
+	{ "card_id", 746827490 },
+	{ "account_id", 366509156 },
+	{ "status", "IN_PROGRESS" },
+	{ "failure_reason", "dcpw" },
+	{ "current_state", "iVehoGsjieTjWjEQvwDJulbTKVsmGGZyUfZQmSvXcdUTzJiYVCyVSwZnZQWBVfp" },
 	{ "do_not_queue", true },
-	{ "user_is_present", false },
-	{ "time_elapsed", 88558525 },
-	{ "started_on", "1971-02-16T04:46:05.229Z" },
-	{ "completed_on", "1973-04-04T06:28:14.753Z" },
-	{ "expiration_date", "1987-07-09T12:41:15.423Z" }
+	{ "user_is_present", true },
+	{ "time_elapsed", 543836749 },
+	{ "started_on", "1998-12-08T09:13:06.504Z" },
+	{ "completed_on", "2010-05-13T04:39:07.186Z" },
+	{ "expiration_date", "2014-12-02T05:01:31.741Z" }
 };
 
 CardSavrResponse<SingleSiteJob> singlesitejob = await http.CreateSingleSiteJobAsync(body, CARDHOLDER_SAFE_KEY);
 ```
 
 ```shell
-curl -d "{\"place_card_on_multiple_sites_job_id\":1858338258,\"user_id\":1983581417,\"card_id\":956774473,\"account_id\":1641269600,\"status\":\"INVALID_CVV\",\"custom_data\":{\"OIPpByzALkos\":\"nqVyq2Jfp%c>8%CtK-$n6hiP#o6h5>\",\"bQGbDWkCoThk\":0,\"nytACDIyfvEN\":true},\"failure_reason\":\"NwRAMw\",\"current_state\":\"pdaMKxdrxesmUXQpbTPLWStqrmwRgSOxIDwNrcpHKZKZVXbgvYZSFVpvEENKoMK\",\"do_not_queue\":true,\"user_is_present\":false,\"time_elapsed\":88558525,\"started_on\":\"1971-02-16T04:46:05.229Z\",\"completed_on\":\"1973-04-04T06:28:14.753Z\",\"expiration_date\":\"1987-07-09T12:41:15.423Z\"}"
+curl -d "{\"place_card_on_multiple_sites_job_id\":1441439773,\"user_id\":391803332,\"card_id\":746827490,\"account_id\":366509156,\"status\":\"IN_PROGRESS\",\"custom_data\":{\"mQcKhfOrliTH\":\"z\",\"mMvvIVHYbCDE\":28,\"FJvGusNyYtGg\":false},\"failure_reason\":\"dcpw\",\"current_state\":\"iVehoGsjieTjWjEQvwDJulbTKVsmGGZyUfZQmSvXcdUTzJiYVCyVSwZnZQWBVfp\",\"do_not_queue\":true,\"user_is_present\":true,\"time_elapsed\":543836749,\"started_on\":\"1998-12-08T09:13:06.504Z\",\"completed_on\":\"2010-05-13T04:39:07.186Z\",\"expiration_date\":\"2014-12-02T05:01:31.741Z\"}"
 -X POST -H "Content-Type: application/json"
 -H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
@@ -2208,46 +2226,46 @@ See [single-site job response attributes](#response-place_card_on_single_site_jo
 
 ```javascript
 const singlesitejob = await session.updateSingleSiteJob({
-  "status": "INVALID_NETWORK",
+  "status": "COMPLETED",
   "custom_data": {
-    "boxiFcKOSyan": "@!,U7c9U5UgV",
-    "HLZJnuqHeKTL": 57,
-    "qktToLNMbAJN": true
+    "xBlxRhyktgoM": "wsXmIlioEaz)$[AuTcV$Bp.K<2uA15w",
+    "XerpFhWZDzrm": 93,
+    "mqWklCLfmnop": false
   },
-  "failure_reason": "IfXCLAuRUGhDuFHBJO",
-  "current_state": "DbVyXanUbLnsuWSCVkpDvtYBcNdbLamtAPQkwnbyurrZwuUwUTAJiwghFdYWfHB",
-  "do_not_queue": true,
-  "user_is_present": false,
-  "time_elapsed": 2065794618,
-  "started_on": "2002-12-25T09:02:50.263Z",
-  "completed_on": "1971-04-11T02:37:44.126Z",
-  "expiration_date": "2004-03-19T22:35:59.764Z"
+  "failure_reason": "IzNBCKPGnEYMTrlopEOQ",
+  "current_state": "QZhPnyVUBLiQdJMzZBhKcZgwQRtOWxeBXwhoMNBDbVTqHUDZLOPLVxjFCZYHeIf",
+  "do_not_queue": false,
+  "user_is_present": true,
+  "time_elapsed": 483546004,
+  "started_on": "2008-09-25T11:50:48.634Z",
+  "completed_on": "1986-10-08T04:35:02.068Z",
+  "expiration_date": "1990-12-19T16:52:55.771Z"
 }, CARDHOLDER_SAFE_KEY);
 ```
 
 ```csharp
 PropertyBag body = new PropertyBag()
 {
-	{ "status", "INVALID_NETWORK" },
-	{ "failure_reason", "IfXCLAuRUGhDuFHBJO" },
-	{ "current_state", "DbVyXanUbLnsuWSCVkpDvtYBcNdbLamtAPQkwnbyurrZwuUwUTAJiwghFdYWfHB" },
-	{ "do_not_queue", true },
-	{ "user_is_present", false },
-	{ "time_elapsed", 2065794618 },
-	{ "started_on", "2002-12-25T09:02:50.263Z" },
-	{ "completed_on", "1971-04-11T02:37:44.126Z" },
-	{ "expiration_date", "2004-03-19T22:35:59.764Z" }
+	{ "status", "COMPLETED" },
+	{ "failure_reason", "IzNBCKPGnEYMTrlopEOQ" },
+	{ "current_state", "QZhPnyVUBLiQdJMzZBhKcZgwQRtOWxeBXwhoMNBDbVTqHUDZLOPLVxjFCZYHeIf" },
+	{ "do_not_queue", false },
+	{ "user_is_present", true },
+	{ "time_elapsed", 483546004 },
+	{ "started_on", "2008-09-25T11:50:48.634Z" },
+	{ "completed_on", "1986-10-08T04:35:02.068Z" },
+	{ "expiration_date", "1990-12-19T16:52:55.771Z" }
 };
 
 CardSavrResponse<SingleSiteJob> singlesitejob = await http.UpdateSingleSiteJobAsync(body, CARDHOLDER_SAFE_KEY);
 ```
 
 ```shell
-curl -d "{\"status\":\"INVALID_NETWORK\",\"custom_data\":{\"boxiFcKOSyan\":\"@!,U7c9U5UgV\",\"HLZJnuqHeKTL\":57,\"qktToLNMbAJN\":true},\"failure_reason\":\"IfXCLAuRUGhDuFHBJO\",\"current_state\":\"DbVyXanUbLnsuWSCVkpDvtYBcNdbLamtAPQkwnbyurrZwuUwUTAJiwghFdYWfHB\",\"do_not_queue\":true,\"user_is_present\":false,\"time_elapsed\":2065794618,\"started_on\":\"2002-12-25T09:02:50.263Z\",\"completed_on\":\"1971-04-11T02:37:44.126Z\",\"expiration_date\":\"2004-03-19T22:35:59.764Z\"}"
+curl -d "{\"status\":\"COMPLETED\",\"custom_data\":{\"xBlxRhyktgoM\":\"wsXmIlioEaz)$[AuTcV$Bp.K<2uA15w\",\"XerpFhWZDzrm\":93,\"mqWklCLfmnop\":false},\"failure_reason\":\"IzNBCKPGnEYMTrlopEOQ\",\"current_state\":\"QZhPnyVUBLiQdJMzZBhKcZgwQRtOWxeBXwhoMNBDbVTqHUDZLOPLVxjFCZYHeIf\",\"do_not_queue\":false,\"user_is_present\":true,\"time_elapsed\":483546004,\"started_on\":\"2008-09-25T11:50:48.634Z\",\"completed_on\":\"1986-10-08T04:35:02.068Z\",\"expiration_date\":\"1990-12-19T16:52:55.771Z\"}"
 -X PUT -H "Content-Type: application/json"
 -H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/2098779728
+https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/1657709819
 ```
 
 ### Path
@@ -2282,15 +2300,15 @@ See [single-site job response parameters](#response-place_card_on_single_site_jo
 ```shell
 curl -X DELETE
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
-https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/2098779728
+https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/1657709819
 ```
 
 ```javascript
-await session.deleteSingleSiteJob(2098779728);
+await session.deleteSingleSiteJob(1657709819);
 ```
 
 ```csharp
-CardSavrResponse<SingleSiteJob> singlesitejob = await http.DeleteSingleSiteJobAsync(2098779728);
+CardSavrResponse<SingleSiteJob> singlesitejob = await http.DeleteSingleSiteJobAsync(1657709819);
 ```
 
 ### Path
