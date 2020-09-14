@@ -230,6 +230,9 @@
             <a href="#headers" class="toc-h1 toc-link" data-title="Headers">Headers</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#session-tokens" class="toc-h2 toc-link" data-title="session-tokens">session-tokens</a>
+                  </li>
+                  <li>
                     <a href="#trace" class="toc-h2 toc-link" data-title="Trace">Trace</a>
                   </li>
                   <li>
@@ -594,15 +597,25 @@ The cardsavr server, app key, app name, and the application username/password mu
 <td>x-cardsavr-session-jwt</td>
 <td>preferred</td>
 <td>string</td>
-<td>Std RFC-7519 JSON Web Token. This header is set to emtpy value on /session/start request which will cause a token to be returned in the body.  All subsequent requests on a session must have this value set in this header.</td>
+<td><a href="#session-tokens">See session tokens</a></td>
 </tr>
 <tr>
 <td>cookie</td>
 <td>alternative</td>
 <td>cookie format</td>
-<td>Not used by the SDK nor recommended for production use.  Use is needed for cURL and Postman testing. Cookie named &quot;CardSavrSession&quot; will be set and used by server if &quot;x-cardsavr-session-jwt&quot; token header is not used.</td>
+<td><a href="#cookie-note">See cookie note</a></td>
 </tr>
 </tbody></table>
+<h2 id='session-tokens'>session-tokens</h2>
+<p>CardSavr needs to maintain an API session for state management including authentication, session key, replay prevention, etc.  Standard RFC-7519 JWT tokens are preferred for session persistence and cookies are used as a backup mechanism. The x-cardsavr-session-jwt header is used with token based session. The x-cardsavr-session-jwt header is managed transparently within the Strivve SDK.  It is the responsibility of applications directly using the direct REST protocol to set this header or provide cookies for each request.</p>
+
+<p>With GET /session/start to begin a new session
+  &quot;x-cardsavr-session-token&quot;: &quot;&quot; </p>
+
+<p>With all subsequent requests on a session
+  &quot;x-cardsavr-session-token&quot;: &quot;value-returned-from-session-start&quot;</p>
+<h3 id='cookie-note'>cookie-note</h3>
+<p>When the x-cardsavr-session-jwt header is not present in a request, CardSavr will fall back to setting and using a cookie named &quot;CardSavrSession&quot; for session persistence. This support is intended for use with cURL and Postman for testing and debugging. </p>
 <h2 id='trace'>Trace</h2>
 <blockquote>
 <p>Setting a sample Trace Header</p>
