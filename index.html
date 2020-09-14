@@ -611,11 +611,11 @@ The cardsavr server, app key, app name, and the application username/password mu
 
 <p>With GET /session/start to begin a new session</p>
 
-<p>&quot;x-cardsavr-session-token&quot;: &quot;&quot; </p>
+<p><code>&quot;x-cardsavr-session-token&quot;: &quot;&quot;</code> </p>
 
 <p>With all subsequent requests on a session</p>
 
-<p>&quot;x-cardsavr-session-token&quot;: &quot;value-returned-from-session-start&quot;</p>
+<p><code>&quot;x-cardsavr-session-token&quot;: value-returned-from-session-start</code></p>
 <h3 id='cookie-note'>cookie-note</h3>
 <p>When the x-cardsavr-session-jwt header is not present in a request, CardSavr will fall back to setting and using a cookie named &quot;CardSavrSession&quot; for session persistence. This support is intended for use with cURL and Postman for testing and debugging. </p>
 <h2 id='trace'>Trace</h2>
