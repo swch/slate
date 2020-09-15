@@ -121,7 +121,7 @@ CardSavr needs to maintain an API session for state management including authent
 
 With GET /session/start to begin a new session
 
-  `"x-cardsavr-session-token": ""` 
+  `"x-cardsavr-session-token": "null"` 
 
 With all subsequent requests on a session
 
