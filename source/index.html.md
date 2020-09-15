@@ -129,7 +129,7 @@ With all subsequent requests on a session
 
 ### cookie-note
 
-When the x-cardsavr-session-jwt header is not present in a request, CardSavr will fall back to setting and using a cookie named "CardSavrSession" for session persistence. This support is intended for use with cURL and Postman for testing and debugging. 
+When the x-cardsavr-session-jwt header is not present in a /sessionstart request, CardSavr will fall back to setting and using a cookie named "CardSavrSession" for session persistence. This support is intended for use with cURL and Postman for testing and debugging. 
 
 ## Trace 
 
