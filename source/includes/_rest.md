@@ -132,7 +132,7 @@ password | string | no
 
 See [account response attributes](#response-cardsavr_account).
 
-<aside class="notice">Update calls to /cardsavr_accounts require the cardholder's personal cardholder_safe_key header to encrypt and save the username and password when Strivve does not manage keys for a customer (this is an environment setting). The safe keys are also not required if updating non-safe user properties.</aside>
+<aside class="notice">Create calls to /cardsavr_accounts for user which include either the username or the password require the cardholder's personal cardholder_safe_key header to encrypt and save the username and password when Strivve does not manage keys for a customer.</aside>
 
 ## Update account
 
@@ -181,23 +181,22 @@ password | string |
 
 See [account response parameters](#response-cardsavr_account).
 
-<aside class="notice">Update calls to /cardsavr_accounts require the cardholder's personal cardholder_safe_key header to encrypt and save the username and password when Strivve does not manage keys for a customer (this is an environment setting). The safe keys are also not required if updating non-safe user properties.</aside>
+<aside class="notice">Update calls to /cardsavr_accounts require the cardholder's personal cardholder_safe_key header to encrypt and save the username and password when Strivve does not manage keys for a customer. The safe key is not required if updating non-safe user properties.</aside>
 
 ## Delete account
 
 ```shell
 curl -X DELETE
--H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
 -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_accounts/368518281
 ```
 
 ```javascript
-await session.deleteAccount(368518281, CARDHOLDER_SAFE_KEY);
+await session.deleteAccount(368518281);
 ```
 
 ```csharp
-CardSavrResponse<Account> account = await http.DeleteAccountAsync(368518281, CARDHOLDER_SAFE_KEY);
+CardSavrResponse<Account> account = await http.DeleteAccountAsync(368518281);
 ```
 
 ### Path
@@ -209,8 +208,6 @@ DELETE /cardsavr_accounts/{id}
 Delete a account and purge its [related items](#cascading-delete).  An id is required on every delete request.
 
 See [account response parameters](#response-cardsavr_account).
-
-<aside class="notice">The cardholder_safe_key header is required to delete accounts for third party managed safe key stores.</aside>
 
 
 # Addresses
@@ -817,7 +814,7 @@ last_name | string | yes
 
 See [card response attributes](#response-cardsavr_card).
 
-<aside class="notice">Update calls to /cardsavr_cards require the cardholder's personal cardholder_safe_key header to encrypt and save the pan and cvv when Strivve does not manage keys for a customer (this is an environment setting). The safe keys are also not required if updating non-safe user properties.</aside>
+<aside class="notice">Create calls to /cardsavr_cards require the cardholder's personal cardholder_safe_key header to encrypt and save the pan and cvv when Strivve does not manage keys for a customer.</aside>
 
 ## Update card
 
@@ -885,6 +882,7 @@ last_name | string |
 
 See [card response parameters](#response-cardsavr_card).
 
+<aside class="notice">Update calls to /cardsavr_cards require the cardholder's personal cardholder_safe_key header to encrypt and save the pan and cvv when Strivve does not manage keys for a customer. The safe key is not required if updating non-safe user properties.</aside>
 
 ## Delete card
 
@@ -1117,7 +1115,7 @@ See [user response attributes](#response-cardsavr_user).
 - debugger
 - cust_key_handler
 
-<aside class="notice">Update calls to /cardsavr_users require the cardholder's personal cardholder_safe_key header to encrypt and save the safe when Strivve does not manage keys for a customer (this is an environment setting). The safe keys are also not required if updating non-safe user properties.</aside>
+<aside class="notice">Create calls to /cardsavr_users optionally require the cardholder's personal cardholder_safe_key header if this key is to be managed by a third party.  The safe key is not required if the safe key is to be managed by Strivve.</aside>
 
 ## Update user
 
@@ -1203,7 +1201,7 @@ next_rotation_on | date |
 
 See [user response parameters](#response-cardsavr_user).
 
-<aside class="notice">Update calls to /cardsavr_users require the cardholder's current cardholder-safe-key, and the new new-cardholder-safe-key headers when rotating the cardholder_safe_key.</aside>
+<aside class="notice">Update calls to /cardsavr_users in order to rotate third party keys require the cardholder's current cardholder-safe-key, and the new new-cardholder-safe-key headers.</aside>
 
 ## Delete user
 
@@ -2441,7 +2439,7 @@ See [single-site job response attributes](#response-place_card_on_single_site_jo
 - FAILURE
 - COMPLETED
 
-<aside class="notice">Update calls to /place_card_on_single_site_jobs require the cardholder's personal cardholder_safe_key header to encrypt and save the safe when Strivve does not manage keys for a customer (this is an environment setting). The safe keys are also not required if updating non-safe user properties.</aside>
+<aside class="notice">Create calls to /place_card_on_single_site_jobs require the cardholder's personal cardholder_safe_key header to encrypt and save the safe when Strivve does not manage keys for a customer (this is an environment setting).</aside>
 
 ## Update single-site job
 
@@ -2516,8 +2514,6 @@ completed_on | date |
 expiration_date | date |
 
 See [single-site job response parameters](#response-place_card_on_single_site_job).
-
-<aside class="notice">Update calls to /place_card_on_single_site_jobs require the cardholder's personal cardholder_safe_key header to encrypt and save the safe when Strivve does not manage keys for a customer (this is an environment setting). The safe keys are also not required if updating non-safe user properties.</aside>
 
 ## Delete single-site job
 

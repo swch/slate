@@ -129,7 +129,7 @@ With all subsequent requests on a session
 
 ### cookie-note
 
-When the x-cardsavr-session-jwt header is not present in a /sessionstart request, CardSavr will fall back to setting and using a cookie named "CardSavrSession" for session persistence. This support is intended for use with cURL and Postman for testing and debugging. 
+When the x-cardsavr-session-jwt header is not present in a /session/start request, CardSavr will fall back to setting and using a cookie named "CardSavrSession" for session persistence. This support is intended for use with cURL and Postman for testing and debugging. 
 
 ## Trace 
 
@@ -339,16 +339,16 @@ curl "https://api.INSTANCE.cardsavr.io/cardsavr_users/1"
   -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
   -H "new-cardholder-safe-key: +h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=}" 
   -H "cardholder-safe-key: rttYqkGPHLk2KeK6OD8612gSurKXu0X8W6BTWF3hhGM=}" 
-  -B "{ \"id\": 1, \"cardholder_safe_key\": \"+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=\" }" 
+  -B "{ \"id\": 1 }" 
   -b ~/_cookies
 ```
 
 `{'cardholder-safe-key': 'rttYqkGPHLk2KeK6OD8612gSurKXu0X8W6BTWF3hhGM='}`
 `{'new-cardholder-safe-key': '+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw='}`
 
-You must send an encrypted cardholder safe key header for each request that involves safe-protected information. Saving users (/cardsavr_users), accounts (/cardsavr_accounts) and cards (/cardsavr_cards) require the key to write encrypted data like PANs and merchant site passwords to the server side safe.  Safe keys can be stored by the third party, or they can optionally be stored by Strivve within Cardsavr. Individual endpoint documentation will indicate if a safe key header is required.
+You must send an encrypted cardholder safe key header for each request that involves safe-protected information. Saving users (/cardsavr_users), accounts (/cardsavr_accounts) and cards (/cardsavr_cards) require the key to write encrypted data for PANs, CVVs, merchant usernames and merchant site passwords to the server side safe.  Safe keys can be stored by the third party by including the 'cardholder-safe-key' header when creating a user, or they can optionally be stored by Strivve within Cardsavr by not including a 'cardholder-safe-key]' header when creating a user. Individual endpoint documentation will indicate if a safe key header is required.
 
-When creating a user, or rotating a safe key, you must provide a 'new-cardholder-safe-key' header.  In the case of rotating the safe key, both headers are required.
+For third party managed safe keys, when rotating a safe key, you must provide both an encrypted 'cardholder-safe-key' header and an encrypted 'new-cardholder-safe-key' header on a user update.
 
 See the [link] cardholder safe key section for more information on generating and using safe keys.
 
