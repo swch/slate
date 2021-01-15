@@ -219,8 +219,11 @@ userCredentialGrant | string | no | Credential grant issued by agent from the [/
 The CardSavr service uses a zero-knowledge-proof mechanism with passwords during login.  The proof is done by producing a key derivation from the username/password and producing a HMAC-256 signature that can be verified by the CardSavr server.  This is done to prevent the server from ever knowing the password. 
 
 The pseudo algorithm is:
+
 userNameHash = SHA256(username);
+
 dervivedPasswordKey = PBKDF2(password, userNameHash, 5000, SHA256);
+
 signature = HMAC256(dervivedPasswordKey, sessionSalt);
 
 ## End session
