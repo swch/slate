@@ -25,6 +25,10 @@ The CardSavr REST API is a service for managing payment card circulation on merc
 
 CardSavr responses and requests support JSON-formatted bodies only.
 
+# API Level Encryption
+
+The CardSavr service requires all API requests and responses to be signed and encrypted independent of TLS for all production environments. Development environments relax this to also allow plain text calls over TLS for learning and troubleshooting purposes. See See [Additional REST API Protection](https://developers.strivve.com/resources/cryptography/) for information on this requirement. The CardSavr SDK takes care of all API encryption and signing.  Applications directly implementing the REST API are responsible for implementing this security.
+
 # Authentication
 
 > To authorize, a session initialization followed by a login call is required:
@@ -107,9 +111,9 @@ Header | Default | Type | Description
 ------ | ------- | ---- | -----------
 trace | required | stringified JSON object | [See trace](#trace)
 client-application | integrator name | string | unique per application, integrator name provided as default when using an SDK
-authorization | required | string | contains the [integrator name and a prefix](https://developers.strivve.com/resources/encryption), populated by SDK libraries.
-nonce | required | string (milliseconds) | contains the current UTC time in milliseconds, and therefore provides protection against [replay attacks](https://developers.strivve.com/resources/encryption).
-signature | required | string | The [string-to-sign format](https://developers.strivve.com/resources/encryption) requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the [SDK Libraries](https://developers.strivve.com/api-sdk/).
+authorization | preferred | string | contains the [integrator name and a prefix](https://developers.strivve.com/resources/encryption), populated by SDK libraries. This header is not required for use with Postman and Curl on development environments.
+nonce | preferred | string (milliseconds) | contains the current UTC time in milliseconds, and therefore provides protection against [replay attacks](https://developers.strivve.com/resources/encryption). This header is not required for use with Postman and Curl on development environments.
+signature | preferred | string | The [string-to-sign format](https://developers.strivve.com/resources/encryption) requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the [SDK Libraries](https://developers.strivve.com/api-sdk/). This header is not required for use with Postman and Curl on development environments.
 hydration | (none) | stringified JSON object | [See hydration](#hydration) 
 paging | {"page": 1, "page_length": 25} | stringified JSON object | Only supported with GET calls. [See paging](#paging)
 x-cardsavr-session-jwt | preferred | string | [See session tokens] (#session-tokens)
