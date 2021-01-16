@@ -27,7 +27,7 @@ CardSavr responses and requests support JSON-formatted bodies only.
 
 # API Level Encryption
 
-The CardSavr service requires all API requests and responses to be signed and encrypted independent of TLS for all production environments. Development environments relax this to also allow plain text calls over TLS for learning and troubleshooting purposes. See See [Additional REST API Protection](https://developers.strivve.com/resources/cryptography/) for information on this requirement. The CardSavr SDK takes care of all API encryption and signing.  Applications directly implementing the REST API are responsible for implementing this security.
+The CardSavr service requires all API requests and responses to be signed and encrypted independent of TLS for all production environments. Development environments relax this to also allow plain text calls over TLS for learning and troubleshooting purposes. See [Additional REST API Protection](https://developers.strivve.com/resources/cryptography/) for information on this requirement. The CardSavr SDK takes care of all API encryption and signing.  Applications directly implementing the REST API are responsible for implementing this security.
 
 # Authentication
 
