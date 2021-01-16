@@ -224,6 +224,9 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
+            <a href="#api-level-encryption" class="toc-h1 toc-link" data-title="API Level Encryption">API Level Encryption</a>
+          </li>
+          <li>
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
@@ -496,6 +499,8 @@
 <p>The CardSavr REST API is a service for managing payment card circulation on merchant websites. It uses REST principles and standard HTTP features, such as HTTP verbs, as well as several layers of security to protect sensitive data.</p>
 
 <p>CardSavr responses and requests support JSON-formatted bodies only.</p>
+<h1 id='api-level-encryption'>API Level Encryption</h1>
+<p>The CardSavr service requires all API requests and responses to be signed and encrypted independent of TLS for all production environments. Development environments relax this to also allow plain text calls over TLS for learning and troubleshooting purposes. See See <a href="https://developers.strivve.com/resources/cryptography/">Additional REST API Protection</a> for information on this requirement. The CardSavr SDK takes care of all API encryption and signing.  Applications directly implementing the REST API are responsible for implementing this security.</p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>To authorize, a session initialization followed by a login call is required:</p>
@@ -582,21 +587,21 @@ The cardsavr server, app key, app name, and the application username/password mu
 </tr>
 <tr>
 <td>authorization</td>
-<td>required</td>
+<td>preferred</td>
 <td>string</td>
-<td>contains the <a href="https://developers.strivve.com/resources/encryption">integrator name and a prefix</a>, populated by SDK libraries.</td>
+<td>contains the <a href="https://developers.strivve.com/resources/encryption">integrator name and a prefix</a>, populated by SDK libraries. This header is not required for use with Postman and Curl on development environments.</td>
 </tr>
 <tr>
 <td>nonce</td>
-<td>required</td>
+<td>preferred</td>
 <td>string (milliseconds)</td>
-<td>contains the current UTC time in milliseconds, and therefore provides protection against <a href="https://developers.strivve.com/resources/encryption">replay attacks</a>.</td>
+<td>contains the current UTC time in milliseconds, and therefore provides protection against <a href="https://developers.strivve.com/resources/encryption">replay attacks</a>. This header is not required for use with Postman and Curl on development environments.</td>
 </tr>
 <tr>
 <td>signature</td>
-<td>required</td>
+<td>preferred</td>
 <td>string</td>
-<td>The <a href="https://developers.strivve.com/resources/encryption">string-to-sign format</a> requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the <a href="https://developers.strivve.com/api-sdk/">SDK Libraries</a>.</td>
+<td>The <a href="https://developers.strivve.com/resources/encryption">string-to-sign format</a> requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the <a href="https://developers.strivve.com/api-sdk/">SDK Libraries</a>. This header is not required for use with Postman and Curl on development environments.</td>
 </tr>
 <tr>
 <td>hydration</td>
@@ -1119,7 +1124,7 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="s2">"{<
 <td>signedSalt</td>
 <td>string</td>
 <td>no</td>
-<td>The base 64 encoded HMAC-256 signature zero-knowledge-proof of the PBKDF2 dervived key from the username and dervived password of the user. The Salt returned from the <a href="#start-a-cardsavr-session">session start</a> call is used to generate the HMAC-256 signature. This parameter is mutually exclusive of the &#39;password&#39; and &#39;userCredentialGrant&#39; parameters.</td>
+<td>The base 64 encoded HMAC-256 signature zero-knowledge-proof of the password. See [zero-knowedge-proof] for more information. This parameter is mutually exclusive of the &#39;password&#39; and &#39;userCredentialGrant&#39; parameters.</td>
 </tr>
 <tr>
 <td>password</td>
@@ -1134,6 +1139,8 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="s2">"{<
 <td>Credential grant issued by agent from the [/cardsavr_users:id//credential_grant] call. This parameter is mutually exclusive of the &#39;password&#39; and &#39;signedSalt&#39; parameters.</td>
 </tr>
 </tbody></table>
+
+<p></a=zero-knowledge-proof></a></p>
 <h3 id='zero-knowledge-proof-password'>Zero Knowledge Proof Password</h3>
 <p>The CardSavr service uses a zero-knowledge-proof mechanism with passwords during login.  The proof is done by producing a key derivation from the username/password and producing a HMAC-256 signature that can be verified by the CardSavr server.  This is done to prevent the server from ever knowing the password. See <a href="https://developers.strivve.com/resources/cryptography/">zero knowledge proof</a> for more information.</p>
 <h2 id='end-session'>End session</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">CardsavrSession</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">()</span> <span class="dl">"</span><span class="s2">@strivve/strivve-sdk/lib/cardsavr/CardsavrJSLibrary-2.0</span><span class="dl">"</span><span class="p">;</span>
