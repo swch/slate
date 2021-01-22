@@ -465,7 +465,30 @@ A successful DELETE request will also delete any object that references the dele
 
 For example, a successful DELETE request to '/cardsavr_accounts/123' would also delete any single-site jobs that reference the account with ID 123, as single-site jobs contain a foreign key reference to an account.
 
+## Plural POST
+
+```javascript
+await session.createSingleSiteJobs([{"cardholder_id": 1, "account_id": 1, "status" : "REQUESTED"}, 
+                                    {"cardholder_id": 1, "account_id": 2, "status" : "REQUESTED"}]); 
+```
+
+```csharp
+//unsupported
+```
+
+```shell
+curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs" 
+  -X POST
+  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -B "{\"cardholder_id\": 1, \"account_id\": 1, \"status\" : \"REQUESTED\"}, {\"cardholder_id\": 1, \"account_id\": 2, \"status\" : \"REQUESTED\"}]" 
+  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
+```
+
+Some objects support bulk creation (Single site jobs).  This is accomplished by passing in array of objects rather than simply a single object.  
+
 ## Plural PUT/DELETE
+
+Some objects support updating and deleting using the standard filter parameters.  This is noted in the per-object documentation.
 
 
 
