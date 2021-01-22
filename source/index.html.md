@@ -50,15 +50,14 @@ CardSavrResponse<LoginResult> login = await session.Init();
 
 ```shell
 # With a shell, you must first establish a session, followed by 
-# a login command.  Note that the cookies from the session call 
-# must be passed into the login call. Keep in mind, this ONLY works 
+# a login command.  Keep in mind, this ONLY works 
 # with a development server that supports unsigned body requests. 
 curl "https://api.INSTANCE.cardsavr.io/session/start" 
-  -H "trace: {\"key\": \"my_trace\"}" -c ~/_cookies
+  -H "trace: {\"key\": \"my_trace\"}" 
 
 curl -iv -d "{\"password\": \"PASSWORD\", \"userName\": \"USERNAME\"}" 
   -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/session/login" 
-  -H "trace: {\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+  -H "trace: {\"key\": \"my_trace\"}" 
   
 ```
 
@@ -112,11 +111,11 @@ nonce | required | string (milliseconds) | contains the current UTC time in mill
 signature | required | string | The [string-to-sign format](https://developers.strivve.com/resources/encryption) requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the [SDK Libraries](https://developers.strivve.com/api-sdk/).
 hydration | (none) | stringified JSON object | [See hydration](#hydration) 
 paging | {"page": 1, "page_length": 25} | stringified JSON object | Only supported with GET calls. [See paging](#paging)
-x-cardsavr-session-jwt | preferred | string | [See session tokens] (#session-tokens)
+x-cardsavr-session-jwt | required | string | [See session tokens] (#session-tokens)
 
 ## session-tokens
 
-CardSavr needs to maintain an API session for state management including authentication, session key, replay prevention, etc.  Standard RFC-7519 JWT tokens are preferred for session persistence and cookies are used as a backup mechanism. The x-cardsavr-session-jwt header is used with token based session. The x-cardsavr-session-jwt header is managed transparently within the Strivve SDK.  It is the responsibility of applications directly using the direct REST protocol to set this header for each request.
+CardSavr needs to maintain an API session for state management including authentication, session key, replay prevention, etc.  Standard RFC-7519 JWT tokens are used for client sessions. The x-cardsavr-session-jwt header is used with token based sessions. The x-cardsavr-session-jwt header is managed transparently within the Strivve SDK.  It is the responsibility of applications directly using the direct REST protocol to set this header for each request.
 
 With GET /session/start to begin a new session
 
@@ -240,6 +239,10 @@ For example, including the header {hydration: '["address"]'} in a successful PUT
 `{"hydration": '["card.cardholder"]'}`
 
 for the endpoint '/place_card_on_multiple_sites_jobs' would hydrate the associated card AND cardholder (i.e. user) associated with the card. Hydration headers can be used with any endpoint for any resource that contains foreign key references.
+
+## Financial Institution
+
+A financial-institution header is required on many calls that require FI specfic context.  For example, all cardholders must belong to a financial insitution, and thus the header is required upon creation.  The header is preferred over applying to the body to avoid the unnecessary extra lookup call.  The SDK functions that require the fi have a required parameter in the corresponding function.
 
 ## Client Application
 
@@ -455,10 +458,14 @@ curl "https://api.INSTANCE.cardsavr.io/cardsavr_users"
   -X DELETE
   -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
   -B "{ \"id\": 123 }" 
-  -b ~/_cookies
+  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 A successful DELETE request will also delete any object that references the deleted object. The additional object types that will be deleted for a particular DELETE endpoint are listed in the individual endpoint documentation.
 
 For example, a successful DELETE request to '/cardsavr_accounts/123' would also delete any single-site jobs that reference the account with ID 123, as single-site jobs contain a foreign key reference to an account.
+
+## Plural PUT/DELETE
+
+
 
