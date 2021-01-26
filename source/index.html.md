@@ -121,7 +121,7 @@ With POST /session/login to begin a new session, this header is not required and
 
 With all subsequent requests on a session
 
-  `"x-cardsavr-session-jwt": value-returned-from-session-start`
+  `"x-cardsavr-session-jwt": value-returned-from-session-login`
 
 ## Trace 
 
