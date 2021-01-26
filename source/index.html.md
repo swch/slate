@@ -25,10 +25,6 @@ The CardSavr REST API is a service for managing payment card circulation on merc
 
 CardSavr responses and requests support JSON-formatted bodies only.
 
-# API Level Encryption
-
-The CardSavr service requires all API requests and responses to be signed and encrypted independent of TLS for all production environments. Development environments relax this to also allow plain text calls over TLS for learning and troubleshooting purposes. See [Additional REST API Protection](https://developers.strivve.com/resources/cryptography/) for information on this requirement. The CardSavr SDK takes care of all API encryption and signing.  Applications directly implementing the REST API are responsible for implementing this security.
-
 # Authentication
 
 > To authorize a login call is required:
@@ -54,12 +50,14 @@ CardSavrResponse<LoginResult> login = await session.Init();
 
 ```shell
 # With a shell, you must first establish a session, followed by 
-# a login command.  Note that the cookies from the session call 
-# must be passed into the login call. Keep in mind, this ONLY works 
+# a login command.  Keep in mind, this ONLY works 
 # with a development server that supports unsigned body requests. 
+curl "https://api.INSTANCE.cardsavr.io/session/start" 
+  -H "trace: {\"key\": \"my_trace\"}" 
+
 curl -iv -d "{\"password\": \"PASSWORD\", \"userName\": \"USERNAME\"}" 
   -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/session/login" 
-  -H "trace: {\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+  -H "trace: {\"key\": \"my_trace\"}" 
   
 ```
 
@@ -108,29 +106,22 @@ Header | Default | Type | Description
 ------ | ------- | ---- | -----------
 trace | required | stringified JSON object | [See trace](#trace)
 client-application | integrator name | string | unique per application, integrator name provided as default when using an SDK
-authorization | preferred | string | contains the [integrator name and a prefix](https://developers.strivve.com/resources/encryption), populated by SDK libraries. This header is not required for use with Postman and Curl on development environments.
-nonce | preferred | string (milliseconds) | contains the current UTC time in milliseconds, and therefore provides protection against [replay attacks](https://developers.strivve.com/resources/encryption). This header is not required for use with Postman and Curl on development environments.
-signature | preferred | string | The [string-to-sign format](https://developers.strivve.com/resources/encryption) requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the [SDK Libraries](https://developers.strivve.com/api-sdk/). This header is not required for use with Postman and Curl on development environments.
+authorization | required | string | contains the [integrator name and a prefix](https://developers.strivve.com/resources/encryption), populated by SDK libraries.
+nonce | required | string (milliseconds) | contains the current UTC time in milliseconds, and therefore provides protection against [replay attacks](https://developers.strivve.com/resources/encryption).
+signature | required | string | The [string-to-sign format](https://developers.strivve.com/resources/encryption) requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the [SDK Libraries](https://developers.strivve.com/api-sdk/).
 hydration | (none) | stringified JSON object | [See hydration](#hydration) 
 paging | {"page": 1, "page_length": 25} | stringified JSON object | Only supported with GET calls. [See paging](#paging)
-x-cardsavr-session-jwt | preferred | string | [See session tokens] (#session-tokens)
-cookie | alternative | cookie format | [See cookie note] (#cookie-note)
+x-cardsavr-session-jwt | required | string | [See session tokens] (#session-tokens)
 
 ## session-tokens
 
-CardSavr needs to maintain an API session for state management including authentication, session key, replay prevention, etc.  Standard RFC-7519 JWT tokens are preferred for session persistence and cookies are used as a backup mechanism. The x-cardsavr-session-jwt header is used with token based session. The x-cardsavr-session-jwt header is managed transparently within the Strivve SDK.  It is the responsibility of applications directly using the direct REST protocol to set this header or provide cookies for each request.
+CardSavr needs to maintain an API session for state management including authentication, session key, replay prevention, etc.  Standard RFC-7519 JWT tokens are used for client sessions. The x-cardsavr-session-jwt header is used with token based sessions. The x-cardsavr-session-jwt header is managed transparently within the Strivve SDK.  It is the responsibility of applications directly using the direct REST protocol to set this header for each request.
 
-With POST /session/login to begin a new session
-
-  `"x-cardsavr-session-token": "null"` 
+With POST /session/login to begin a new session, this header is not required and will be ignored.
 
 With all subsequent requests on a session
 
-  `"x-cardsavr-session-token": value-returned-from-session-login`
-
-### cookie-note
-
-When the x-cardsavr-session-jwt header is not present in a /session/start request, CardSavr will fall back to setting and using a cookie named "CardSavrSession" for session persistence. This support is intended for use with cURL and Postman for testing and debugging. 
+  `"x-cardsavr-session-jwt": value-returned-from-session-start`
 
 ## Trace 
 
@@ -138,7 +129,9 @@ When the x-cardsavr-session-jwt header is not present in a /session/start reques
 
 ```javascript
 //initialize as part of the session -- defaults to 
-//the unique username of the session
+//the unique username of the client user.  If an agent user
+//is operating on behalf of a cardholder, the cardholder cid 
+//is the default.  The example specifies how to change it.
 const session = new CardsavrSession(cardsavr_server, 
     app_key, app_name, username, password, null, null, 
     JSON.stringify({key: "NlOFNNlKabi7Fn26CLw="}));
@@ -157,14 +150,15 @@ CardSavrHttpClient session = new CardSavrHttpClient(_cardsavrServer,
 
 //or per request
 HttpRequestHeaders headers = new HttpRequestMessage().Headers;
-headers.Add("trace", "{\"key\": \"my_trace\"}");
 
+headers.Add("trace", "{\"key\": \"my_trace\"}");
 CardSavrResponse<List<User>> result = await http.GetUsersAsync(null, null, headers);
 ```
 
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_users" 
-  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\", \"bid\": \"hEOF26sbi7FCNNlLw==\"}" -c ~/_cookies
+  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\", \"bid\": \"hEOF26sbi7FCNNlLw==\"}" 
+  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 `"trace": JSON-stringified trace object`
@@ -199,7 +193,7 @@ CardSavrResponse<List<Card>> result = await
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_cards/123" 
   -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
   -H "hydration: [\"address\"]" 
-  -c ~/_cookies
+  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 ```json
@@ -217,7 +211,7 @@ curl "https://api.INSTANCE.cardsavr.io/cardsavr_cards/123"
   "created_on": "2019-02-06T20:33:23.094Z",
   "last_updated_on": "2019-03-13T22:32:30.897Z",
   "address": 
-    { "user_id": 3,
+    { "cardholder_id": 3,
       "is_primary": false,
       "address1": "12345 Harris Ave",
       "address2": "STE. 601",
@@ -244,6 +238,10 @@ For example, including the header {hydration: '["address"]'} in a successful PUT
 
 for the endpoint '/place_card_on_multiple_sites_jobs' would hydrate the associated card AND cardholder (i.e. user) associated with the card. Hydration headers can be used with any endpoint for any resource that contains foreign key references.
 
+## Financial Institution
+
+A financial-institution header is required on many calls that require FI specfic context.  For example, all cardholders must belong to a financial insitution, and thus the header is required upon creation.  The header is preferred over applying to the body to avoid the unnecessary extra lookup call.  The SDK functions that require the fi have a required parameter in the corresponding function.
+
 ## Client Application
 
 > Setting a custom application header (defaults to app name)
@@ -260,7 +258,7 @@ http.SetIdentificationHeader('my-client-app');
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_cards/123" 
   -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
   -H "client-application: \"my-client-app\"" 
-  -c ~/_cookies
+  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 `{'client-application': {client application name}}`
@@ -285,7 +283,7 @@ CardSavrResponse<List<Card>> list = await http.getCardsAsync(null, paging);
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_cards/123" 
   -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
   -H "paging: \"{\"page\": \"1\"}\"" 
-  -b ~/_cookies
+  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 `{'paging': 'JSON-stringified paging object'}`
@@ -310,27 +308,28 @@ descending | boolean | If true, sorts results in descending order; if false, sor
 
 *Check GET endpoint documentation to see which properties are sort-able
 
-const updated_body = { id: 1, cardholder_safe_key : new_cardholder_safe_key };
-const res = await my_session.updateUser(1, updated_body, new_cardholder_safe_key, cardholder_safe_key);
+const updated_body = { id: 1, first_name : "Mark" };
+const res = await my_session.updateUser(1, updated_body);
 
 
 ## Safe key
 
-> safe keys are included to save data to the users' safe - if Strivve is storing the safe key, safe keys do not be inlcuded as a request header. If a customer uses a remote safe key store, it must be included with all safe managed properties (accounts, jobs, and cards), and it is the customer's responsibility to rotate them.  If a user is going to persist for a significant length of time (longer than a one and done job), then it is advised to use a thrid party safe key store.
+> safe keys are required to encrypt PII data (email address, address, name) and PCI data (PAN, CVV)  Customers are encouraged to store their own safe keys outside the cardsavr environment.  This prevents the API from examining sensitive data.  If safe key storage is deemed unnecessary (espeically for short lived cardholders), Strivve has the ability to store the safe key on behalf of the customer.  By omitting the safe key when adding cardholders, Strive will generate a safe key and store it along with the cardholder.  It is strongly encouraged not to use a Strivve managed safe key if cardholders are going to persist for long periods of time.
+
+Although safe_keys are stored with the cardholder, callers cannot persist a safe key on the body of the cardholder.  
 
 ```javascript
-const updated_body = { id: 1, cardholder_safe_key : new_cardholder_safe_key };
-const res = await my_session.updateUser(1, updated_body, new_cardholder_safe_key, cardholder_safe_key);
+const body = { id: 1, email : "foo@foo.com" };
+const res = await my_session.createCardholder(1, body, cardholder_safe_key);
 ```
 
 ```csharp
 HttpRequestHeaders headers = new HttpRequestMessage().Headers;
-AddNewSafeKeyHeader(headers, newSafeKey);
 AddSafeKeyHeader(headers, safeKey);
 
 PropertyBag bag = new PropertyBag();
 bag["id"] = 1;
-bag["cardholder_safe_key"] = newSafeKey;
+bag["email"] = "foo@foo.com";
 await http.UpdateUserAsync(bag.GetString("id"), bag, null, headers); //no paging
 ```
 
@@ -340,16 +339,16 @@ curl "https://api.INSTANCE.cardsavr.io/cardsavr_users/1"
   -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
   -H "new-cardholder-safe-key: +h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=}" 
   -H "cardholder-safe-key: rttYqkGPHLk2KeK6OD8612gSurKXu0X8W6BTWF3hhGM=}" 
-  -B "{ \"id\": 1 }" 
-  -b ~/_cookies
+  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
+  -B "{ \"id\": 1, \"cardholder_safe_key\": \"+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=\" }" 
 ```
 
 `{'cardholder-safe-key': 'rttYqkGPHLk2KeK6OD8612gSurKXu0X8W6BTWF3hhGM='}`
 `{'new-cardholder-safe-key': '+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw='}`
 
-You must send an encrypted cardholder safe key header for each request that involves safe-protected information. Saving users (/cardsavr_users), accounts (/cardsavr_accounts) and cards (/cardsavr_cards) require the key to write encrypted data for PANs, CVVs, merchant usernames and merchant site passwords to the server side safe.  Safe keys can be stored by the third party by including the 'cardholder-safe-key' header when creating a user, or they can optionally be stored by Strivve within Cardsavr by not including a 'cardholder-safe-key]' header when creating a user. Individual endpoint documentation will indicate if a safe key header is required.
+You must send an encrypted cardholder safe key header for each request that involves safe-protected information. Saving users (/cardsavr_users), accounts (/cardsavr_accounts) and cards (/cardsavr_cards) require the key to write encrypted data like PANs and merchant site passwords to the server side safe.  Safe keys can be stored by the third party, or they can optionally be stored by Strivve within Cardsavr. Individual endpoint documentation will indicate if a safe key header is required.
 
-For third party managed safe keys, when rotating a safe key, you must provide both an encrypted 'cardholder-safe-key' header and an encrypted 'new-cardholder-safe-key' header on a user update.
+When rotating a safe key, you must provide a 'new-cardholder-safe-key' header.  Both headers are required (new- and existing) in this case.
 
 See the [link] cardholder safe key section for more information on generating and using safe keys.
 
@@ -376,7 +375,7 @@ CardSavrResponse<List<MerchantSite>> merchants = await http.GetMerchantSitesAsyn
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_users?top_hosts=amazon.com,apple.com&exclude_hosts=walmart.com" 
   -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
-  -b ~/_cookies
+  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 ### Singular filters
@@ -457,10 +456,37 @@ curl "https://api.INSTANCE.cardsavr.io/cardsavr_users"
   -X DELETE
   -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
   -B "{ \"id\": 123 }" 
-  -b ~/_cookies
+  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 A successful DELETE request will also delete any object that references the deleted object. The additional object types that will be deleted for a particular DELETE endpoint are listed in the individual endpoint documentation.
 
 For example, a successful DELETE request to '/cardsavr_accounts/123' would also delete any single-site jobs that reference the account with ID 123, as single-site jobs contain a foreign key reference to an account.
+
+## Plural POST
+
+```javascript
+await session.createSingleSiteJobs([{"cardholder_id": 1, "account_id": 1, "status" : "REQUESTED"}, 
+                                    {"cardholder_id": 1, "account_id": 2, "status" : "REQUESTED"}]); 
+```
+
+```csharp
+//unsupported
+```
+
+```shell
+curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs" 
+  -X POST
+  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -B "{\"cardholder_id\": 1, \"account_id\": 1, \"status\" : \"REQUESTED\"}, {\"cardholder_id\": 1, \"account_id\": 2, \"status\" : \"REQUESTED\"}]" 
+  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
+```
+
+Some objects support bulk creation (Single site jobs).  This is accomplished by passing in array of objects rather than simply a single object.  
+
+## Plural PUT/DELETE
+
+Some objects support updating and deleting using the standard filter parameters.  This is noted in the per-object documentation.
+
+
 
