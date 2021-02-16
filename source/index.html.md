@@ -27,7 +27,7 @@ CardSavr responses and requests support JSON-formatted bodies only.
 
 # Authentication
 
-> To authorize, a session initialization followed by a login call is required:
+> To authorize a login call is required:
 
 ```javascript
 const { CardsavrHelper } = require("@strivve/strivve-sdk/lib/cardsavr/CardsavrJSLibrary-2.0");
@@ -117,13 +117,11 @@ x-cardsavr-session-jwt | required | string | [See session tokens] (#session-toke
 
 CardSavr needs to maintain an API session for state management including authentication, session key, replay prevention, etc.  Standard RFC-7519 JWT tokens are used for client sessions. The x-cardsavr-session-jwt header is used with token based sessions. The x-cardsavr-session-jwt header is managed transparently within the Strivve SDK.  It is the responsibility of applications directly using the direct REST protocol to set this header for each request.
 
-With GET /session/start to begin a new session
-
-  `"x-cardsavr-session-jwt": "null"` 
+With POST /session/login to begin a new session, this header is not required and will be ignored.
 
 With all subsequent requests on a session
 
-  `"x-cardsavr-session-jwt": value-returned-from-session-start`
+  `"x-cardsavr-session-jwt": value-returned-from-session-login`
 
 ## Trace 
 
