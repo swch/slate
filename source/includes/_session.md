@@ -1,30 +1,30 @@
-# Grants and Passwords
+# Cardholder authorization and Passwords
 
 ## Get user credential grant
 
-> Credential grants are very important for handing off responbility to a downstream client.  The grants must be provisioned by a user that caan create grants (like a cardholder_agent), and the grant is one time use for 3 minutes.
+> Credential grants are very important for handing off responbility to a downstream client.  The grants must be provisioned by a user that caan create grants (like a customer_agent), and the grant is one time use for 3 minutes.  Grants are created when cardholders are created, and can be used as part of the authorize endpoint within the client by an agent (generally a cardholder_agent).
 
 ```javascript
 const { CardsavrSession } = require() "@strivve/strivve-sdk/lib/cardsavr/CardsavrJSLibrary-2.0";
 
 //agent_session is the session of a cardholder agent.  Cardholder agents are lower 
-//privileged agents that can issue grants for cardholder accounts.
-const grant_response_login = await agent_session.getCredentialGrant(cardholder_id);
-const grant = grant_response_login.body.user_credential_grant;
+//privileged agents that can authorize themselves using grants created upstream when cardholder are created.
+const login = await agent_session.authorizeCardholder(grant);
+const response = agent_session.createSingleSitJob(job); //agent can now act on behalf of cardholder
 ```
 
 ```csharp
 using Switch.CardSavr.Http;
 
-CardSavrResponse<CredentialGrant> grantCardholder = await agentSession.client.CreateUserGrantAsync(cardholderId);
-string grant = grantCardholder.Body.user_credential_grant;
+CardSavrResponse<UserLogin> login = await agentSession.client.authorizeCardholder(grant);
+//user can now act on behalf of cardholder
 ```
 
 ```shell
 #session must first be started, and must have permissions to create grants
 curl -iv 
-  -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/cardsavr_users/:id/credential_grant" 
-  -H "trace: {\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+  -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/cardholder/{{GRANT}}/authorize" 
+  -H "trace: {\"key\": \"my_trace\"}" -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 > Grants are always 38 characters, are one time use, and expire after 3 minutes.
@@ -62,12 +62,23 @@ bag["password_copy"] = new_password;
 CardSavrResponse<PropertyBag> result = await http.UpdateUserPasswordAsync(user_id, bag);
 ```
 
+```java
+JsonObject body = Json.createObjectBuilder()
+  .add("old_password", old_password)
+  .add("password", password)
+  .add("password_copy", password_copy)
+  .build();
+
+String url = String.format("/users/%d/update_password", userId);
+JsonObject response = (JsonObject) session.put(url, body, null, null);
+```
+
 ```shell
 #old_pass is not required for privileged admins.  Users must provide their old password
 curl -iv  -d "{\"password\": \"3ysXPhntmPDU7xUFYKbc/4Aq=WVrhExdjHQsx5FgV2pZ\", 
   \"password_copy\": \"3ysXPhntmPDU7xUFYKbc/4Aq=WVrhExdjHQsx5FgV2pZ\"}" 
   -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/cardsavr_users/:id/credential_grant" 
-  -H "trace: {\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+  -H "trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 > Grants are always 38 characters, are one time use, and expire after 3 minutes.
@@ -131,7 +142,7 @@ JsonObject obj = (JsonObject) session.login(username, password, null);
 ```shell
 curl -iv -d "{\"password\": \"PASSWORD\", \"userName\": \"USERNAME\"}" 
   -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/session/login" 
-  -H "trace: {\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+  -H "trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 > The login call both starts and authorizes a new session and returns the user, along with a public key to be used in generating a new API  Session Key to sign and encrypt future requests on the session. See [API Session Keys](https://developers.strivve.com/resources/cryptography/) for information on using Server's public key. Return a session token to be used with all subsequent calls on the session.  This value is sent with the "x-cardsavr-session-jwt" header. If you are debugging with cURL or Postman, cookies are used in lieu of session tokens.
@@ -207,7 +218,7 @@ JsonObject response = session.end();
 ```shell
 #session must first be started
 curl -iv -d -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/session/end" 
-  -H "trace: {\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+  -H "trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 > Session end returns a 200 with no body

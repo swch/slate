@@ -15,11 +15,15 @@ const key = subscription.body.access_key;
 //not implemented
 ```
 
+```java
+//not implemented
+```
+
 ```shell
 #session must first be started, and must have permissions
 curl -iv 
   -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/messages/place_card_on_single_site_jobs/123/broadcasts/registrations" 
-  -H "trace: {\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+  -H "trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 > access_key is required for all future requests for status updates.  Messages are returned as an array.  status is always job_status
@@ -71,7 +75,7 @@ Not implemented yet
 curl -iv -H "Content-Type: application/json" 
   "https://api.INSTANCE.cardsavr.io/messages/place_card_on_single_site_jobs/123/broadcasts/" 
   -H "cardsavr-messaging-access-key: erz5nk219FPZNWGv3AbHdA=="
-  -H "trace: {\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+  -H "trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 > Response is an array, as mutliple messages may be generated between polls.
@@ -129,15 +133,18 @@ const request_probe = setInterval(async () => {
 //not implemented
 ```
 
-```shell
-# With a shell, you must first establish a session, followed by 
-# a login command.  Note that the cookies from the session call 
-# must be passed into the login call. This ONLY works 
-# with a development server that supports unsigned body requests. 
-curl "https://api.INSTANCE.cardsavr.io/messages/place_card_on_single_site_jobs/123/broadcasts" 
-  -H 
-  -H "trace: {\"key\": \"my_trace\"}" -c ~/_cookies  
+```java
+// not implemented
 ```
+
+```shell
+# With a shell, you must first establish a sessionby logging in.
+# All calls must be accompanied by the session token.  This only works on a dev
+# server with authentication optional. 
+curl "https://api.INSTANCE.cardsavr.io/messages/place_card_on_single_site_jobs/123/broadcasts" 
+  -H "trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}" 
+```
+
 
 > The response contains a unique request envelope id which must be returned with the response.
 
@@ -174,7 +181,7 @@ session.sendJobInformation(job_id, envelope_id, "tfa_response", "1234");
 #session must first be started
 curl -iv -X POST -d "{\"envelope_id\": \"uHsa6mI3GYO2ZwOf82SuaA==\", \"type\": \"tfa_request\", \"message\": \"1234\"}" 
   -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/messages/place_card_on_single_site_jobs/123/credential_responses" 
-  -H "trace: {\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+  -H "trace: {\"key\": \"my_trace\"}" -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 > The login call returns the user, along with a public key to be used to encrypt future requests
