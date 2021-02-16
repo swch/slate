@@ -5,6 +5,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - shell
   - javascript
   - csharp
+  - java
 
 toc_footers:
   - <a href='#'>Email us for a Developer Key</a>

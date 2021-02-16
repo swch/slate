@@ -120,6 +120,14 @@ CardSavrHttpClient session = new CardSavrHttpClient(_cardsavrServer,
 CardSavrResponse<LoginResult> login = await session.Init();
 ```
 
+```java
+import com.strivve.CardsavrSession;
+
+this.session = CardsavrSession.createSession(integratorName, integratorKey, apiServer);
+JsonObject obj = (JsonObject) session.login(username, password, null);
+//throws CardsavrRESTException
+```
+
 ```shell
 curl -iv -d "{\"password\": \"PASSWORD\", \"userName\": \"USERNAME\"}" 
   -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/session/login" 
@@ -188,6 +196,12 @@ using Switch.CardSavr.Http;
 await client.EndAsync();
 //or if using CardSavrHelper, you need to release the session from the cache
 //await helper.CloseSession(userName);
+```
+
+```java
+import com.strivve.CardsavrSession;
+
+JsonObject response = session.end();
 ```
 
 ```shell
