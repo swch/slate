@@ -1,6 +1,6 @@
 # Client Messages
 
-## Subscribe to Status Updaates
+## Subscribe to Status Updates
 
 > Before you can listen to a channel, you must first subscribe.  Unlike credential requests, multiple clients can listen to messages for the same job.
 
