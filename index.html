@@ -271,7 +271,7 @@
               </ul>
           </li>
           <li>
-            <a href="#grants-and-passwords" class="toc-h1 toc-link" data-title="Grants and Passwords">Grants and Passwords</a>
+            <a href="#cardholder-authorization-and-passwords" class="toc-h1 toc-link" data-title="Cardholder authorization and Passwords">Cardholder authorization and Passwords</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#get-user-credential-grant" class="toc-h2 toc-link" data-title="Get user credential grant">Get user credential grant</a>
@@ -988,24 +988,24 @@ const res = await my_session.updateUser(1, updated_body);</p>
 <p>Some objects support bulk creation (Single site jobs).  This is accomplished by passing in array of objects rather than simply a single object.  </p>
 <h2 id='plural-put-delete'>Plural PUT/DELETE</h2>
 <p>Some objects support updating and deleting using the standard filter parameters (e.g. Single Site Jobs).  This is noted in the per-object documentation.</p>
-<h1 id='grants-and-passwords'>Grants and Passwords</h1><h2 id='get-user-credential-grant'>Get user credential grant</h2>
+<h1 id='cardholder-authorization-and-passwords'>Cardholder authorization and Passwords</h1><h2 id='get-user-credential-grant'>Get user credential grant</h2>
 <blockquote>
-<p>Credential grants are very important for handing off responbility to a downstream client.  The grants must be provisioned by a user that caan create grants (like a cardholder_agent), and the grant is one time use for 3 minutes.</p>
+<p>Credential grants are very important for handing off responbility to a downstream client.  The grants must be provisioned by a user that caan create grants (like a customer_agent), and the grant is one time use for 3 minutes.  Grants are created when cardholders are created, and can be used as part of the authorize endpoint within the client by an agent (generally a cardholder_agent).</p>
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">CardsavrSession</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">()</span> <span class="dl">"</span><span class="s2">@strivve/strivve-sdk/lib/cardsavr/CardsavrJSLibrary-2.0</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">//agent_session is the session of a cardholder agent.  Cardholder agents are lower </span>
-<span class="c1">//privileged agents that can issue grants for cardholder accounts.</span>
-<span class="kd">const</span> <span class="nx">grant_response_login</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">agent_session</span><span class="p">.</span><span class="nx">getCredentialGrant</span><span class="p">(</span><span class="nx">cardholder_id</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">grant</span> <span class="o">=</span> <span class="nx">grant_response_login</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">user_credential_grant</span><span class="p">;</span>
+<span class="c1">//privileged agents that can authorize themselves using grants created upstream when cardholder are created.</span>
+<span class="kd">const</span> <span class="nx">login</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">agent_session</span><span class="p">.</span><span class="nx">authorizeCardholder</span><span class="p">(</span><span class="nx">grant</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">agent_session</span><span class="p">.</span><span class="nx">createSingleSitJob</span><span class="p">(</span><span class="nx">job</span><span class="p">);</span> <span class="c1">//agent can now act on behalf of cardholder</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="k">using</span> <span class="nn">Switch.CardSavr.Http</span><span class="p">;</span>
 
-<span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">CredentialGrant</span><span class="p">&gt;</span> <span class="n">grantCardholder</span> <span class="p">=</span> <span class="k">await</span> <span class="n">agentSession</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="nf">CreateUserGrantAsync</span><span class="p">(</span><span class="n">cardholderId</span><span class="p">);</span>
-<span class="kt">string</span> <span class="n">grant</span> <span class="p">=</span> <span class="n">grantCardholder</span><span class="p">.</span><span class="n">Body</span><span class="p">.</span><span class="n">user_credential_grant</span><span class="p">;</span>
+<span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">UserLogin</span><span class="p">&gt;</span> <span class="n">login</span> <span class="p">=</span> <span class="k">await</span> <span class="n">agentSession</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="nf">authorizeCardholder</span><span class="p">(</span><span class="n">grant</span><span class="p">);</span>
+<span class="c1">//user can now act on behalf of cardholder</span>
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#session must first be started, and must have permissions to create grants</span>
 curl <span class="nt">-iv</span> 
-  <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="s2">"https://api.INSTANCE.cardsavr.io/cardsavr_users/:id/credential_grant"</span> 
-  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-b</span> ~/_cookies <span class="nt">-c</span> ~/_cookies
+  <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="s2">"https://api.INSTANCE.cardsavr.io/cardholder/{{GRANT}}/authorize"</span> 
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-H</span> <span class="s2">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span>
 </code></pre></div>
 <blockquote>
 <p>Grants are always 38 characters, are one time use, and expire after 3 minutes.</p>
@@ -1032,11 +1032,19 @@ curl <span class="nt">-iv</span>
 <span class="n">bag</span><span class="p">[</span><span class="s">"password_copy"</span><span class="p">]</span> <span class="p">=</span> <span class="n">new_password</span><span class="p">;</span>
 
 <span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">PropertyBag</span><span class="p">&gt;</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">UpdateUserPasswordAsync</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">bag</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonObject</span> <span class="n">body</span> <span class="o">=</span> <span class="nc">Json</span><span class="o">.</span><span class="na">createObjectBuilder</span><span class="o">()</span>
+  <span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"old_password"</span><span class="o">,</span> <span class="n">old_password</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"password"</span><span class="o">,</span> <span class="n">password</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"password_copy"</span><span class="o">,</span> <span class="n">password_copy</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+<span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"/users/%d/update_password"</span><span class="o">,</span> <span class="n">userId</span><span class="o">);</span>
+<span class="nc">JsonObject</span> <span class="n">response</span> <span class="o">=</span> <span class="o">(</span><span class="nc">JsonObject</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">body</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#old_pass is not required for privileged admins.  Users must provide their old password</span>
 curl <span class="nt">-iv</span>  <span class="nt">-d</span> <span class="s2">"{</span><span class="se">\"</span><span class="s2">password</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">3ysXPhntmPDU7xUFYKbc/4Aq=WVrhExdjHQsx5FgV2pZ</span><span class="se">\"</span><span class="s2">, 
   </span><span class="se">\"</span><span class="s2">password_copy</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">3ysXPhntmPDU7xUFYKbc/4Aq=WVrhExdjHQsx5FgV2pZ</span><span class="se">\"</span><span class="s2">}"</span> 
   <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="s2">"https://api.INSTANCE.cardsavr.io/cardsavr_users/:id/credential_grant"</span> 
-  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-b</span> ~/_cookies <span class="nt">-c</span> ~/_cookies
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span>  <span class="nt">-H</span> <span class="s2">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span>
 </code></pre></div>
 <blockquote>
 <p>Grants are always 38 characters, are one time use, and expire after 3 minutes.</p>
@@ -1103,7 +1111,7 @@ Most password updates can be done via the [Partner Portal](https://developers.st
 <span class="c1">//throws CardsavrRESTException</span>
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="s2">"{</span><span class="se">\"</span><span class="s2">password</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">PASSWORD</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">userName</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">USERNAME</span><span class="se">\"</span><span class="s2">}"</span> 
   <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="s2">"https://api.INSTANCE.cardsavr.io/session/login"</span> 
-  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-b</span> ~/_cookies <span class="nt">-c</span> ~/_cookies
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span>  <span class="nt">-H</span> <span class="s2">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span>
 </code></pre></div>
 <blockquote>
 <p>The login call both starts and authorizes a new session and returns the user, along with a public key to be used in generating a new API  Session Key to sign and encrypt future requests on the session. See <a href="https://developers.strivve.com/resources/cryptography/">API Session Keys</a> for information on using Server&#39;s public key. Return a session token to be used with all subsequent calls on the session.  This value is sent with the &quot;x-cardsavr-session-jwt&quot; header. If you are debugging with cURL or Postman, cookies are used in lieu of session tokens.</p>
@@ -1190,7 +1198,7 @@ Most password updates can be done via the [Partner Portal](https://developers.st
 <span class="nc">JsonObject</span> <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">end</span><span class="o">();</span>
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#session must first be started</span>
 curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="s2">"https://api.INSTANCE.cardsavr.io/session/end"</span> 
-  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-b</span> ~/_cookies <span class="nt">-c</span> ~/_cookies
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span>  <span class="nt">-H</span> <span class="s2">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span>
 </code></pre></div>
 <blockquote>
 <p>Session end returns a 200 with no body</p>
@@ -5051,10 +5059,11 @@ https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/93798229
 <span class="c1">//this key is necessary for all future requests</span>
 <span class="kd">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">subscription</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">access_key</span><span class="p">;</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="c1">//not implemented</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="c1">//not implemented</span>
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#session must first be started, and must have permissions</span>
 curl <span class="nt">-iv</span> 
   <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="s2">"https://api.INSTANCE.cardsavr.io/messages/place_card_on_single_site_jobs/123/broadcasts/registrations"</span> 
-  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-b</span> ~/_cookies <span class="nt">-c</span> ~/_cookies
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span>  <span class="nt">-H</span> <span class="s2">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span>
 </code></pre></div>
 <blockquote>
 <p>access_key is required for all future requests for status updates.  Messages are returned as an array.  status is always job_status</p>
@@ -5094,7 +5103,7 @@ See the <a href="https://developers.strivve.com/resources/messaging">Messaging s
 curl <span class="nt">-iv</span> <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> 
   <span class="s2">"https://api.INSTANCE.cardsavr.io/messages/place_card_on_single_site_jobs/123/broadcasts/"</span> 
   <span class="nt">-H</span> <span class="s2">"cardsavr-messaging-access-key: erz5nk219FPZNWGv3AbHdA=="</span>
-  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-b</span> ~/_cookies <span class="nt">-c</span> ~/_cookies
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span>  <span class="nt">-H</span> <span class="s2">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span>
 </code></pre></div>
 <blockquote>
 <p>Response is an array, as mutliple messages may be generated between polls.</p>
@@ -5158,13 +5167,12 @@ curl <span class="nt">-iv</span> <span class="nt">-H</span> <span class="s2">"Co
     <span class="p">}</span>
 <span class="p">},</span> <span class="mi">5000</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="c1">//not implemented</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># With a shell, you must first establish a session, followed by </span>
-<span class="c"># a login command.  Note that the cookies from the session call </span>
-<span class="c"># must be passed into the login call. This ONLY works </span>
-<span class="c"># with a development server that supports unsigned body requests. </span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="c1">// not implemented</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># With a shell, you must first establish a sessionby logging in.</span>
+<span class="c"># All calls must be accompanied by the session token.  This only works on a dev</span>
+<span class="c"># server with authentication optional. </span>
 curl <span class="s2">"https://api.INSTANCE.cardsavr.io/messages/place_card_on_single_site_jobs/123/broadcasts"</span> 
-  <span class="nt">-H</span> 
-  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-c</span> ~/_cookies  
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span>  <span class="nt">-H</span> <span class="s2">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span> 
 </code></pre></div>
 <blockquote>
 <p>The response contains a unique request envelope id which must be returned with the response.</p>
@@ -5188,7 +5196,7 @@ curl <span class="s2">"https://api.INSTANCE.cardsavr.io/messages/place_card_on_s
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#session must first be started</span>
 curl <span class="nt">-iv</span> <span class="nt">-X</span> POST <span class="nt">-d</span> <span class="s2">"{</span><span class="se">\"</span><span class="s2">envelope_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">uHsa6mI3GYO2ZwOf82SuaA==</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">type</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">tfa_request</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">message</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">1234</span><span class="se">\"</span><span class="s2">}"</span> 
   <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="s2">"https://api.INSTANCE.cardsavr.io/messages/place_card_on_single_site_jobs/123/credential_responses"</span> 
-  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-b</span> ~/_cookies <span class="nt">-c</span> ~/_cookies
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-H</span> <span class="s2">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span>
 </code></pre></div>
 <blockquote>
 <p>The login call returns the user, along with a public key to be used to encrypt future requests</p>
