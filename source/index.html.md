@@ -49,6 +49,13 @@ CardSavrResponse<LoginResult> login = await session.Init();
 //await session.getCardsAsync(); //session can now be used to make api calls
 ```
 
+```java
+import com.strivve.CardsavrSession;
+
+this.session = CardsavrSession.createSession(integratorName, integratorKey, apiServer);
+JsonObject obj = (JsonObject) session.login(username, password, null);
+```
+
 ```shell
 # With a shell, you must first establish a session, followed by 
 # a login command.  Keep in mind, this ONLY works 
@@ -62,13 +69,7 @@ curl -iv -d "{\"password\": \"PASSWORD\", \"userName\": \"USERNAME\"}"
   
 ```
 
-> The SDK calls save the sessionSalt for future use, so all that is returned is the structure JSON of the login.  See [link to encryption stuff] on how to use the sessionSalt.
-
-```json
-{
-  "sessionSalt": "kz2R3qexAkZqhoCalnNX9+6CLAMZ+"
-}
-```
+> The SDK calls hide the implementation of the login.  In includes a ECDH key exchange, password signing, and the establishment of a session secret key which will be used for all future encryptions.  It also leverages a session token which enables the client to access their session on the server.
 
 ```json
 {
@@ -156,6 +157,21 @@ headers.Add("trace", "{\"key\": \"my_trace\"}");
 CardSavrResponse<List<User>> result = await http.GetUsersAsync(null, null, headers);
 ```
 
+```java
+CardsavrSession session = CardsavrSession.createSession(integratorName, integratorKey, apiServer);
+
+//Add a trace at the start of the session
+JsonObject trace = createObjectBuilder().add("key", "my_trace").build();
+(JsonObject) session.login(username, password, trace);
+
+//or per request
+Headers headers = session.createHeaders();
+headers.trace = trace;
+session.post("/cardsavr_cards", body, headers);
+
+```
+
+
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_users" 
   -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\", \"bid\": \"hEOF26sbi7FCNNlLw==\"}" 
@@ -185,9 +201,16 @@ await session.getCards(123, {}, { "hydration": JSON.stringify(["address"]) });
 ```csharp
 HttpRequestHeaders headers = new HttpRequestMessage().Headers;
 headers.Add("hydration", "[\"address\"]");
-
+    
 CardSavrResponse<List<Card>> result = await 
   http.GetCardsAsync(123);
+```
+
+```java
+CardsavrSession header = session.createHeaders();
+headers.hydration = Json.createArrayBuilder().add("address").build();
+
+session.get("/cardsavr_cards", 1, headers);
 ```
 
 ```shell
@@ -255,6 +278,10 @@ session.setSessionHeaders( {'client-application': 'my-client-app' });
 http.SetIdentificationHeader('my-client-app');
 ```
 
+```java
+//Not implemented, must pass as a header
+```
+
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_cards/123" 
   -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
@@ -278,6 +305,12 @@ await session.getCards(123, { page: 1 });
 ```csharp
 Paging paging = new Paging() { PageLength = 100 };
 CardSavrResponse<List<Card>> list = await http.getCardsAsync(null, paging);
+```
+
+```java
+Headers headers = session.createHeaders();
+headers.paging = Json.createObjectBuilder().add("page", 1).add("page_length", 5).build();
+session.post("/cardsavr_cards", body, headers);
 ```
 
 ```shell
@@ -334,6 +367,15 @@ bag["email"] = "foo@foo.com";
 await http.UpdateUserAsync(bag.GetString("id"), bag, null, headers); //no paging
 ```
 
+```java
+Headers headers = session.createHeaders();
+headers.safeKey = SAFE_KEY;
+headers.newSafeKey = NEW_SAFE_KEY;
+
+JsonObject obj = Json.createJsonBuilder().add("id", 1).build();
+JsonObject response = session.update("/cardsavr_users", obj, headers);
+```
+
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_users/1" 
   -X PUT
@@ -372,6 +414,13 @@ CardSavrResponse<List<MerchantSite>> merchants = await http.GetMerchantSitesAsyn
     }
 );
 ```
+
+```java
+  List<NameValuePair> filters = new ArrayList<>(1);
+  filters.add(new BasicNameValuePair("tags", "canada"));
+  JsonArray response = (JsonArray)session.get("/merchant_sites", filters, null);
+```
+
 
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_users?top_hosts=amazon.com,apple.com&exclude_hosts=walmart.com" 
@@ -445,11 +494,15 @@ Multiple filters for string properties always use **partial** matching, meaning 
 > Deleting user 123 will delete their corresponding jobs, cards, and addresses.  Their job results will remain.
 
 ```javascript
-await session.deleteUser(123); 
+await session.deleteCardholder(123); 
 ```
 
 ```csharp
-await http.DeleteUserAsync(123);
+await http.DeleteCardholderAsync(123);
+```
+
+```java
+session.delete("/cardholder", 123);
 ```
 
 ```shell
@@ -475,6 +528,14 @@ await session.createSingleSiteJobs([{"cardholder_id": 1, "account_id": 1, "statu
 //unsupported
 ```
 
+```java
+JsonArray body = Json.createArrayBuilder()
+  .add(Json.createJsonBuilder().add("cardholder_id", 1).add("account_id", 1).add("status", "REQUESTED").build())
+  .add(Json.createJsonBuilder().add("cardholder_id", 1).add("account_id", 2).add("status", "REQUESTED").build())
+  .build();
+await session.post("/place_card_on_single_site_jobs", body, null);
+```
+
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs" 
   -X POST
@@ -487,7 +548,7 @@ Some objects support bulk creation (Single site jobs).  This is accomplished by 
 
 ## Plural PUT/DELETE
 
-Some objects support updating and deleting using the standard filter parameters.  This is noted in the per-object documentation.
+Some objects support updating and deleting using the standard filter parameters (e.g. Single Site Jobs).  This is noted in the per-object documentation.
 
 
 
