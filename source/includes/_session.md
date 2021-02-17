@@ -1,6 +1,6 @@
-# Cardholder authorization and Passwords
+# Passwords and Authorization
 
-## Get user credential grant
+## Authorize cardholder
 
 > Credential grants are very important for handing off responbility to a downstream client.  The grants must be provisioned by a user that caan create grants (like a customer_agent), and the grant is one time use for 3 minutes.  Grants are created when cardholders are created, and can be used as part of the authorize endpoint within the client by an agent (generally a cardholder_agent).
 
@@ -19,6 +19,13 @@ using Switch.CardSavr.Http;
 CardSavrResponse<UserLogin> login = await agentSession.client.authorizeCardholder(grant);
 //user can now act on behalf of cardholder
 ```
+
+```java
+import com.strivve.CardsavrSession
+
+JsonObject login = agentSession.put("/cardholder/authorize", Json.createObjectBuilder().add("grant", grant).build(), null, null); 
+//user can now act on behalf of cardholder
+``
 
 ```shell
 #session must first be started, and must have permissions to create grants
