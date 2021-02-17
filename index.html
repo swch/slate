@@ -1006,13 +1006,10 @@ const res = await my_session.updateUser(1, updated_body);</p>
 
 <span class="nc">JsonObject</span> <span class="n">login</span> <span class="o">=</span> <span class="n">agentSession</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"/cardholder/authorize"</span><span class="o">,</span> <span class="nc">Json</span><span class="o">.</span><span class="na">createObjectBuilder</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"grant"</span><span class="o">,</span> <span class="n">grant</span><span class="o">).</span><span class="na">build</span><span class="o">(),</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span> 
 <span class="c1">//user can now act on behalf of cardholder</span>
-<span class="err">``</span>
-
-<span class="err">```</span><span class="n">shell</span>
-<span class="err">#</span><span class="n">session</span> <span class="n">must</span> <span class="n">first</span> <span class="n">be</span> <span class="n">started</span><span class="o">,</span> <span class="n">and</span> <span class="n">must</span> <span class="n">have</span> <span class="n">permissions</span> <span class="n">to</span> <span class="n">create</span> <span class="n">grants</span>
-<span class="n">curl</span> <span class="o">-</span><span class="n">iv</span> 
-  <span class="o">-</span><span class="no">H</span> <span class="s">"Content-Type: application/json"</span> <span class="s">"https://api.INSTANCE.cardsavr.io/cardholder/{{GRANT}}/authorize"</span> 
-  <span class="o">-</span><span class="no">H</span> <span class="s">"trace: {\"key\": \"my_trace\"}"</span> <span class="o">-</span><span class="no">H</span> <span class="s">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#session must first be started, and must have permissions to create grants</span>
+curl <span class="nt">-iv</span> 
+  <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="s2">"https://api.INSTANCE.cardsavr.io/cardholder/{{GRANT}}/authorize"</span> 
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-H</span> <span class="s2">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span>
 </code></pre></div>
 <blockquote>
 <p>Grants are always 38 characters, are one time use, and expire after 3 minutes.</p>
