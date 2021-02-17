@@ -25,7 +25,7 @@ import com.strivve.CardsavrSession
 
 JsonObject login = agentSession.put("/cardholder/authorize", Json.createObjectBuilder().add("grant", grant).build(), null, null); 
 //user can now act on behalf of cardholder
-``
+```
 
 ```shell
 #session must first be started, and must have permissions to create grants
