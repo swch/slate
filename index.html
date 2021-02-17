@@ -268,6 +268,9 @@
                   <li>
                     <a href="#plural-put-delete" class="toc-h2 toc-link" data-title="Plural PUT/DELETE">Plural PUT/DELETE</a>
                   </li>
+                  <li>
+                    <a href="#request-hydration-on-post" class="toc-h2 toc-link" data-title="Request Hydration on POST">Request Hydration on POST</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -988,6 +991,64 @@ const res = await my_session.updateUser(1, updated_body);</p>
 <p>Some objects support bulk creation (Single site jobs).  This is accomplished by passing in array of objects rather than simply a single object.  </p>
 <h2 id='plural-put-delete'>Plural PUT/DELETE</h2>
 <p>Some objects support updating and deleting using the standard filter parameters (e.g. Single Site Jobs).  This is noted in the per-object documentation.</p>
+<h2 id='request-hydration-on-post'>Request Hydration on POST</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">createSingleSiteJobs</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span> 
+</code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="c1">//unsupported</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonObject</span> <span class="n">body</span> <span class="o">=</span> <span class="nc">Json</span><span class="o">.</span><span class="na">createObjectBuilder</span><span class="o">()</span>
+  <span class="o">.</span><span class="na">add</span><span class="o">(...</span>
+  <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="n">await</span> <span class="n">session</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="s">"/place_card_on_single_site_jobs"</span><span class="o">,</span> <span class="n">body</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs"</span> 
+  <span class="nt">-X</span> POST
+  <span class="nt">-H</span> <span class="s2">"trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">NlOFNNlKabi7Fn26CLw==</span><span class="se">\"</span><span class="s2">}"</span> 
+  <span class="nt">-B</span> <span class="s2">"{</span><span class="se">\"</span><span class="s2">cardholder_id</span><span class="se">\"</span><span class="s2">: 1, </span><span class="se">\"</span><span class="s2">account_id</span><span class="se">\"</span><span class="s2">: 1, </span><span class="se">\"</span><span class="s2">status</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">REQUESTED</span><span class="se">\"</span><span class="s2">}, {</span><span class="se">\"</span><span class="s2">cardholder_id</span><span class="se">\"</span><span class="s2">: 1, </span><span class="se">\"</span><span class="s2">account_id</span><span class="se">\"</span><span class="s2">: 2, </span><span class="se">\"</span><span class="s2">status</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">REQUESTED</span><span class="se">\"</span><span class="s2">}]"</span> 
+  <span class="nt">-H</span> <span class="s2">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span>
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"REQUESTED"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"cardholder"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"cuid"</span><span class="p">:</span><span class="s2">"{{CARDHOLDER_UNIQUE_KEY}}"</span><span class="p">,</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"card"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"cardholder_ref"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"cuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{CARDHOLDER_UNIQUE_KEY}}"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"par"</span><span class="p">:</span><span class="s2">"peLpzDnEHdhiiWEtuhUgIbN{{CARDHOLDER_UNIQUE_KEY}}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pan"</span><span class="p">:</span><span class="s2">"KOnalFfwdrBXlZD"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"cvv"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"expiration_month"</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"expiration_year"</span><span class="p">:</span><span class="mi">24</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name_on_card"</span><span class="p">:</span><span class="s2">"FirstName LastName"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"address"</span><span class="p">:</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"cardholder_ref"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"cuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{CARDHOLDER_UNIQUE_KEY}}"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"first_name"</span><span class="p">:</span><span class="s2">"Swtich"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"last_name"</span><span class="p">:</span><span class="s2">"Strivve"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"address1"</span><span class="p">:</span><span class="s2">"SGTClNSCCMqlfjuzTmJuepDyFgvWhlCMRycXlKGiRIooOJJkoXeObOcAwJMGeqjSDWfhTHobAWMimcCynMIQcvlBFSbMQlwUFyJ"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"address2"</span><span class="p">:</span><span class="s2">"AyFgoCTjCLXUQVylBAfkHJOtqkkKJjuaLHnmJpSctqBOQueIvciyAUPqYoFpkiAPlkGjgPuabhAPCHFPvaxciObOmIBvBUWpngD"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"city"</span><span class="p">:</span><span class="s2">"Seattle"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"subnational"</span><span class="p">:</span><span class="s2">"WA"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="s2">"98177"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"country"</span><span class="p">:</span><span class="s2">"USA"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"is_primary"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"account"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"cardholder_ref"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"cuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{CARDHOLDER_UNIQUE_KEY}}"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"merchant_site_id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"username"</span><span class="p">:</span><span class="s2">"bad_email"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"password"</span><span class="p">:</span><span class="s2">"good_password"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>Some objects support posting multiple nested objects to avoid multiple server calls.  This is supported by the Single Site Jobs, Cards, Accounts as well as the address APIs.  For example, a Job can be posted with a nested cardholder, account, and a card (the card can even have a nested address).  This is currently only supported when single jobs are posted, not with Plural POSTs.  </p>
+
+<p>If a nested cardholder is referenced by multiple objects, the nested object should reference the created instnce using the cardholder cuid.  Notice the body required on the request to the right.  A cardholder_ref parameter is required on card, account, and address entities to ensure the correstponding cardholder_id properties are filled in properly. </p>
 <h1 id='passwords-and-authorization'>Passwords and Authorization</h1><h2 id='authorize-cardholder'>Authorize cardholder</h2>
 <blockquote>
 <p>Credential grants are very important for handing off responbility to a downstream client.  The grants must be provisioned by a user that caan create grants (like a customer_agent), and the grant is one time use for 3 minutes.  Grants are created when cardholders are created, and can be used as part of the authorize endpoint within the client by an agent (generally a cardholder_agent).</p>
