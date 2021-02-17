@@ -550,5 +550,76 @@ Some objects support bulk creation (Single site jobs).  This is accomplished by 
 
 Some objects support updating and deleting using the standard filter parameters (e.g. Single Site Jobs).  This is noted in the per-object documentation.
 
+## Request Hydration on POST
 
+```javascript
+await session.createSingleSiteJobs(body); 
+```
 
+```csharp
+//unsupported
+```
+
+```java
+JsonObject body = Json.createObjectBuilder()
+  .add(...
+  .build();
+await session.post("/place_card_on_single_site_jobs", body, null);
+```
+
+```shell
+curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs" 
+  -X POST
+  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -B "{\"cardholder_id\": 1, \"account_id\": 1, \"status\" : \"REQUESTED\"}, {\"cardholder_id\": 1, \"account_id\": 2, \"status\" : \"REQUESTED\"}]" 
+  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
+```
+
+```json
+{
+  "status": "REQUESTED",
+  "cardholder":
+    {
+      "cuid":"{{CARDHOLDER_UNIQUE_KEY}}",
+    },
+  "card":
+    {
+      "cardholder_ref": {
+        "cuid": "{{CARDHOLDER_UNIQUE_KEY}}"
+      },
+      "par":"peLpzDnEHdhiiWEtuhUgIbN{{CARDHOLDER_UNIQUE_KEY}}",
+      "pan":"KOnalFfwdrBXlZD",
+      "cvv":"123",
+      "expiration_month":12,
+      "expiration_year":24,
+      "name_on_card":"FirstName LastName",
+      "address":
+        {
+          "cardholder_ref": {
+            "cuid": "{{CARDHOLDER_UNIQUE_KEY}}"
+          },
+          "first_name":"Swtich",
+          "last_name":"Strivve",
+          "address1":"SGTClNSCCMqlfjuzTmJuepDyFgvWhlCMRycXlKGiRIooOJJkoXeObOcAwJMGeqjSDWfhTHobAWMimcCynMIQcvlBFSbMQlwUFyJ",
+          "address2":"AyFgoCTjCLXUQVylBAfkHJOtqkkKJjuaLHnmJpSctqBOQueIvciyAUPqYoFpkiAPlkGjgPuabhAPCHFPvaxciObOmIBvBUWpngD",
+          "city":"Seattle",
+          "subnational":"WA",
+          "postal_code":"98177",
+          "country":"USA",
+          "is_primary": true
+        }
+    },
+  "account":
+    {
+      "cardholder_ref": {
+        "cuid": "{{CARDHOLDER_UNIQUE_KEY}}"
+      },
+      "merchant_site_id":1,
+      "username":"bad_email",
+      "password":"good_password"
+    }
+}
+```
+Some objects support posting multiple nested objects to avoid multiple server calls.  This is supported by the Single Site Jobs, Cards, Accounts as well as the address APIs.  For example, a Job can be posted with a nested cardholder, account, and a card (the card can even have a nested address).  This is currently only supported when single jobs are posted, not with Plural POSTs.  
+
+If a nested cardholder is referenced by multiple objects, the nested object should reference the created instnce using the cardholder cuid.  Notice the body required on the request to the right.  A cardholder_ref parameter is required on card, account, and address entities to ensure the correstponding cardholder_id properties are filled in properly. 
