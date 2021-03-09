@@ -488,6 +488,11 @@
                   <li>
                     <a href="#delete-single-site-job" class="toc-h2 toc-link" data-title="Delete single-site job">Delete single-site job</a>
                   </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#client-messages" class="toc-h1 toc-link" data-title="Client Messages">Client Messages</a>
+              <ul class="toc-list-h2">
                   <li>
                     <a href="#subscribe-to-status-updates" class="toc-h2 toc-link" data-title="Subscribe to Status Updates">Subscribe to Status Updates</a>
                   </li>
@@ -5109,8 +5114,7 @@ https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/1531167200
 <p>Delete a single-site job and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 
 <p>See <a href="#response-place_card_on_single_site_job">single-site job response parameters</a>.</p>
-<p>I usAP# Client Messages</p>
-<h2 id='subscribe-to-status-updates'>Subscribe to Status Updates</h2>
+<h1 id='client-messages'>Client Messages</h1><h2 id='subscribe-to-status-updates'>Subscribe to Status Updates</h2>
 <blockquote>
 <p>Before you can listen to a channel, you must first subscribe.  Unlike credential requests, multiple clients can listen to messages for the same job.</p>
 </blockquote>
@@ -5205,11 +5209,11 @@ curl <span class="nt">-iv</span> <span class="nt">-H</span> <span class="s2">"Co
 </tr>
 <tr>
 <td>USER_DATA_FAILURE</td>
-<td>There was an issue with data supplied by the user like a TFA code or password</td>
+<td>There was an issue with data supplied by the cardholder like a TFA code or password</td>
 </tr>
 <tr>
 <td>SITE_INTERACTION_FAILURE</td>
-<td>Strivve&#39;s robot was unable to crawl the site</td>
+<td>Cardsavr was unable to definitively place the card on the site</td>
 </tr>
 <tr>
 <td>PROCESS_FAILURE</td>
@@ -5300,7 +5304,7 @@ Credential resubmission messages notify the virtual browser session that credent
 <td>message</td>
 <td>string</td>
 <td>yes</td>
-<td>&quot;success&quot; for credential resubmissions, and the tfa code entered by the user for TFA responses</td>
+<td>&quot;success&quot; for credential resubmissions, and the tfa code entered by the cardholder for TFA responses</td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
