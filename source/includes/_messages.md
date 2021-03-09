@@ -112,8 +112,8 @@ Grabs the status messages for this job.  If there are no messages, none are retu
 Termination type | Description
 ---------------- | -----------
 BILLABLE | Job completed successfully
-USER_DATA_FAILURE | There was an issue with data supplied by the user like a TFA code or password
-SITE_INTERACTION_FAILURE | Strivve's robot was unable to crawl the site
+USER_DATA_FAILURE | There was an issue with data supplied by the cardholder like a TFA code or password
+SITE_INTERACTION_FAILURE | Cardsavr was unable to definitively place the card on the site
 PROCESS_FAILURE | There was an internal system failure - these happen very rarely and should be escallated immediately
 
 ## Get Credential Requests
@@ -213,4 +213,4 @@ Parameter | Type | Required | Desription
 -------- | ---- | --------- | ----------
 envelope_id | string | yes | unique key associated with the original request
 type | string | yes | credential_request or tfa_request
-message | string | yes | "success" for credential resubmissions, and the tfa code entered by the user for TFA responses
+message | string | yes | "success" for credential resubmissions, and the tfa code entered by the cardholder for TFA responses
