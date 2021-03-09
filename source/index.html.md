@@ -562,7 +562,7 @@ await session.createSingleSiteJobs(body);
 
 ```java
 JsonObject body = Json.createObjectBuilder()
-  .add(...
+  .add(... //various nested properties using JsonObjects and JsonArrays (JsonValues)
   .build();
 await session.post("/place_card_on_single_site_jobs", body, null);
 ```
