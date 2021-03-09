@@ -488,11 +488,6 @@
                   <li>
                     <a href="#delete-single-site-job" class="toc-h2 toc-link" data-title="Delete single-site job">Delete single-site job</a>
                   </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#client-messages" class="toc-h1 toc-link" data-title="Client Messages">Client Messages</a>
-              <ul class="toc-list-h2">
                   <li>
                     <a href="#subscribe-to-status-updates" class="toc-h2 toc-link" data-title="Subscribe to Status Updates">Subscribe to Status Updates</a>
                   </li>
@@ -994,7 +989,7 @@ const res = await my_session.updateUser(1, updated_body);</p>
 <h2 id='request-hydration-on-post'>Request Hydration on POST</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">createSingleSiteJobs</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span> 
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="c1">//unsupported</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonObject</span> <span class="n">body</span> <span class="o">=</span> <span class="nc">Json</span><span class="o">.</span><span class="na">createObjectBuilder</span><span class="o">()</span>
-  <span class="o">.</span><span class="na">add</span><span class="o">(...</span>
+  <span class="o">.</span><span class="na">add</span><span class="o">(...</span> <span class="c1">//various nested properties using JsonObjects and JsonArrays (JsonValues)</span>
   <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 <span class="n">await</span> <span class="n">session</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="s">"/place_card_on_single_site_jobs"</span><span class="o">,</span> <span class="n">body</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs"</span> 
@@ -5114,7 +5109,8 @@ https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/1531167200
 <p>Delete a single-site job and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 
 <p>See <a href="#response-place_card_on_single_site_job">single-site job response parameters</a>.</p>
-<h1 id='client-messages'>Client Messages</h1><h2 id='subscribe-to-status-updates'>Subscribe to Status Updates</h2>
+<p>I usAP# Client Messages</p>
+<h2 id='subscribe-to-status-updates'>Subscribe to Status Updates</h2>
 <blockquote>
 <p>Before you can listen to a channel, you must first subscribe.  Unlike credential requests, multiple clients can listen to messages for the same job.</p>
 </blockquote>
