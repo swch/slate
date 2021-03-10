@@ -38,7 +38,7 @@ curl -iv
 GET /messages/place_card_on_single_site_jobs/job_id:/broadcasts/registrations
 
 ### Description
-Registers a client to a broadcast message channel.  Messages are saved for an hour waiting for the client to poll.  Generally clients poll every 5 seconds.  Multiple clients can poll for messages for the same job, so each client has its own access key.  
+Registers a client to a broadcast message channel.  Messages are saved for an hour waiting for the client to poll.  Generally clients poll every 3-5 seconds.  Multiple clients can poll for messages for the same job, so each client has its own access key.  
 
 <aside class="notice">
 See the <a href="https://developers.strivve.com/resources/messaging">Messaging system document</a> for more details on how the messaging system is architected.
