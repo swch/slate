@@ -61,11 +61,11 @@ JsonObject obj = (JsonObject) session.login(username, password, null);
 # a login command.  Keep in mind, this ONLY works 
 # with a development server that supports unsigned body requests. 
 curl "https://api.INSTANCE.cardsavr.io/session/start" 
-  -H "trace: {\"key\": \"my_trace\"}" 
+  -H "x-cardsavr-trace: {\"key\": \"my_trace\"}" 
 
 curl -iv -d "{\"password\": \"PASSWORD\", \"userName\": \"USERNAME\"}" 
   -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/session/login" 
-  -H "trace: {\"key\": \"my_trace\"}" 
+  -H "x-cardsavr-trace: {\"key\": \"my_trace\"}" 
   
 ```
 
@@ -106,13 +106,13 @@ REST calls support and/or require the following headers once the session is esta
 
 Header | Default | Type | Description
 ------ | ------- | ---- | -----------
-trace | required | stringified JSON object | [See trace](#trace)
-client-application | integrator name | string | unique per application, integrator name provided as default when using an SDK
-authorization | required | string | contains the [integrator name and a prefix](https://developers.strivve.com/resources/encryption), populated by SDK libraries.
-nonce | required | string (milliseconds) | contains the current UTC time in milliseconds, and therefore provides protection against [replay attacks](https://developers.strivve.com/resources/encryption).
-signature | required | string | The [string-to-sign format](https://developers.strivve.com/resources/encryption) requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the [SDK Libraries](https://developers.strivve.com/api-sdk/).
-hydration | (none) | stringified JSON object | [See hydration](#hydration) 
-paging | {"page": 1, "page_length": 25} | stringified JSON object | Only supported with GET calls. [See paging](#paging)
+x-cardsavr-trace | required | stringified JSON object | [See trace](#trace)
+x-cardsavr-client-application | integrator name | string | unique per application, integrator name provided as default when using an SDK
+x-cardsavr-authorization | required | string | contains the [integrator name and a prefix](https://developers.strivve.com/resources/encryption), populated by SDK libraries.
+x-cardsavr-nonce | required | string (milliseconds) | contains the current UTC time in milliseconds, and therefore provides protection against [replay attacks](https://developers.strivve.com/resources/encryption).
+x-cardsavr-signature | required | string | The [string-to-sign format](https://developers.strivve.com/resources/encryption) requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the [SDK Libraries](https://developers.strivve.com/api-sdk/).
+x-cardsavr-hydration | (none) | stringified JSON object | [See hydration](#hydration) 
+x-cardsavr-paging | {"page": 1, "page_length": 25} | stringified JSON object | Only supported with GET calls. [See paging](#paging)
 x-cardsavr-session-jwt | required | string | [See session tokens] (#session-tokens)
 
 ## session-tokens
@@ -139,7 +139,7 @@ const session = new CardsavrSession(cardsavr_server,
     JSON.stringify({key: "NlOFNNlKabi7Fn26CLw="}));
 
 //or change the trace mid-session 
-session.setHeaders({"trace": JSON.stringify({key: "NlOFNNlKabi7Fn26CLw="}));
+session.setHeaders({"x-cardsavr-trace": JSON.stringify({key: "NlOFNNlKabi7Fn26CLw="}));
 
 //or per request
 await session.getUsers({}, {}, {trace: JSON.stringify({key: "NlOFNNlKabi7Fn26CLw="})}); 
@@ -153,7 +153,7 @@ CardSavrHttpClient session = new CardSavrHttpClient(_cardsavrServer,
 //or per request
 HttpRequestHeaders headers = new HttpRequestMessage().Headers;
 
-headers.Add("trace", "{\"key\": \"my_trace\"}");
+headers.Add("x-cardsavr-trace", "{\"key\": \"my_trace\"}");
 CardSavrResponse<List<User>> result = await http.GetUsersAsync(null, null, headers);
 ```
 
@@ -174,11 +174,11 @@ session.post("/cardsavr_cards", body, headers);
 
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_users" 
-  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\", \"bid\": \"hEOF26sbi7FCNNlLw==\"}" 
+  -H "x-cardsavr-trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\", \"bid\": \"hEOF26sbi7FCNNlLw==\"}" 
   -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
-`"trace": JSON-stringified trace object`
+`"x-cardsavr-trace": JSON-stringified trace object`
 
 CardSavr uses trace headers to trace all request-related activity within the CardSavr infrastructure. When a request is made to CardSavr, any ID included in the trace header will appear in all logging associated with that request. This allows for quick troubleshooting and monitoring. .  
 
@@ -195,12 +195,12 @@ A trace header can contain multiple trace IDs. It is up to the developer to mint
 > Setting a sample Hydration Header
 
 ```javascript
-await session.getCards(123, {}, { "hydration": JSON.stringify(["address"]) });
+await session.getCards(123, {}, { "x-cardsavr-hydration": JSON.stringify(["address"]) });
 ```
 
 ```csharp
 HttpRequestHeaders headers = new HttpRequestMessage().Headers;
-headers.Add("hydration", "[\"address\"]");
+headers.Add("x-cardsavr-hydration", "[\"address\"]");
     
 CardSavrResponse<List<Card>> result = await 
   http.GetCardsAsync(123);
@@ -215,8 +215,8 @@ session.get("/cardsavr_cards", 1, headers);
 
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_cards/123" 
-  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
-  -H "hydration: [\"address\"]" 
+  -H "x-cardsavr-trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -H "x-cardsavr-hydration: [\"address\"]" 
   -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
@@ -250,7 +250,7 @@ curl "https://api.INSTANCE.cardsavr.io/cardsavr_cards/123"
 }
 ```
 
-`{"hydration": {JSON-stringified array of resources to be hydrated}}`
+`{"x-cardsavr-hydration": {JSON-stringified array of resources to be hydrated}}`
 
 For requests against a resource type that contains foreign key references (e.g. 'address_id' for 'cardsavr_cards'), a hydration header will "hydrate" (i.e. fill out) any of the resources indicated. Therefore, any objects returned in the response body will contain additional key-value pairs for each of the resources listed, where the key is the resource name (e.g. "address" in the previous example) and the value is the full object.
 
@@ -258,7 +258,7 @@ For example, including the header {hydration: '["address"]'} in a successful PUT
 
 **Nested hydration** can also be used. For example, the following header:
 
-`{"hydration": '["card.cardholder"]'}`
+`{"x-cardsavr-hydration": '["card.cardholder"]'}`
 
 for the endpoint '/place_card_on_multiple_sites_jobs' would hydrate the associated card AND cardholder (i.e. user) associated with the card. Hydration headers can be used with any endpoint for any resource that contains foreign key references.
 
@@ -284,7 +284,7 @@ http.SetIdentificationHeader('my-client-app');
 
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_cards/123" 
-  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -H "x-cardsavr-trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
   -H "client-application: \"my-client-app\"" 
   -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
@@ -315,8 +315,8 @@ session.post("/cardsavr_cards", body, headers);
 
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_cards/123" 
-  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
-  -H "paging: \"{\"page\": \"1\"}\"" 
+  -H "x-cardsavr-trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -H "x-cardsavr-paging: \"{\"page\": \"1\"}\"" 
   -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
@@ -379,9 +379,9 @@ JsonObject response = session.update("/cardsavr_users", obj, headers);
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_users/1" 
   -X PUT
-  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
-  -H "new-cardholder-safe-key: +h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=}" 
-  -H "cardholder-safe-key: rttYqkGPHLk2KeK6OD8612gSurKXu0X8W6BTWF3hhGM=}" 
+  -H "x-cardsavr-trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -H "x-cardsavr-new-cardholder-safe-key: +h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=}" 
+  -H "x-cardsavr-cardholder-safe-key: rttYqkGPHLk2KeK6OD8612gSurKXu0X8W6BTWF3hhGM=}" 
   -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
   -B "{ \"id\": 1, \"cardholder_safe_key\": \"+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=\" }" 
 ```
@@ -424,7 +424,7 @@ CardSavrResponse<List<MerchantSite>> merchants = await http.GetMerchantSitesAsyn
 
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_users?top_hosts=amazon.com,apple.com&exclude_hosts=walmart.com" 
-  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -H "x-cardsavr-trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
   -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
@@ -508,7 +508,7 @@ session.delete("/cardholder", 123);
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/cardsavr_users" 
   -X DELETE
-  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -H "x-cardsavr-trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
   -B "{ \"id\": 123 }" 
   -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
@@ -539,7 +539,7 @@ await session.post("/place_card_on_single_site_jobs", body, null);
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs" 
   -X POST
-  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -H "x-cardsavr-trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
   -B "{\"cardholder_id\": 1, \"account_id\": 1, \"status\" : \"REQUESTED\"}, {\"cardholder_id\": 1, \"account_id\": 2, \"status\" : \"REQUESTED\"}]" 
   -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
@@ -570,7 +570,7 @@ await session.post("/place_card_on_single_site_jobs", body, null);
 ```shell
 curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs" 
   -X POST
-  -H "trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
+  -H "x-cardsavr-trace: {\"key\": \"NlOFNNlKabi7Fn26CLw==\"}" 
   -B "{\"cardholder_id\": 1, \"account_id\": 1, \"status\" : \"REQUESTED\"}, {\"cardholder_id\": 1, \"account_id\": 2, \"status\" : \"REQUESTED\"}]" 
   -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
@@ -598,7 +598,7 @@ curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs"
           "cardholder_ref": {
             "cuid": "{{CARDHOLDER_UNIQUE_KEY}}"
           },
-          "first_name":"Swtich",
+          "first_name":"Switch",
           "last_name":"Strivve",
           "address1":"SGTClNSCCMqlfjuzTmJuepDyFgvWhlCMRycXlKGiRIooOJJkoXeObOcAwJMGeqjSDWfhTHobAWMimcCynMIQcvlBFSbMQlwUFyJ",
           "address2":"AyFgoCTjCLXUQVylBAfkHJOtqkkKJjuaLHnmJpSctqBOQueIvciyAUPqYoFpkiAPlkGjgPuabhAPCHFPvaxciObOmIBvBUWpngD",

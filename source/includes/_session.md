@@ -31,7 +31,7 @@ JsonObject login = agentSession.put("/cardholder/authorize", Json.createObjectBu
 #session must first be started, and must have permissions to create grants
 curl -iv 
   -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/cardholder/{{GRANT}}/authorize" 
-  -H "trace: {\"key\": \"my_trace\"}" -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
+  -H "x-cardsavr-trace: {\"key\": \"my_trace\"}" -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 > Grants are always 38 characters, are one time use, and expire after 3 minutes.
@@ -85,7 +85,7 @@ JsonObject response = (JsonObject) session.put(url, body, null, null);
 curl -iv  -d "{\"password\": \"3ysXPhntmPDU7xUFYKbc/4Aq=WVrhExdjHQsx5FgV2pZ\", 
   \"password_copy\": \"3ysXPhntmPDU7xUFYKbc/4Aq=WVrhExdjHQsx5FgV2pZ\"}" 
   -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/cardsavr_users/:id/credential_grant" 
-  -H "trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
+  -H "x-cardsavr-trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 > Grants are always 38 characters, are one time use, and expire after 3 minutes.
@@ -149,7 +149,7 @@ JsonObject obj = (JsonObject) session.login(username, password, null);
 ```shell
 curl -iv -d "{\"password\": \"PASSWORD\", \"userName\": \"USERNAME\"}" 
   -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/session/login" 
-  -H "trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
+  -H "x-cardsavr-trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 > The login call both starts and authorizes a new session and returns the user, along with a public key to be used in generating a new API  Session Key to sign and encrypt future requests on the session. See [API Session Keys](https://developers.strivve.com/resources/cryptography/) for information on using Server's public key. Return a session token to be used with all subsequent calls on the session.  This value is sent with the "x-cardsavr-session-jwt" header. If you are debugging with cURL or Postman, cookies are used in lieu of session tokens.
@@ -225,7 +225,7 @@ JsonObject response = session.end();
 ```shell
 #session must first be started
 curl -iv -d -H "Content-Type: application/json" "https://api.INSTANCE.cardsavr.io/session/end" 
-  -H "trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
+  -H "x-cardsavr-trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
 > Session end returns a 200 with no body

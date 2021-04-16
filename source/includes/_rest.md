@@ -4,7 +4,7 @@ An account object contains a CardSavr user's account information for a specific 
 ## Get account
 
 ```shell
-curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+curl -H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_accounts/1396911080
 ```
 
@@ -123,7 +123,7 @@ JsonValue account = session.post("/cardsavr_accounts", body, null, null);
 curl -d "{\"cardholder_id\":1809823831,\"merchant_site_id\":1188585392,\"last_card_placed_id\":1685342613,\"username\":\"jsmith123\",\"password\":\"BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=\"}"
 -X POST -H "Content-Type: application/json"
 -H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_accounts/
 ```
 
@@ -186,7 +186,7 @@ JsonValue account = session.put("/cardsavr_accounts", body, null, null);
 curl -d "{\"last_card_placed_id\":823616754,\"username\":\"jsmith123\",\"password\":\"BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=\",\"id\":\"1\"}"
 -X PUT -H "Content-Type: application/json"
 -H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_accounts/1396911080
 ```
 
@@ -214,7 +214,7 @@ See [account response parameters](#response-cardsavr_account).
 
 ```shell
 curl -X DELETE
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_accounts/1396911080
 ```
 
@@ -246,7 +246,7 @@ Address objects contain billing address information for a particular user.
 ## Get address
 
 ```shell
-curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+curl -H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_addresses/1417469372
 ```
 
@@ -401,7 +401,7 @@ JsonValue address = session.post("/cardsavr_addresses", body, null, null);
 ```shell
 curl -d "{\"cardholder_id\":735897442,\"address1\":\"AbqJOjrphlYjiuaYDdKsPmpcZloyqTfNAfrtzbbIlyRwyvVbLOkENqRcZzYtjFVSZrkPAePDJdvCuIrQlDzwoIJUWITMvVwzyuF\",\"address2\":\"MHzHVNnaguyEmIpqadXIFXuTwBQOwEkPhOksktuuPfcPUHrQAmEowYNqVsbRmNPfHOHmfxbWlLuogJhZYaqEBSOiarSAbdEEEXz\",\"city\":\"Seattle\",\"subnational\":\"WA\",\"postal_code\":\"98177\",\"postal_other\":\"98177-0124\",\"country\":\"USA\",\"is_primary\":false,\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"email\":\"test_email@strivve.com\",\"phone_number\":\"MXuKpzpNyCtDCugZQN\"}"
 -X POST -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_addresses/
 ```
 
@@ -497,7 +497,7 @@ JsonValue address = session.put("/cardsavr_addresses", body, null, null);
 ```shell
 curl -d "{\"address1\":\"edmSFfiGYQfedyEAlnxmuFcqvFjCTGXcOYAIxXwNJxamyxeaHENNDInbttqivYIXldfsCwOkuKOVXqrwensXjhMJJodIweyRgAc\",\"address2\":\"LRypCjZDOtGntXUoDUyMESkkajSMPmoBhKMepTSxjaAoNhPjmzzfClrqtRHdXyLdEXiQpjILzhoWIhtTgGnpiygMdAjqDWXAZYv\",\"city\":\"Seattle\",\"subnational\":\"WA\",\"postal_code\":\"98177\",\"postal_other\":\"98177-0124\",\"country\":\"USA\",\"is_primary\":false,\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"email\":\"test_email@strivve.com\",\"phone_number\":\"XTwwgdvZJgFfBE\",\"id\":\"1\"}"
 -X PUT -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_addresses/1417469372
 ```
 
@@ -533,7 +533,7 @@ See [address response parameters](#response-cardsavr_address).
 
 ```shell
 curl -X DELETE
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_addresses/1417469372
 ```
 
@@ -565,7 +565,7 @@ A cardsavr_bin object
 ## Get bin
 
 ```shell
-curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+curl -H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_bins/589781932
 ```
 
@@ -673,7 +673,7 @@ JsonValue bin = session.post("/cardsavr_bins", body, null, null);
 ```shell
 curl -d "{\"financial_institution_id\":1637080527,\"bank_identification_number\":\"41315847\",\"custom_data\":{\"PzOIAHRxrtlL\":\"~\",\"BOGqRxpCbAlz\":93,\"RQFyIkvwIraK\":false}}"
 -X POST -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_bins/
 ```
 
@@ -731,7 +731,7 @@ JsonValue bin = session.put("/cardsavr_bins", body, null, null);
 ```shell
 curl -d "{\"financial_institution_id\":633498482,\"custom_data\":{\"cADrUIpcRfrY\":\"j]hajb\",\"oAPRfIlVYhMa\":98,\"VENlMYTgXlai\":false},\"id\":\"1\"}"
 -X PUT -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_bins/589781932
 ```
 
@@ -757,7 +757,7 @@ See [bin response parameters](#response-cardsavr_bin).
 
 ```shell
 curl -X DELETE
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_bins/589781932
 ```
 
@@ -789,7 +789,7 @@ Card objects contain information about a payment card belonging to a single card
 ## Get card
 
 ```shell
-curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+curl -H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_cards/182972531
 ```
 
@@ -938,7 +938,7 @@ JsonValue card = session.post("/cardsavr_cards", body, null, null);
 curl -d "{\"cardholder_id\":1179397314,\"address_id\":1141519658,\"bin_id\":1050920062,\"par\":\"fEwdmDRAFeWANOwPaoLqaNtOiRGhr\",\"pan\":\"4111111111111111\",\"cvv\":\"111\",\"expiration_month\":12,\"expiration_year\":24,\"name_on_card\":\"Joe C Smith\",\"first_6\":\"000000\",\"first_7\":\"0000000\",\"first_8\":\"00000000\"}"
 -X POST -H "Content-Type: application/json"
 -H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_cards/
 ```
 
@@ -1025,7 +1025,7 @@ JsonValue card = session.put("/cardsavr_cards", body, null, null);
 ```shell
 curl -d "{\"address_id\":1957280579,\"bin_id\":619743663,\"name_on_card\":\"Joe C Smith\",\"pan\":\"4111111111111111\",\"cvv\":\"111\",\"expiration_month\":12,\"expiration_year\":24,\"first_6\":\"000000\",\"first_7\":\"0000000\",\"first_8\":\"00000000\",\"id\":\"1\"}"
 -X PUT -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_cards/182972531
 ```
 
@@ -1052,7 +1052,7 @@ See [card response parameters](#response-cardsavr_card).
 
 ```shell
 curl -X DELETE
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_cards/182972531
 ```
 
@@ -1084,7 +1084,7 @@ Entities which represent end-users/cardholders.
 ## Get cardholder
 
 ```shell
-curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+curl -H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardholders/1834555247
 ```
 
@@ -1221,7 +1221,7 @@ JsonValue cardholder = session.post("/cardholders", body, null, null);
 ```shell
 curl -d "{\"financial_institution_id\":1957712361,\"cuid\":\"xfAuuMtvJTFaofflJN\",\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"email\":\"test_email@strivve.com\",\"meta_key\":\"hINBAKP\",\"custom_data\":{\"GzbkgLsTcUMx\":\"5niN\",\"kyNuIQZRMmDP\":2,\"ChpIjblYXiME\":false}}"
 -X POST -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardholders/
 ```
 
@@ -1299,7 +1299,7 @@ JsonValue cardholder = session.put("/cardholders", body, null, null);
 ```shell
 curl -d "{\"financial_institution_id\":637421332,\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"email\":\"test_email@strivve.com\",\"meta_key\":\"jIXlyWwEYiIVtA\",\"custom_data\":{\"DGYYmUTdxXqv\":\"Kxe9-pHr3L/\",\"nzEEJCgkUyvq\":49,\"cVNIOzspzthI\":true},\"id\":\"1\"}"
 -X PUT -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardholders/1834555247
 ```
 
@@ -1330,7 +1330,7 @@ See [cardholder response parameters](#response-cardholder).
 
 ```shell
 curl -X DELETE
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardholders/1834555247
 ```
 
@@ -1362,7 +1362,7 @@ User objects correspond to a single CardSavr user.
 ## Get user
 
 ```shell
-curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+curl -H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_users/101796096
 ```
 
@@ -1521,7 +1521,7 @@ JsonValue user = session.post("/cardsavr_users", body, null, null);
 ```shell
 curl -d "{\"financial_institution_id\":1887786998,\"username\":\"jsmith123\",\"password\":\"BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=\",\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"password_lifetime\":196,\"email\":\"test_email@strivve.com\",\"is_password_update_required\":false,\"role\":\"swch_agent\",\"custom_data\":{\"CxRqTIkADxhp\":\"XnI,E[Nqc-*1I0%@{+F\",\"jdBExRhrvxVH\":99,\"BEMQxXxOOovR\":false},\"next_rotation_on\":\"2018-10-26T15:08:28.795Z\"}"
 -X POST -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_users/
 ```
 
@@ -1621,7 +1621,7 @@ JsonValue user = session.put("/cardsavr_users", body, null, null);
 curl -d "{\"financial_institution_id\":1997298528,\"first_name\":\"Joe\",\"last_name\":\"Smith\",\"password_lifetime\":343,\"email\":\"test_email@strivve.com\",\"is_password_update_required\":true,\"role\":\"cardholder_agent\",\"custom_data\":{\"PbyGuUHDgIxw\":\"5hi9d5.g0nY_@i)>C8!))b1l(MG*/w_{\",\"IMauNOhJkBhM\":34,\"zrNajCAAuUby\":true},\"next_rotation_on\":\"1976-09-16T11:49:24.611Z\",\"username\":\"jsmith123\",\"password\":\"BSN6W6IF72W6EVWwbwgqYIo51ad/ZCZ74vxa3rzyQqI=\",\"id\":\"1\"}"
 -X PUT -H "Content-Type: application/json"
 -H "new-cardholder-safe-key: NEW_CARDHODLER_SAFE_KEY"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_users/101796096
 ```
 
@@ -1654,7 +1654,7 @@ See [user response parameters](#response-cardsavr_user).
 
 ```shell
 curl -X DELETE
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_users/101796096
 ```
 
@@ -1686,7 +1686,7 @@ A CardSavr Financial Institution that can be associated with jobs and users.
 ## Get financial institution
 
 ```shell
-curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+curl -H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/financial_institutions/450069908
 ```
 
@@ -1816,7 +1816,7 @@ JsonValue financialinstitution = session.post("/financial_institutions", body, n
 ```shell
 curl -d "{\"name\":\"DDrXlgUBwxHOotughyRdzXpwJzgGQKkWXwJhXXXzmfDaQWNioFHLNCXwxQnudLa\",\"description\":\"yHGltNSTuCkTnurgrIhS\",\"lookup_key\":\"sZdtMYjeHImXLeCOJLaAYOtvfJUBQdJKzdPlXLtcnXDVVTZpzdSsvqDRknNsaoG\",\"alternate_lookup_key\":\"ywKwkIQgJVAKIWgaTOolXnrGMwhZVMkHlwImyVUZXKTbOGDJJnJhTbGOqFVJrYe\",\"config\":{\"hBRaBkkvXOEH\":\"w7^{37Gd\",\"RhywaTAZsXGt\":88,\"rsVbEBsJSfIv\":false},\"email_config\":{\"HqPmBLZBEHDg\":\"w%l>>HarPO$rM&eSGpyt#\",\"ytMieTYVKUER\":94,\"mJrTvveizcRC\":false}}"
 -X POST -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/financial_institutions/
 ```
 
@@ -1891,7 +1891,7 @@ JsonValue financialinstitution = session.put("/financial_institutions", body, nu
 ```shell
 curl -d "{\"name\":\"CrhgJDopSIgINNDRWbDWwvYAhsYVLauBDpVshWPKtuRQqhjKajJdMpDvfgXOgYe\",\"description\":\"lhrVjLCcSpubglSgCdAuAcYsZiVRZfFz\",\"lookup_key\":\"cguALztMxIqrdZOgFdjannAbFOgrPNEKUbpkrcqUHCxOMhexgcgvaNuFFFstIGt\",\"alternate_lookup_key\":\"eVccCEYEGHkgtybKGyKrIEhNooQvwQRGPjZIjoVQZStBhwHpHaUMOrEqHqldPRU\",\"config\":{\"pkUAZuAbgovT\":\"4PflVUvrj!q5A!^TU8Q\",\"qrdKpzJXEXrO\":35,\"sjYdBevnfRvs\":true},\"email_config\":{\"ueziKfDuHupm\":\"jmKE!i-KiJ@#\",\"FsuFgkfdxsNZ\":80,\"CLkuzWlTMWTF\":true},\"id\":\"1\"}"
 -X PUT -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/financial_institutions/450069908
 ```
 
@@ -1921,7 +1921,7 @@ See [financial institution response parameters](#response-financial_institution)
 
 ```shell
 curl -X DELETE
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/financial_institutions/450069908
 ```
 
@@ -1953,7 +1953,7 @@ An integrator object represents an integrator that implements CardSavr.
 ## Get integrator
 
 ```shell
-curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+curl -H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/integrators/2055073532
 ```
 
@@ -2083,7 +2083,7 @@ JsonValue integrator = session.post("/integrators", body, null, null);
 ```shell
 curl -d "{\"name\":\"fvIHFKLaRwRuGTWWnAiujBJLIymcfeQUZLljNdrraBhvNocXw\",\"integrator_type\":\"swch_internal\",\"description\":\"iptrBXKZIG\",\"last_key\":\"6ZdkbvgvBWPbO4FZvjbvcsw3/v/8e9re6eDhrHp8Z+Q=\",\"current_key\":\"mvGZEVYhGi3dMcWMNXFB6d1nIrLa8eMovmstMaKeAfI=\",\"next_key\":\"rd++sPXLCudRjI0tUHtcSAntzzzwIa2fpjng6in32W8=\",\"key_lifetime\":39,\"next_rotation_on\":\"2017-12-29T03:24:55.086Z\"}"
 -X POST -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/integrators/
 ```
 
@@ -2167,7 +2167,7 @@ JsonValue integrator = session.put("/integrators", body, null, null);
 ```shell
 curl -d "{\"name\":\"yUBRxuyqzgSayMBnllZPzzNlVAKJlNQCKLWPhipjqoopJGmYz\",\"integrator_type\":\"swch_internal\",\"description\":\"gTmWVxzUZIYnqJqhvxwO\",\"last_key\":\"11L5AM0VR4WeGkCSCFkWzHBBUt5+sWV6CmqZYPdPHtY=\",\"current_key\":\"+emomt6LY2W1vhvW9VtOUNyiwDUzcptw7BfMA7koTYk=\",\"next_key\":\"XVW8fJUWuUwawCgsJTL6X7JTV9aneEZ8y7Q6GIew0O8=\",\"key_lifetime\":167,\"next_rotation_on\":\"1994-06-19T04:18:56.271Z\",\"id\":\"1\"}"
 -X PUT -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/integrators/2055073532
 ```
 
@@ -2199,7 +2199,7 @@ See [integrator response parameters](#response-integrator).
 
 ```shell
 curl -X DELETE
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/integrators/2055073532
 ```
 
@@ -2231,7 +2231,7 @@ Merchant site objects contain information and images related to CardSavr-support
 ## Get merchant site
 
 ```shell
-curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+curl -H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/merchant_sites/1057188696
 ```
 
@@ -2336,7 +2336,7 @@ A notification record that defines how to take action on CardSavr events like jo
 ## Get notification
 
 ```shell
-curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+curl -H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/notifications/38530108
 ```
 
@@ -2466,7 +2466,7 @@ JsonValue notification = session.post("/notifications", body, null, null);
 ```shell
 curl -d "{\"financial_institution_id\":434397638,\"name\":\"NnNLbpogpMXjTiIkXTeFnrgLxCeLVcfwGdwxVAiMovtsMVxvelewabxnQlQviyF\",\"type\":\"email\",\"event\":\"session_complete\",\"config\":{\"DIHbBJkiesxQ\":\"#n3,Jox9j*=A0OzgSR\",\"WyCQgCbyMvVj\":39,\"gbYBtcDsUbkH\":true},\"html_template\":\"xLoTzDk\",\"text_template\":\"cDXqalYeeHysNfISdrviziF\"}"
 -X POST -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/notifications/
 ```
 
@@ -2548,7 +2548,7 @@ JsonValue notification = session.put("/notifications", body, null, null);
 ```shell
 curl -d "{\"name\":\"HehCmsQNkNmGlWhMvWXNWxkMbHhkbelEsnTFTvjNOzzHFfzfmbpGdIQignEVSCN\",\"type\":\"email\",\"event\":\"webhook_error_summary\",\"config\":{\"rCcUtBNlRfJJ\":\"/%WiWil$&}\",\"BtHwzQaPacAZ\":44,\"hKLIdqHOXBYU\":true},\"html_template\":\"BRgiudjdoxzdQtOvdrFNLHT\",\"text_template\":\"xUpYws\",\"id\":\"1\"}"
 -X PUT -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/notifications/38530108
 ```
 
@@ -2578,7 +2578,7 @@ See [notification response parameters](#response-notification).
 
 ```shell
 curl -X DELETE
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/notifications/38530108
 ```
 
@@ -2610,7 +2610,7 @@ A notification result record that defines how to take action on CardSavr events 
 ## Get notification result
 
 ```shell
-curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+curl -H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/notification_results/1531634943
 ```
 
@@ -2740,7 +2740,7 @@ JsonValue notificationresult = session.post("/notification_results", body, null,
 ```shell
 curl -d "{\"notification_id\":1800838945,\"fi_lookup_key\":\"qIxllucNNxryGuPzUvXbLewLWiLIvfVsoDDCAKWYwpbWYIiwaDHBaQbzzgUFtPQ\",\"cuid\":\"pntNDqTGCUtFSdj\",\"status\":\"failure\",\"attempts\":1778469782,\"notification_data\":{\"UbOFUUsbLJXF\":\"&UJqS)&I1ypa$5\",\"YHVIJGzTRifC\":29,\"beaOTDQDUCFE\":true}}"
 -X POST -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/notification_results/
 ```
 
@@ -2814,7 +2814,7 @@ JsonValue notificationresult = session.put("/notification_results", body, null, 
 ```shell
 curl -d "{\"fi_lookup_key\":\"CeOFQwvNkFbXgEpgDMpjrRDAkDMIBZaPoGMlVIKzHFNdPKumfUOstCTffkgHRET\",\"cuid\":\"VanxdNlcmbubyBrzOOgva\",\"status\":\"failure\",\"attempts\":1204580799,\"notification_data\":{\"PWnaTKVLOOjf\":\"zh=ZV^A<-FhrnW\",\"aJyQQldKtDBc\":8,\"axoUWgDbijkr\":true},\"id\":\"1\"}"
 -X PUT -H "Content-Type: application/json"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/notification_results/1531634943
 ```
 
@@ -2843,7 +2843,7 @@ See [notification result response parameters](#response-notification_result).
 
 ```shell
 curl -X DELETE
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/notification_results/1531634943
 ```
 
@@ -2875,7 +2875,7 @@ A place_card_on_single_site_job object
 ## Get single-site job
 
 ```shell
-curl -H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+curl -H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/1531167200
 ```
 
@@ -3058,7 +3058,7 @@ JsonValue singlesitejob = session.post("/place_card_on_single_site_jobs", body, 
 curl -d "{\"cardholder_id\":974030370,\"card_id\":1297599480,\"account_id\":1542097756,\"type\":\"CARD_PLACEMENT\",\"status\":\"BILLED_THROUGH_DISNEY_PLUS\",\"custom_data\":{\"SYNtjaImGsbz\":\"(*pHd6AX\",\"OvbrIGVIYvvD\":68,\"lTtygWZsOIbl\":false},\"failure_reason\":\"EuVxqG\",\"current_state\":\"GxhmLDFExRKBcfDCiVnXbIcCIyDTBXliqZYfsLXJbpWyiisBpGMyXzwnWIfYWXU\",\"notification_sent\":true,\"time_elapsed\":2067677545,\"run_count\":904160363,\"started_on\":\"1974-07-20T10:05:31.589Z\",\"completed_on\":\"1992-06-30T01:29:38.535Z\",\"expiration_date\":\"1972-08-21T01:56:14.841Z\"}"
 -X POST -H "Content-Type: application/json"
 -H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/
 ```
 
@@ -3207,7 +3207,7 @@ JsonValue singlesitejob = session.put("/place_card_on_single_site_jobs", body, n
 curl -d "{\"card_id\":253423468,\"status\":\"PASSWORD_RESET_REQUIRED\",\"custom_data\":{\"dtQcpeueDlnM\":\"gP9<,HH0uM-{bAdE=,dH>H\",\"ogDXVWWqwZNY\":21,\"DuDXjPmgFbfB\":false},\"failure_reason\":\"WupXyFTAfvLE\",\"current_state\":\"XwdKarFpLhyJbxAElRZUICNyezrCppVPGWkQMCyJGOGtfPzBtVgOspIAhcvwsCb\",\"notification_sent\":false,\"time_elapsed\":23495911,\"run_count\":152840528,\"started_on\":\"1993-06-01T06:08:12.120Z\",\"completed_on\":\"1992-12-29T23:14:05.340Z\",\"expiration_date\":\"1974-12-03T00:50:07.366Z\",\"id\":\"1\"}"
 -X PUT -H "Content-Type: application/json"
 -H "cardholder-safe-key: CARDHOLDER_SAFE_KEY"
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/1531167200
 ```
 
@@ -3243,7 +3243,7 @@ See [single-site job response parameters](#response-place_card_on_single_site_jo
 
 ```shell
 curl -X DELETE
--H "trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
+-H "x-cardsavr-trace:{\"key\": \"my_trace\"}" -b ~/_cookies -c ~/_cookies
 https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/1531167200
 ```
 
