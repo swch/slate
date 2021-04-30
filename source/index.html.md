@@ -28,14 +28,13 @@ CardSavr responses and requests support JSON-formatted bodies only.
 
 # Authentication
 
-> To authorize a login call is required:
+> To authorize, an init or login call (differs per SDK) is required:
 
 ```javascript
 const { CardsavrHelper } = require("@strivve/strivve-sdk/lib/cardsavr/CardsavrJSLibrary-2.0");
 
-const session = new CardsavrSession(cardsavr_server, 
-    app_key, app_name, username, password);
-const login_data = await session.init();
+const session = new CardsavrSession(cardsavr_server, app_key, app_name);
+const login_data = await session.init(username, password);
 //await session.getCards({}); //session can now be used to make api calls
 ```
 
@@ -69,7 +68,7 @@ curl -iv -d "{\"password\": \"PASSWORD\", \"userName\": \"USERNAME\"}"
   
 ```
 
-> The SDK calls hide the implementation of the login.  In includes a ECDH key exchange, password signing, and the establishment of a session secret key which will be used for all future encryptions.  It also leverages a session token which enables the client to access their session on the server.
+> The SDK calls hide the implementation of the login.  Login includes an ECDH key exchange, password signing, and the establishment of a session secret key, which will be used for all future encryptions.  It also leverages a session token which enables the client to access their session on the server.
 
 ```json
 {
@@ -127,22 +126,19 @@ With all subsequent requests on a session
 
 ## Trace 
 
-> Setting a sample Trace Header
+> Setting a sample trace header
 
 ```javascript
-//initialize as part of the session -- defaults to 
-//the unique username of the client user.  If an agent user
-//is operating on behalf of a cardholder, the cardholder cid 
-//is the default.  The example specifies how to change it.
-const session = new CardsavrSession(cardsavr_server, 
-    app_key, app_name, username, password, null, null, 
-    JSON.stringify({key: "NlOFNNlKabi7Fn26CLw="}));
+//initialize as part of the session initialization; if not set 
+//explicitly, the trace header defaults to the unique username of  //the client user.  If an agent user is operating on behalf of a 
+//cardholder, the cardholder cid is the default.  The example      //specifies how to change it.
 
-//or change the trace mid-session 
-session.setHeaders({"x-cardsavr-trace": JSON.stringify({key: "NlOFNNlKabi7Fn26CLw="}));
+await session.init(username, password, JSON.stringify({key: "NlOFNNlKabi7Fn26CLw="}));
+
+session.setTrace("NlOFNNlKabi7Fn26CLw=");
 
 //or per request
-await session.getUsers({}, {}, {trace: JSON.stringify({key: "NlOFNNlKabi7Fn26CLw="})}); 
+await session.getUsers({}, {}, {"x-cardsavr-trace": JSON.stringify({key: "NlOFNNlKabi7Fn26CLw="})}); 
 ```
 
 ```csharp
@@ -342,19 +338,15 @@ descending | boolean | If true, sorts results in descending order; if false, sor
 
 *Check GET endpoint documentation to see which properties are sort-able
 
-const updated_body = { id: 1, first_name : "Mark" };
-const res = await my_session.updateUser(1, updated_body);
-
-
 ## Safe key
 
-> safe keys are required to encrypt PII data (email address, address, name) and PCI data (PAN, CVV)  Customers are encouraged to store their own safe keys outside the cardsavr environment.  This prevents the API from examining sensitive data.  If safe key storage is deemed unnecessary (espeically for short lived cardholders), Strivve has the ability to store the safe key on behalf of the customer.  By omitting the safe key when adding cardholders, Strive will generate a safe key and store it along with the cardholder.  It is strongly encouraged not to use a Strivve managed safe key if cardholders are going to persist for long periods of time.
+> Safe keys are required to encrypt PII data (email address, address, name) and PCI data (PAN, CVV)  Customers are encouraged to store their own safe keys outside the cardsavr environment.  This prevents the API from examining sensitive data.  If safe key storage is deemed unnecessary (espeically for short lived cardholders), Strivve has the ability to store the safe key on behalf of the customer.  By omitting the safe key when adding cardholders, Strive will generate a safe key and store it along with the cardholder, so there is no need to send a safe key header.  It is strongly encouraged not to use a Strivve managed safe key if cardholders are going to persist for long periods of time.
 
-Although safe_keys are stored with the cardholder, callers cannot persist a safe key on the body of the cardholder.  
+Although safe keys are stored with the cardholder, callers cannot persist a safe key on the body of the cardholder.  
 
 ```javascript
-const body = { id: 1, email : "foo@foo.com" };
-const res = await my_session.createCardholder(1, body, cardholder_safe_key);
+const body = { email : "foo@foo.com", cuid : "samplecuid"};
+const res = await my_session.createCardholder(body, cardholder_safe_key);
 ```
 
 ```csharp
@@ -389,11 +381,11 @@ curl "https://api.INSTANCE.cardsavr.io/cardsavr_users/1"
 `{'cardholder-safe-key': 'rttYqkGPHLk2KeK6OD8612gSurKXu0X8W6BTWF3hhGM='}`
 `{'new-cardholder-safe-key': '+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw='}`
 
-You must send an encrypted cardholder safe key header for each request that involves safe-protected information. Saving users (/cardsavr_users), accounts (/cardsavr_accounts) and cards (/cardsavr_cards) require the key to write encrypted data like PANs and merchant site passwords to the server side safe.  Safe keys can be stored by the third party, or they can optionally be stored by Strivve within Cardsavr. Individual endpoint documentation will indicate if a safe key header is required.
+You must send an encrypted cardholder safe key header for each request that involves safe-protected information. Saving users (/cardsavr_users), accounts (/cardsavr_accounts) and cards (/cardsavr_cards) requires the key in order to write encrypted data like PANs and merchant site passwords to the server side safe.  Safe keys can be stored by the third party, or they can optionally be stored by Strivve within Cardsavr. Individual endpoint documentation will indicate if a safe key header is required.
 
 When rotating a safe key, you must provide a 'new-cardholder-safe-key' header.  Both headers are required (new- and existing) in this case.
 
-See the [link] cardholder safe key section for more information on generating and using safe keys.
+See the [cardholder safe key section](https://swch.github.io/slate/?javascript#safe-key) for more information on generating and using safe keys.
 
 # API Usage 
 
@@ -404,7 +396,7 @@ Query parameter filters can be used with GET requests that do not have an ID pat
 > Filters can be aggregated together to apply multiple filters
 
 ```javascript
-const merchants = await session.getMerchants({ top_hosts : "amazon.com,apple.com", exclude_hosts : "walmart.com" });
+const merchants = await session.getMerchantSites({ top_hosts : "amazon.com,apple.com", exclude_hosts : "walmart.com" });
 ```
 
 ```csharp
@@ -521,7 +513,7 @@ For example, a successful DELETE request to '/cardsavr_accounts/123' would also 
 
 ```javascript
 await session.createSingleSiteJobs([{"cardholder_id": 1, "account_id": 1, "status" : "REQUESTED"}, 
-                                    {"cardholder_id": 1, "account_id": 2, "status" : "REQUESTED"}]); 
+                                    {"cardholder_id": 2, "account_id": 2, "status" : "REQUESTED"}]); 
 ```
 
 ```csharp
@@ -544,16 +536,16 @@ curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs"
   -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
-Some objects support bulk creation (Single site jobs).  This is accomplished by passing in array of objects rather than simply a single object.  
+Some objects support bulk creation (e.g. single site jobs).  This is accomplished by passing in array of objects rather than simply a single object.  
 
 ## Plural PUT/DELETE
 
-Some objects support updating and deleting using the standard filter parameters (e.g. Single Site Jobs).  This is noted in the per-object documentation.
+Some objects support updating and deleting using the standard filter parameters (e.g. single site jobs).  This is noted in the per-object documentation.
 
 ## Request Hydration on POST
 
 ```javascript
-await session.createSingleSiteJobs(body); 
+await session.createSingleSiteJob(body); 
 ```
 
 ```csharp
@@ -620,6 +612,6 @@ curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs"
     }
 }
 ```
-Some objects support posting multiple nested objects to avoid multiple server calls.  This is supported by the Single Site Jobs, Cards, Accounts as well as the address APIs.  For example, a Job can be posted with a nested cardholder, account, and a card (the card can even have a nested address).  This is currently only supported when single jobs are posted, not with Plural POSTs.  
+Some objects support posting multiple nested objects to avoid multiple server calls.  This is supported by the Single Site Job, Card, Account and Address APIs.  For example, a Job can be posted with a nested cardholder, account, and a card (the card can even have a nested address).  This is currently only supported when single jobs are posted, not with Plural POSTs.  
 
-If a nested cardholder is referenced by multiple objects, the nested object should reference the created instnce using the cardholder cuid.  Notice the body required on the request to the right.  A cardholder_ref parameter is required on card, account, and address entities to ensure the correstponding cardholder_id properties are filled in properly. 
+If a nested cardholder is referenced by multiple objects, the nested object should reference the created instance using the cardholder cuid.  Notice the body required on the request to the right.  A cardholder_ref parameter is required on card, account, and address entities to ensure the correstponding cardholder_id properties are filled in properly. 
