@@ -519,13 +519,12 @@
 <p>CardSavr responses and requests support JSON-formatted bodies only.</p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
-<p>To authorize a login call is required:</p>
+<p>To authorize, an init or login call (differs per SDK) is required:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">CardsavrHelper</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@strivve/strivve-sdk/lib/cardsavr/CardsavrJSLibrary-2.0</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">session</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CardsavrSession</span><span class="p">(</span><span class="nx">cardsavr_server</span><span class="p">,</span> 
-    <span class="nx">app_key</span><span class="p">,</span> <span class="nx">app_name</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">login_data</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">session</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CardsavrSession</span><span class="p">(</span><span class="nx">cardsavr_server</span><span class="p">,</span> <span class="nx">app_key</span><span class="p">,</span> <span class="nx">app_name</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">login_data</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">);</span>
 <span class="c1">//await session.getCards({}); //session can now be used to make api calls</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="k">using</span> <span class="nn">Switch.CardSavr.Http</span><span class="p">;</span>
 
@@ -550,7 +549,7 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="s2">"{<
 
 </code></pre></div>
 <blockquote>
-<p>The SDK calls hide the implementation of the login.  In includes a ECDH key exchange, password signing, and the establishment of a session secret key which will be used for all future encryptions.  It also leverages a session token which enables the client to access their session on the server.</p>
+<p>The SDK calls hide the implementation of the login.  Login includes an ECDH key exchange, password signing, and the establishment of a session secret key, which will be used for all future encryptions.  It also leverages a session token which enables the client to access their session on the server.</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"serverPublicKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sample_public_key"</span><span class="p">,</span><span class="w">
@@ -648,21 +647,18 @@ The cardsavr server, app key, app name, and the application username/password mu
 <p><code>&quot;x-cardsavr-session-jwt&quot;: value-returned-from-session-login</code></p>
 <h2 id='trace'>Trace</h2>
 <blockquote>
-<p>Setting a sample Trace Header</p>
+<p>Setting a sample trace header</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="c1">//initialize as part of the session -- defaults to </span>
-<span class="c1">//the unique username of the client user.  If an agent user</span>
-<span class="c1">//is operating on behalf of a cardholder, the cardholder cid </span>
-<span class="c1">//is the default.  The example specifies how to change it.</span>
-<span class="kd">const</span> <span class="nx">session</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CardsavrSession</span><span class="p">(</span><span class="nx">cardsavr_server</span><span class="p">,</span> 
-    <span class="nx">app_key</span><span class="p">,</span> <span class="nx">app_name</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> 
-    <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NlOFNNlKabi7Fn26CLw=</span><span class="dl">"</span><span class="p">}));</span>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="c1">//initialize as part of the session initialization; if not set </span>
+<span class="c1">//explicitly, the trace header defaults to the unique username of  //the client user.  If an agent user is operating on behalf of a </span>
+<span class="c1">//cardholder, the cardholder cid is the default.  The example      //specifies how to change it.</span>
 
-<span class="c1">//or change the trace mid-session </span>
-<span class="nx">session</span><span class="p">.</span><span class="nx">setHeaders</span><span class="p">({</span><span class="dl">"</span><span class="s2">x-cardsavr-trace</span><span class="dl">"</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NlOFNNlKabi7Fn26CLw=</span><span class="dl">"</span><span class="p">}));</span>
+<span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NlOFNNlKabi7Fn26CLw=</span><span class="dl">"</span><span class="p">}));</span>
+
+<span class="nx">session</span><span class="p">.</span><span class="nx">setTrace</span><span class="p">(</span><span class="dl">"</span><span class="s2">NlOFNNlKabi7Fn26CLw=</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="c1">//or per request</span>
-<span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getUsers</span><span class="p">({},</span> <span class="p">{},</span> <span class="p">{</span><span class="na">trace</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NlOFNNlKabi7Fn26CLw=</span><span class="dl">"</span><span class="p">})});</span> 
+<span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getUsers</span><span class="p">({},</span> <span class="p">{},</span> <span class="p">{</span><span class="dl">"</span><span class="s2">x-cardsavr-trace</span><span class="dl">"</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NlOFNNlKabi7Fn26CLw=</span><span class="dl">"</span><span class="p">})});</span> 
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="c1">//Add a trace at the start of the session</span>
 <span class="n">CardSavrHttpClient</span> <span class="n">session</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CardSavrHttpClient</span><span class="p">(</span><span class="n">_cardsavrServer</span><span class="p">,</span> 
   <span class="n">_appKey</span><span class="p">,</span> <span class="n">_appName</span><span class="p">,</span> <span class="n">userName</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="s">"{\"key\": \"my_trace\"}"</span><span class="p">);</span>
@@ -845,17 +841,14 @@ The cardsavr server, app key, app name, and the application username/password mu
 </tbody></table>
 
 <p>*Check GET endpoint documentation to see which properties are sort-able</p>
-
-<p>const updated_body = { id: 1, first_name : &quot;Mark&quot; };
-const res = await my_session.updateUser(1, updated_body);</p>
 <h2 id='safe-key'>Safe key</h2>
 <blockquote>
-<p>safe keys are required to encrypt PII data (email address, address, name) and PCI data (PAN, CVV)  Customers are encouraged to store their own safe keys outside the cardsavr environment.  This prevents the API from examining sensitive data.  If safe key storage is deemed unnecessary (espeically for short lived cardholders), Strivve has the ability to store the safe key on behalf of the customer.  By omitting the safe key when adding cardholders, Strive will generate a safe key and store it along with the cardholder.  It is strongly encouraged not to use a Strivve managed safe key if cardholders are going to persist for long periods of time.</p>
+<p>Safe keys are required to encrypt PII data (email address, address, name) and PCI data (PAN, CVV)  Customers are encouraged to store their own safe keys outside the cardsavr environment.  This prevents the API from examining sensitive data.  If safe key storage is deemed unnecessary (espeically for short lived cardholders), Strivve has the ability to store the safe key on behalf of the customer.  By omitting the safe key when adding cardholders, Strive will generate a safe key and store it along with the cardholder, so there is no need to send a safe key header.  It is strongly encouraged not to use a Strivve managed safe key if cardholders are going to persist for long periods of time.</p>
 </blockquote>
 
-<p>Although safe_keys are stored with the cardholder, callers cannot persist a safe key on the body of the cardholder.  </p>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">body</span> <span class="o">=</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">email</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">foo@foo.com</span><span class="dl">"</span> <span class="p">};</span>
-<span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">my_session</span><span class="p">.</span><span class="nx">createCardholder</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">body</span><span class="p">,</span> <span class="nx">cardholder_safe_key</span><span class="p">);</span>
+<p>Although safe keys are stored with the cardholder, callers cannot persist a safe key on the body of the cardholder.  </p>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">body</span> <span class="o">=</span> <span class="p">{</span> <span class="na">email</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">foo@foo.com</span><span class="dl">"</span><span class="p">,</span> <span class="na">cuid</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">samplecuid</span><span class="dl">"</span><span class="p">};</span>
+<span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">my_session</span><span class="p">.</span><span class="nx">createCardholder</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="nx">cardholder_safe_key</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">HttpRequestHeaders</span> <span class="n">headers</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpRequestMessage</span><span class="p">().</span><span class="n">Headers</span><span class="p">;</span>
 <span class="nf">AddSafeKeyHeader</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">safeKey</span><span class="p">);</span>
 
@@ -880,18 +873,18 @@ const res = await my_session.updateUser(1, updated_body);</p>
 <p><code>{&#39;cardholder-safe-key&#39;: &#39;rttYqkGPHLk2KeK6OD8612gSurKXu0X8W6BTWF3hhGM=&#39;}</code>
 <code>{&#39;new-cardholder-safe-key&#39;: &#39;+h+W0c9EsgvFLufWnu87iV6ErDF7dpyT5YUEbb/oOIw=&#39;}</code></p>
 
-<p>You must send an encrypted cardholder safe key header for each request that involves safe-protected information. Saving users (/cardsavr_users), accounts (/cardsavr_accounts) and cards (/cardsavr_cards) require the key to write encrypted data like PANs and merchant site passwords to the server side safe.  Safe keys can be stored by the third party, or they can optionally be stored by Strivve within Cardsavr. Individual endpoint documentation will indicate if a safe key header is required.</p>
+<p>You must send an encrypted cardholder safe key header for each request that involves safe-protected information. Saving users (/cardsavr_users), accounts (/cardsavr_accounts) and cards (/cardsavr_cards) requires the key in order to write encrypted data like PANs and merchant site passwords to the server side safe.  Safe keys can be stored by the third party, or they can optionally be stored by Strivve within Cardsavr. Individual endpoint documentation will indicate if a safe key header is required.</p>
 
 <p>When rotating a safe key, you must provide a &#39;new-cardholder-safe-key&#39; header.  Both headers are required (new- and existing) in this case.</p>
 
-<p>See the [link] cardholder safe key section for more information on generating and using safe keys.</p>
+<p>See the <a href="https://swch.github.io/slate/?javascript#safe-key">cardholder safe key section</a> for more information on generating and using safe keys.</p>
 <h1 id='api-usage'>API Usage</h1>
 <p>Query parameter filters can be used with GET requests that do not have an ID path parameter (i.e. &#39;/cardsavr_cards&#39; but not &#39;/cardsavr_cards/123&#39;). When using a query filter, you must place a &#39;?&#39; after the endpoint (preceding the first query filter). Mutiple query filters must be separated by an &#39;&amp;&#39;. There are six filter types in CardSavr:</p>
 <h2 id='get-filters'>GET Filters</h2>
 <blockquote>
 <p>Filters can be aggregated together to apply multiple filters</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">merchants</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getMerchants</span><span class="p">({</span> <span class="na">top_hosts</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">amazon.com,apple.com</span><span class="dl">"</span><span class="p">,</span> <span class="na">exclude_hosts</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">walmart.com</span><span class="dl">"</span> <span class="p">});</span>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">merchants</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getMerchantSites</span><span class="p">({</span> <span class="na">top_hosts</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">amazon.com,apple.com</span><span class="dl">"</span><span class="p">,</span> <span class="na">exclude_hosts</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">walmart.com</span><span class="dl">"</span> <span class="p">});</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">MerchantSite</span><span class="p">&gt;&gt;</span> <span class="n">merchants</span> <span class="p">=</span> <span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">GetMerchantSitesAsync</span><span class="p">(</span>
     <span class="k">new</span> <span class="nf">NameValueCollection</span><span class="p">()</span> <span class="p">{</span>
         <span class="p">{</span> <span class="s">"top_hosts"</span><span class="p">,</span> <span class="s">"amazon.com,apple.com"</span><span class="p">},</span> <span class="p">{</span><span class="s">"exclude_hosts"</span><span class="p">,</span> <span class="s">"walmart.com"</span> <span class="p">}</span>
@@ -969,7 +962,7 @@ const res = await my_session.updateUser(1, updated_body);</p>
 
 <p>For example, a successful DELETE request to &#39;/cardsavr_accounts/123&#39; would also delete any single-site jobs that reference the account with ID 123, as single-site jobs contain a foreign key reference to an account.</p>
 <h2 id='plural-post'>Plural POST</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">createSingleSiteJobs</span><span class="p">([{</span><span class="dl">"</span><span class="s2">cardholder_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="dl">"</span><span class="s2">account_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="dl">"</span><span class="s2">status</span><span class="dl">"</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">REQUESTED</span><span class="dl">"</span><span class="p">},</span> 
-                                    <span class="p">{</span><span class="dl">"</span><span class="s2">cardholder_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="dl">"</span><span class="s2">account_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="dl">"</span><span class="s2">status</span><span class="dl">"</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">REQUESTED</span><span class="dl">"</span><span class="p">}]);</span> 
+                                    <span class="p">{</span><span class="dl">"</span><span class="s2">cardholder_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="dl">"</span><span class="s2">account_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="dl">"</span><span class="s2">status</span><span class="dl">"</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">REQUESTED</span><span class="dl">"</span><span class="p">}]);</span> 
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="c1">//unsupported</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonArray</span> <span class="n">body</span> <span class="o">=</span> <span class="nc">Json</span><span class="o">.</span><span class="na">createArrayBuilder</span><span class="o">()</span>
   <span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="nc">Json</span><span class="o">.</span><span class="na">createJsonBuilder</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"cardholder_id"</span><span class="o">,</span> <span class="mi">1</span><span class="o">).</span><span class="na">add</span><span class="o">(</span><span class="s">"account_id"</span><span class="o">,</span> <span class="mi">1</span><span class="o">).</span><span class="na">add</span><span class="o">(</span><span class="s">"status"</span><span class="o">,</span> <span class="s">"REQUESTED"</span><span class="o">).</span><span class="na">build</span><span class="o">())</span>
@@ -982,10 +975,10 @@ const res = await my_session.updateUser(1, updated_body);</p>
   <span class="nt">-B</span> <span class="s2">"{</span><span class="se">\"</span><span class="s2">cardholder_id</span><span class="se">\"</span><span class="s2">: 1, </span><span class="se">\"</span><span class="s2">account_id</span><span class="se">\"</span><span class="s2">: 1, </span><span class="se">\"</span><span class="s2">status</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">REQUESTED</span><span class="se">\"</span><span class="s2">}, {</span><span class="se">\"</span><span class="s2">cardholder_id</span><span class="se">\"</span><span class="s2">: 1, </span><span class="se">\"</span><span class="s2">account_id</span><span class="se">\"</span><span class="s2">: 2, </span><span class="se">\"</span><span class="s2">status</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">REQUESTED</span><span class="se">\"</span><span class="s2">}]"</span> 
   <span class="nt">-H</span> <span class="s2">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span>
 </code></pre></div>
-<p>Some objects support bulk creation (Single site jobs).  This is accomplished by passing in array of objects rather than simply a single object.  </p>
+<p>Some objects support bulk creation (e.g. single site jobs).  This is accomplished by passing in array of objects rather than simply a single object.  </p>
 <h2 id='plural-put-delete'>Plural PUT/DELETE</h2>
-<p>Some objects support updating and deleting using the standard filter parameters (e.g. Single Site Jobs).  This is noted in the per-object documentation.</p>
-<h2 id='request-hydration-on-post'>Request Hydration on POST</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">createSingleSiteJobs</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span> 
+<p>Some objects support updating and deleting using the standard filter parameters (e.g. single site jobs).  This is noted in the per-object documentation.</p>
+<h2 id='request-hydration-on-post'>Request Hydration on POST</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">createSingleSiteJob</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span> 
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="c1">//unsupported</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonObject</span> <span class="n">body</span> <span class="o">=</span> <span class="nc">Json</span><span class="o">.</span><span class="na">createObjectBuilder</span><span class="o">()</span>
   <span class="o">.</span><span class="na">add</span><span class="o">(...</span> <span class="c1">//various nested properties using JsonObjects and JsonArrays (JsonValues)</span>
@@ -1040,19 +1033,19 @@ const res = await my_session.updateUser(1, updated_body);</p>
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>Some objects support posting multiple nested objects to avoid multiple server calls.  This is supported by the Single Site Jobs, Cards, Accounts as well as the address APIs.  For example, a Job can be posted with a nested cardholder, account, and a card (the card can even have a nested address).  This is currently only supported when single jobs are posted, not with Plural POSTs.  </p>
+<p>Some objects support posting multiple nested objects to avoid multiple server calls.  This is supported by the Single Site Job, Card, Account and Address APIs.  For example, a Job can be posted with a nested cardholder, account, and a card (the card can even have a nested address).  This is currently only supported when single jobs are posted, not with Plural POSTs.  </p>
 
-<p>If a nested cardholder is referenced by multiple objects, the nested object should reference the created instnce using the cardholder cuid.  Notice the body required on the request to the right.  A cardholder_ref parameter is required on card, account, and address entities to ensure the correstponding cardholder_id properties are filled in properly. </p>
+<p>If a nested cardholder is referenced by multiple objects, the nested object should reference the created instance using the cardholder cuid.  Notice the body required on the request to the right.  A cardholder_ref parameter is required on card, account, and address entities to ensure the correstponding cardholder_id properties are filled in properly. </p>
 <h1 id='passwords-and-authorization'>Passwords and Authorization</h1><h2 id='authorize-cardholder'>Authorize cardholder</h2>
 <blockquote>
-<p>Credential grants are very important for handing off responbility to a downstream client.  The grants must be provisioned by a user that caan create grants (like a customer_agent), and the grant is one time use for 3 minutes.  Grants are created when cardholders are created, and can be used as part of the authorize endpoint within the client by an agent (generally a cardholder_agent).</p>
+<p>Credential grants are very important for handing off responbility to a downstream client.  The grants must be provisioned by a user that can create grants (like a customer_agent), and the grant is one-time-use for 3 minutes.  Grants are created when cardholders are created, and can be used as part of the authorize endpoint within the client by an agent (generally a cardholder_agent).</p>
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">CardsavrSession</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">()</span> <span class="dl">"</span><span class="s2">@strivve/strivve-sdk/lib/cardsavr/CardsavrJSLibrary-2.0</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">//agent_session is the session of a cardholder agent.  Cardholder agents are lower </span>
 <span class="c1">//privileged agents that can authorize themselves using grants created upstream when cardholder are created.</span>
 <span class="kd">const</span> <span class="nx">login</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">agent_session</span><span class="p">.</span><span class="nx">authorizeCardholder</span><span class="p">(</span><span class="nx">grant</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">agent_session</span><span class="p">.</span><span class="nx">createSingleSitJob</span><span class="p">(</span><span class="nx">job</span><span class="p">);</span> <span class="c1">//agent can now act on behalf of cardholder</span>
+<span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">agent_session</span><span class="p">.</span><span class="nx">createSingleSiteJob</span><span class="p">(</span><span class="nx">job</span><span class="p">);</span> <span class="c1">//agent can now act on behalf of cardholder</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="k">using</span> <span class="nn">Switch.CardSavr.Http</span><span class="p">;</span>
 
 <span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">UserLogin</span><span class="p">&gt;</span> <span class="n">login</span> <span class="p">=</span> <span class="k">await</span> <span class="n">agentSession</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="nf">authorizeCardholder</span><span class="p">(</span><span class="n">grant</span><span class="p">);</span>
@@ -1075,7 +1068,7 @@ curl <span class="nt">-iv</span>
 </span></code></pre></div><h3 id='path'>Path</h3>
 <p>GET /cardsavr_users/:id/credential_grant</p>
 <h3 id='description'>Description</h3>
-<p>Returns a credential grant for specified user. This grant can be included with a login call ONCE within three minutes of being created.</p>
+<p>Returns a credential grant for specified user. This grant can be included with an authorize endpoint call ONCE within three minutes of being created.</p>
 <h2 id='update-user-password'>Update user password</h2>
 <blockquote>
 <p>Password updates for non-agents must supply the old_password</p>
@@ -1104,12 +1097,8 @@ curl <span class="nt">-iv</span>  <span class="nt">-d</span> <span class="s2">"{
   </span><span class="se">\"</span><span class="s2">password_copy</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">3ysXPhntmPDU7xUFYKbc/4Aq=WVrhExdjHQsx5FgV2pZ</span><span class="se">\"</span><span class="s2">}"</span> 
   <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="s2">"https://api.INSTANCE.cardsavr.io/cardsavr_users/:id/credential_grant"</span> 
   <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span>  <span class="nt">-H</span> <span class="s2">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span>
-</code></pre></div>
-<blockquote>
-<p>Grants are always 38 characters, are one time use, and expire after 3 minutes.</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"successs"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='path-2'>Path</h3>
 <p>PUT /cardsavr_users/:id/update_password</p>
@@ -1138,7 +1127,7 @@ Most password updates can be done via the [Partner Portal](https://developers.st
 <td>password_copy</td>
 <td>string</td>
 <td>yes</td>
-<td>copy of new password key</td>
+<td>Copy of new password key</td>
 </tr>
 <tr>
 <td>old_password</td>
@@ -1231,12 +1220,6 @@ Most password updates can be done via the [Partner Portal](https://developers.st
 <td>no</td>
 <td>User&#39;s plain text password when using Postman or Curl on a development environment. This parameter is mutually exclusive of the &#39;passwordProof&#39; and &#39;userCredentialGrant&#39; parameters.</td>
 </tr>
-<tr>
-<td>userCredentialGrant</td>
-<td>string</td>
-<td>no</td>
-<td>Credential grant issued by agent from the [/cardsavr_users:id//credential_grant] call. This parameter is mutually exclusive of the &#39;password&#39; and &#39;passwordProof&#39; parameters.</td>
-</tr>
 </tbody></table>
 
 <p></a=zero-knowledge-proof></a></p>
@@ -1270,7 +1253,7 @@ curl <span class="nt">-iv</span> <span class="nt">-d</span> <span class="nt">-H<
 <p>An account object contains a CardSavr user&#39;s account information for a specific merchant site.</p>
 <h2 id='get-account'>Get account</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-b</span> ~/_cookies <span class="nt">-c</span> ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_accounts/1487472190
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">accounts</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getAccounts</span><span class="p">(</span><span class="mi">1487472190</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">account</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getAccounts</span><span class="p">(</span><span class="mi">1487472190</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">Accounts</span><span class="p">&gt;</span> <span class="n">accounts</span> <span class="p">=</span> <span class="k">await</span> <span class="n">session</span><span class="p">.</span><span class="nf">GetAccountsAsync</span><span class="p">(</span><span class="m">1487472190</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonValue</span> <span class="n">accounts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"/cardsavr_accounts"</span><span class="o">,</span> <span class="mi">1487472190</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
 </code></pre></div>
@@ -1401,7 +1384,7 @@ https://api.INSTANCE.cardsavr.io/cardsavr_accounts/
 </code></pre></div><h3 id='path-2'>Path</h3>
 <p>POST /cardsavr_accounts</p>
 <h3 id='description-2'>Description</h3>
-<p>Create a account and return the created object.</p>
+<p>Create an account and return the created object.</p>
 <h3 id='body-parameters'>Body parameters</h3>
 <table><thead>
 <tr>
@@ -1518,7 +1501,7 @@ https://api.INSTANCE.cardsavr.io/cardsavr_accounts/1487472190
 
 <p>See <a href="#response-cardsavr_account">account response parameters</a>.</p>
 <h1 id='addresses'>Addresses</h1>
-<p>Address objects contain billing address information for a particular user.</p>
+<p>Address objects contain billing address information for a particular cardholder.</p>
 <h2 id='get-address'>Get address</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-b</span> ~/_cookies <span class="nt">-c</span> ~/_cookies
 https://api.INSTANCE.cardsavr.io/cardsavr_addresses/130973664
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">addresses</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getAddresses</span><span class="p">(</span><span class="mi">130973664</span><span class="p">);</span>
@@ -1716,7 +1699,7 @@ https://api.INSTANCE.cardsavr.io/cardsavr_addresses/
 </code></pre></div><h3 id='path-6'>Path</h3>
 <p>POST /cardsavr_addresses</p>
 <h3 id='description-6'>Description</h3>
-<p>Create a address and return the created object.</p>
+<p>Create an address and return the created object.</p>
 <h3 id='body-parameters-3'>Body parameters</h3>
 <table><thead>
 <tr>
@@ -2402,7 +2385,7 @@ https://api.INSTANCE.cardsavr.io/cardsavr_cards/
 <p>See <a href="#response-cardsavr_card">card response attributes</a>.</p>
 
 <aside class="notice">Update calls to /cardsavr_cards require the cardholder's personal cardholder_safe_key header to encrypt and save the pan and cvv when Strivve does not manage keys for a customer (this is an environment setting). The safe keys are also not required if updating non-safe user properties.</aside>
-<h2 id='update-card'>Update card</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">card</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">updateCard</span><span class="p">({</span>
+<h2 id='update-card'>Update card</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">card</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">updateCard</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span>
   <span class="dl">"</span><span class="s2">address_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">576026016</span><span class="p">,</span>
   <span class="dl">"</span><span class="s2">bin_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1204478035</span><span class="p">,</span>
   <span class="dl">"</span><span class="s2">name_on_card</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Joe C Smith</span><span class="dl">"</span><span class="p">,</span>
@@ -2412,8 +2395,7 @@ https://api.INSTANCE.cardsavr.io/cardsavr_cards/
   <span class="dl">"</span><span class="s2">expiration_year</span><span class="dl">"</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span>
   <span class="dl">"</span><span class="s2">first_6</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">000000</span><span class="dl">"</span><span class="p">,</span>
   <span class="dl">"</span><span class="s2">first_7</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0000000</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">first_8</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">00000000</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">id</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1</span><span class="dl">"</span>
+  <span class="dl">"</span><span class="s2">first_8</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">00000000</span><span class="dl">"</span>
 <span class="p">},</span> <span class="nx">CARDHOLDER_SAFE_KEY</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">PropertyBag</span> <span class="n">body</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">PropertyBag</span><span class="p">()</span>
 <span class="p">{</span>
@@ -3742,7 +3724,7 @@ https://api.INSTANCE.cardsavr.io/integrators/
 <li>swch_internal</li>
 <li>cust_internal</li>
 </ul>
-<h2 id='update-integrator'>Update integrator</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">integrator</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">updateIntegrator</span><span class="p">({</span>
+<h2 id='update-integrator'>Update integrator</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">integrator</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">updateIntegrator</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span>
   <span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">IvybnTgVORkguWDXDrEWeBMJRSJZLzlTQnbPesbvDhXXNDHzR</span><span class="dl">"</span><span class="p">,</span>
   <span class="dl">"</span><span class="s2">integrator_type</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">application</span><span class="dl">"</span><span class="p">,</span>
   <span class="dl">"</span><span class="s2">description</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ixuYFzESKhSXmKFuKaWEyTIUjC</span><span class="dl">"</span><span class="p">,</span>
@@ -3750,8 +3732,7 @@ https://api.INSTANCE.cardsavr.io/integrators/
   <span class="dl">"</span><span class="s2">current_key</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ebWdgK9J4J4GeikNnT9v6RaK847BbmdYzl9YaQiRPNM=</span><span class="dl">"</span><span class="p">,</span>
   <span class="dl">"</span><span class="s2">next_key</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">T8S8ZsrQnIzdG5C9UbEyXyOT9fo+PeBfDMctj2Y5wAk=</span><span class="dl">"</span><span class="p">,</span>
   <span class="dl">"</span><span class="s2">key_lifetime</span><span class="dl">"</span><span class="p">:</span> <span class="mi">301</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">next_rotation_on</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1992-08-13T16:54:50.455Z</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">id</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1</span><span class="dl">"</span>
+  <span class="dl">"</span><span class="s2">next_rotation_on</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1992-08-13T16:54:50.455Z</span><span class="dl">"</span>
 <span class="p">});</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">PropertyBag</span> <span class="n">body</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">PropertyBag</span><span class="p">()</span>
 <span class="p">{</span>
@@ -4217,7 +4198,7 @@ https://api.INSTANCE.cardsavr.io/notifications/
 <li>merchant_site_updates_top</li>
 <li>merchant_site_updates_all</li>
 </ul>
-<h2 id='update-notification'>Update notification</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">notification</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">updateNotification</span><span class="p">({</span>
+<h2 id='update-notification'>Update notification</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">notification</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">updateNotification</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span>
   <span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">cigexwwwVtmnjxqwVQLoMCgkDAubfLKKLwRvqASqjZiJmnBhWkzvKGDTFZKEeis</span><span class="dl">"</span><span class="p">,</span>
   <span class="dl">"</span><span class="s2">type</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">webhook</span><span class="dl">"</span><span class="p">,</span>
   <span class="dl">"</span><span class="s2">event</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">webhook_error_summary</span><span class="dl">"</span><span class="p">,</span>
@@ -4227,8 +4208,7 @@ https://api.INSTANCE.cardsavr.io/notifications/
     <span class="dl">"</span><span class="s2">gtYZCDAtqmEC</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span>
   <span class="p">},</span>
   <span class="dl">"</span><span class="s2">html_template</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Yfdvnq</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">text_template</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">sKJqVOVvZIumgJRhvQwGydvkmrX</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">id</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1</span><span class="dl">"</span>
+  <span class="dl">"</span><span class="s2">text_template</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">sKJqVOVvZIumgJRhvQwGydvkmrX</span><span class="dl">"</span>
 <span class="p">});</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">PropertyBag</span> <span class="n">body</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">PropertyBag</span><span class="p">()</span>
 <span class="p">{</span>
@@ -5246,11 +5226,7 @@ Credential resubmission messages notify the virtual browser session that credent
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
-<aside class="notice">
-This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
-</aside>
-
-<p>The Kittn API uses the following error codes:</p>
+<p>The CardSavr API uses the following error codes:</p>
 
 <table><thead>
 <tr>
@@ -5268,15 +5244,15 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
+<td>Forbidden -- The resource requested is hidden for administrators only.</td>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
+<td>Not Found -- The specified resource could not be found.</td>
 </tr>
 <tr>
 <td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
+<td>Method Not Allowed -- You tried to access a resource with an invalid method.</td>
 </tr>
 <tr>
 <td>406</td>
@@ -5284,15 +5260,11 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 </tr>
 <tr>
 <td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
+<td>Gone -- The resource requested has been removed from our servers.</td>
 </tr>
 <tr>
 <td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
+<td>Too Many Requests --</td>
 </tr>
 <tr>
 <td>500</td>
