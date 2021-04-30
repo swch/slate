@@ -2,7 +2,7 @@
 
 ## Authorize cardholder
 
-> Credential grants are very important for handing off responbility to a downstream client.  The grants must be provisioned by a user that caan create grants (like a customer_agent), and the grant is one time use for 3 minutes.  Grants are created when cardholders are created, and can be used as part of the authorize endpoint within the client by an agent (generally a cardholder_agent).
+> Credential grants are very important for handing off responbility to a downstream client.  The grants must be provisioned by a user that can create grants (like a customer_agent), and the grant is one-time-use for 3 minutes.  Grants are created when cardholders are created, and can be used as part of the authorize endpoint within the client by an agent (generally a cardholder_agent).
 
 ```javascript
 const { CardsavrSession } = require() "@strivve/strivve-sdk/lib/cardsavr/CardsavrJSLibrary-2.0";
@@ -10,7 +10,7 @@ const { CardsavrSession } = require() "@strivve/strivve-sdk/lib/cardsavr/Cardsav
 //agent_session is the session of a cardholder agent.  Cardholder agents are lower 
 //privileged agents that can authorize themselves using grants created upstream when cardholder are created.
 const login = await agent_session.authorizeCardholder(grant);
-const response = agent_session.createSingleSitJob(job); //agent can now act on behalf of cardholder
+const response = agent_session.createSingleSiteJob(job); //agent can now act on behalf of cardholder
 ```
 
 ```csharp
@@ -46,7 +46,7 @@ curl -iv
 GET /cardsavr_users/:id/credential_grant
 
 ### Description
-Returns a credential grant for specified user. This grant can be included with a login call ONCE within three minutes of being created.
+Returns a credential grant for specified user. This grant can be included with an authorize endpoint call ONCE within three minutes of being created.
 
 ## Update user password
 
@@ -88,11 +88,9 @@ curl -iv  -d "{\"password\": \"3ysXPhntmPDU7xUFYKbc/4Aq=WVrhExdjHQsx5FgV2pZ\",
   -H "x-cardsavr-trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
-> Grants are always 38 characters, are one time use, and expire after 3 minutes.
-
 ```json
 {
-    "successs": true
+    "success": true
 }
 ```
 
@@ -111,7 +109,7 @@ Most password updates can be done via the [Partner Portal](https://developers.st
 Parameter | Type | Required | Desription
 --------- | ---- | -------- | ----------
 password | string | yes | New password key
-password_copy | string | yes | copy of new password key
+password_copy | string | yes | Copy of new password key
 old_password | string | not always | Privileged accounts can reset users' passwords without the old key
 
 # Session
@@ -191,7 +189,6 @@ clientPublicKey | string | yes | The base 64 encoded NIST point 256 (P256) ellip
 userName | string | yes | user name for this user
 passwordProof | string | no | The base 64 encoded HMAC-256 signature zero-knowledge-proof of the password. See [zero-knowedge-proof] for more information. This parameter is mutually exclusive of the 'password' and 'userCredentialGrant' parameters.
 password | string | no | User's plain text password when using Postman or Curl on a development environment. This parameter is mutually exclusive of the 'passwordProof' and 'userCredentialGrant' parameters.
-userCredentialGrant | string | no | Credential grant issued by agent from the [/cardsavr_users:id//credential_grant] call. This parameter is mutually exclusive of the 'password' and 'passwordProof' parameters.
 
 </a=zero-knowledge-proof></a>
 ### Zero Knowledge Proof Password 

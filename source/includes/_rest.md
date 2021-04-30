@@ -9,7 +9,7 @@ https://api.INSTANCE.cardsavr.io/cardsavr_accounts/1487472190
 ```
 
 ```javascript
-const accounts = await session.getAccounts(1487472190);
+const account = await session.getAccounts(1487472190);
 ```
 
 ```csharp
@@ -133,7 +133,7 @@ POST /cardsavr_accounts
 
 ### Description
 
-Create a account and return the created object.
+Create an account and return the created object.
 
 ### Body parameters
 
@@ -242,7 +242,7 @@ See [account response parameters](#response-cardsavr_account).
 
 
 # Addresses
-Address objects contain billing address information for a particular user.
+Address objects contain billing address information for a particular cardholder.
 ## Get address
 
 ```shell
@@ -411,7 +411,7 @@ POST /cardsavr_addresses
 
 ### Description
 
-Create a address and return the created object.
+Create an address and return the created object.
 
 ### Body parameters
 
@@ -971,7 +971,7 @@ See [card response attributes](#response-cardsavr_card).
 ## Update card
 
 ```javascript
-const card = await session.updateCard({
+const card = await session.updateCard(1, {
   "address_id": 576026016,
   "bin_id": 1204478035,
   "name_on_card": "Joe C Smith",
@@ -981,8 +981,7 @@ const card = await session.updateCard({
   "expiration_year": 24,
   "first_6": "000000",
   "first_7": "0000000",
-  "first_8": "00000000",
-  "id": "1"
+  "first_8": "00000000"
 }, CARDHOLDER_SAFE_KEY);
 ```
 
@@ -2119,7 +2118,7 @@ See [integrator response attributes](#response-integrator).
 ## Update integrator
 
 ```javascript
-const integrator = await session.updateIntegrator({
+const integrator = await session.updateIntegrator(1, {
   "name": "IvybnTgVORkguWDXDrEWeBMJRSJZLzlTQnbPesbvDhXXNDHzR",
   "integrator_type": "application",
   "description": "ixuYFzESKhSXmKFuKaWEyTIUjC",
@@ -2127,8 +2126,7 @@ const integrator = await session.updateIntegrator({
   "current_key": "ebWdgK9J4J4GeikNnT9v6RaK847BbmdYzl9YaQiRPNM=",
   "next_key": "T8S8ZsrQnIzdG5C9UbEyXyOT9fo+PeBfDMctj2Y5wAk=",
   "key_lifetime": 301,
-  "next_rotation_on": "1992-08-13T16:54:50.455Z",
-  "id": "1"
+  "next_rotation_on": "1992-08-13T16:54:50.455Z"
 });
 ```
 
@@ -2521,7 +2519,7 @@ See [notification response attributes](#response-notification).
 ## Update notification
 
 ```javascript
-const notification = await session.updateNotification({
+const notification = await session.updateNotification(1, {
   "name": "cigexwwwVtmnjxqwVQLoMCgkDAubfLKKLwRvqASqjZiJmnBhWkzvKGDTFZKEeis",
   "type": "webhook",
   "event": "webhook_error_summary",
@@ -2531,8 +2529,7 @@ const notification = await session.updateNotification({
     "gtYZCDAtqmEC": true
   },
   "html_template": "Yfdvnq",
-  "text_template": "sKJqVOVvZIumgJRhvQwGydvkmrX",
-  "id": "1"
+  "text_template": "sKJqVOVvZIumgJRhvQwGydvkmrX"
 });
 ```
 
