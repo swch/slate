@@ -1,7 +1,7 @@
 # Errors
 
 <aside class="notice">
-This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
+Strivve adheres to a standard set of error codes.  In general, formatting/data errors should return 400 responses.  500 errors should be reported to developers@strivve.com.
 </aside>
 
 The Strivve API uses the following error codes:
