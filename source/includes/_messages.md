@@ -40,11 +40,13 @@ GET /messages/place_card_on_single_site_jobs/job_id:/broadcasts/registrations
 ### Description
 Registers a client to a broadcast message channel.  Messages are saved for an hour waiting for the client to poll.  Generally clients poll every 3-5 seconds.  Multiple clients can poll for messages for the same job, so each client has its own access key.  
 
+Note: Creating a place_card_on_single_site_job will automatically create a subscription to a job and return an access_key.  Thereforce explicit subscription is only for higher privileged agents that didn't actually create the job.
+
 <aside class="notice">
 See the <a href="https://developers.strivve.com/resources/messaging">Messaging system document</a> for more details on how the messaging system is architected.
 </aside>
 
-## Get Status Updates
+## Get Job Status Updates
 
 > The unique access key is returned for every broadcast message poll request
 
@@ -71,7 +73,6 @@ Not implemented yet
 ```
 
 ```shell
-#old_pass is not required for privileged admins.  Users must provide their old password
 curl -iv -H "Content-Type: application/json" 
   "https://api.INSTANCE.cardsavr.io/messages/place_card_on_single_site_jobs/123/broadcasts/" 
   -H "cardsavr-messaging-access-key: erz5nk219FPZNWGv3AbHdA=="
@@ -108,6 +109,74 @@ GET /messages/place_card_on_single_site_jobs/job_id:/credential_requests
 
 ### Description
 Grabs the status messages for this job.  If there are no messages, none are returned.  Since multiple messages may be returned, the body is an array of messages.  When jobs complete, the final message will have a "termination_type" with values:
+
+Termination type | Description
+---------------- | -----------
+BILLABLE | Job completed successfully
+USER_DATA_FAILURE | There was an issue with data supplied by the cardholder like a TFA code or password
+SITE_INTERACTION_FAILURE | Cardsavr was unable to definitively place the card on the site
+PROCESS_FAILURE | There was an internal system failure - these happen very rarely and should be escallated immediately
+
+
+## Get Cardholder Status Updates
+
+> The unique access key is returned for every broadcast message poll request
+
+```javascript
+const messages = await session.getCardholderMessages(cardholder_id);
+if (messages.body) {
+    messages.body.map(async (item) => {
+        if (item.type === "job_status") { 
+            conssole.log(item.status);
+        }
+    });
+}
+```
+
+```csharp
+Not implemented yet
+```
+
+```java
+Not implemented yet
+```
+
+```shell
+curl -iv -H "Content-Type: application/json" 
+  "https://api.INSTANCE.cardsavr.io/messages/cardholders/123/" 
+  -H "x-cardsavr-trace: {\"key\": \"my_trace\"}"  -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
+```
+
+> Response is an array, as mutliple messages from multiple jobs may be generated between polls.
+
+```json
+[
+    {
+        "job_id": "1585",
+        "type": "job_status",
+        "message": {
+            "status": "AUTH",
+            "job_timeout": 781440,
+            "percent_complete": 5
+        }
+    },
+    {
+        "job_id": "1586",
+        "type": "job_status",
+        "message": {
+            "status": "AUTH",
+            "job_timeout": 781254,
+            "percent_complete": 5
+        }
+    }
+]
+```
+
+### Path
+GET /messages/cardholders/cardholder_id
+
+### Description
+Grabs the status messages for this cardholder.  If there are no messages, none are returned.  When runniung multiple jobs, this is much more efficient mechanism for retrieving messaages.  You do not need to manage acceess_keys since the permissions are managed via the cardholder agent's permissions.  Since multiple job and messages may be returned, the body is an array of messages.  As jobs complete, the final message for each job will have a "termination_type" with values:
 
 Termination type | Description
 ---------------- | -----------
