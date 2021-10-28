@@ -105,7 +105,7 @@ curl -iv -H "Content-Type: application/json"
 ```
 
 ### Path
-GET /messages/place_card_on_single_site_jobs/job_id:/credential_requests
+GET /messages/place_card_on_single_site_jobs/job_id:/broadcasts
 
 ### Description
 Grabs the status messages for this job.  If there are no messages, none are returned.  Since multiple messages may be returned, the body is an array of messages.  When jobs complete, the final message will have a "termination_type" with values:
