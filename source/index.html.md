@@ -334,7 +334,7 @@ Property name | Type | Description | Default value
 page | integer | The page to be returned | 1
 page_length | integer | Length of each page | 25
 sort* | string | Property to sort results by | "id"
-descending | boolean | If true, sorts results in descending order; if false, sorts in ascending order | false
+is_descending | boolean | If true, sorts results in descending order; if false, sorts in ascending order | false
 
 *Check GET endpoint documentation to see which properties are sort-able
 
