@@ -111,7 +111,7 @@ x-cardsavr-authorization | required | string | contains the [integrator name and
 x-cardsavr-nonce | required | string (milliseconds) | contains the current UTC time in milliseconds, and therefore provides protection against [replay attacks](https://developers.strivve.com/resources/encryption).
 x-cardsavr-signature | required | string | The [string-to-sign format](https://developers.strivve.com/resources/encryption) requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the [SDK Libraries](https://developers.strivve.com/api-sdk/).
 x-cardsavr-hydration | (none) | stringified JSON object | [See hydration](#hydration) 
-x-cardsavr-paging | {"page": 1, "page_length": 25} | stringified JSON object | Only supported with GET calls. [See paging](#paging)
+x-cardsavr-paging | {"page": 1, "page_length": 25, "is_descending" : true} | stringified JSON object | Only supported with GET calls. [See paging](#paging)
 x-cardsavr-session-jwt | required | string | [See session tokens] (#session-tokens)
 
 ## session-tokens
@@ -295,17 +295,17 @@ Your client application name will appear in the CardSavr logs alongside each req
 
 ```javascript
 //javascript SDK supports a json object as a paging header
-await session.getCards(123, { page: 1 });
+await session.getCards(123, {"sort":"id","is_descending":true,"page":1,"page_length":25});
 ```
 
 ```csharp
-Paging paging = new Paging() { PageLength = 100 };
+Paging paging = new Paging() { PageLength = 100, IsDescending = true, Page = 1, Sort = “id” };
 CardSavrResponse<List<Card>> list = await http.getCardsAsync(null, paging);
 ```
 
 ```java
 Headers headers = session.createHeaders();
-headers.paging = Json.createObjectBuilder().add("page", 1).add("page_length", 5).build();
+headers.paging = Json.createObjectBuilder().add("page", 1).add("page_length", 5).add("is_descending", true).add("sort", "id").build();
 session.post("/cardsavr_cards", body, headers);
 ```
 
