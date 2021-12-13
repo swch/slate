@@ -3717,3 +3717,4 @@ DELETE /place_card_on_single_site_jobs/{id}
 Delete a single-site job and purge its [related items](#cascading-delete).  An id is required on every delete request.
 
 See [single-site job response parameters](#response-place_card_on_single_site_job).
+
