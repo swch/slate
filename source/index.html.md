@@ -111,7 +111,7 @@ x-cardsavr-authorization | required | string | contains the [integrator name and
 x-cardsavr-nonce | required | string (milliseconds) | contains the current UTC time in milliseconds, and therefore provides protection against [replay attacks](https://developers.strivve.com/resources/encryption).
 x-cardsavr-signature | required | string | The [string-to-sign format](https://developers.strivve.com/resources/encryption) requires the URL-Path (decoded), the authorization header, and the nonce header.  Also part of the [SDK Libraries](https://developers.strivve.com/api-sdk/).
 x-cardsavr-hydration | (none) | stringified JSON object | [See hydration](#hydration) 
-x-cardsavr-paging | {"page": 1, "page_length": 25} | stringified JSON object | Only supported with GET calls. [See paging](#paging)
+x-cardsavr-paging | {"page": 1, "page_length": 25, "is_descending" : true} | stringified JSON object | Only supported with GET calls. [See paging](#paging)
 x-cardsavr-session-jwt | required | string | [See session tokens] (#session-tokens)
 
 ## session-tokens
@@ -295,17 +295,17 @@ Your client application name will appear in the CardSavr logs alongside each req
 
 ```javascript
 //javascript SDK supports a json object as a paging header
-await session.getCards(123, { page: 1 });
+await session.getCards(123, {"sort":"id","is_descending":true,"page":1,"page_length":25});
 ```
 
 ```csharp
-Paging paging = new Paging() { PageLength = 100 };
+Paging paging = new Paging() { PageLength = 100, IsDescending = true, Page = 1, Sort = “id” };
 CardSavrResponse<List<Card>> list = await http.getCardsAsync(null, paging);
 ```
 
 ```java
 Headers headers = session.createHeaders();
-headers.paging = Json.createObjectBuilder().add("page", 1).add("page_length", 5).build();
+headers.paging = Json.createObjectBuilder().add("page", 1).add("page_length", 5).add("is_descending", true).add("sort", "id").build();
 session.post("/cardsavr_cards", body, headers);
 ```
 
@@ -334,7 +334,7 @@ Property name | Type | Description | Default value
 page | integer | The page to be returned | 1
 page_length | integer | Length of each page | 25
 sort* | string | Property to sort results by | "id"
-is_descending | boolean | If true, sorts results in descending order; if false, sorts in ascending order | false
+descending | boolean | If true, sorts results in descending order; if false, sorts in ascending order | false
 
 *Check GET endpoint documentation to see which properties are sort-able
 
@@ -614,4 +614,4 @@ curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs"
 ```
 Some objects support posting multiple nested objects to avoid multiple server calls.  This is supported by the Single Site Job, Card, Account and Address APIs.  For example, a Job can be posted with a nested cardholder, account, and a card (the card can even have a nested address).  This is currently only supported when single jobs are posted, not with Plural POSTs.  
 
-If a nested cardholder is referenced by multiple objects, the nested object should reference the created instance using the cardholder cuid.  Notice the body required on the request to the right.  A cardholder_ref parameter is required on card, account, and address entities to ensure the correstponding cardholder_id properties are filled in properly. 
+If a nested cardholder is referenced by multiple objects, the nested object should reference the created instance using the cardholder cuid.  Notice the body required on the request to the right.  A cardholder_ref parameter is required on card, account, and address entities to ensure the correstponding cardholder_id properties are filled in properly.
