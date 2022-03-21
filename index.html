@@ -993,7 +993,7 @@ The cardsavr server, app key, app name, and the application username/password mu
 <h2 id='plural-put-delete'>Plural PUT/DELETE</h2>
 <p>Some objects support updating and deleting using the standard filter parameters (e.g. single site jobs).  This is noted in the per-object documentation.</p>
 <h2 id='customer-keys-and-upserting'>Customer keys and Upserting</h2>
-<p>Cards, cardholders, and accounts support external references.  This enables integrators to access entities using alternative namespaces rather than by the cardsavr supplied ids.  These external references can either be supplied (e.g. a cardholder bank account id).  </p>
+<p>Cards, cardholders, and accounts support external references.  This enables integrators to access entities using alternative namespaces rather than by the cardsavr supplied ids.  These external references are generally existing entities in the integrators system (e.g. a cardholder bank account id).  </p>
 
 <p>Integrators can also &quot;upsert&quot; these entities by providing the customer_key rather than cardsavr ids.  If the entity exists, it is merely updated and returned.  If the entity does not exist, it will be created.  This simplifies the integration and can reduce the complexity of the integrator&#39;s middleware.</p>
 
