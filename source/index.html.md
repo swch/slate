@@ -457,7 +457,7 @@ Multiple filters for string properties always use **partial** matching, meaning 
 **Include filters** select for any objects that have the specified property value. Unlike multiple filters, include filters use exact matching.
 
 <aside class="notice">
-"/cardsavr_users?roles_include=developer,analysts" returns users with roles of developer and analyst.
+"/cardsavr_users?roles_include=cardholder_agent,customer_agent" returns users with roles of cardholder_agent and customer_agent.
 "/cardsavr_users?roles_include=dev,ana" would return no users, as "dev" and "ana" are not roles defined in CardSavr.
 </aside>
 
@@ -542,6 +542,23 @@ Some objects support bulk creation (e.g. single site jobs).  This is accomplishe
 
 Some objects support updating and deleting using the standard filter parameters (e.g. single site jobs).  This is noted in the per-object documentation.
 
+## Customer keys and Upserting
+
+Cards, cardholders, and accounts support external references.  This enables integrators to access entities using alternative namespaces rather than by the cardsavr supplied ids.  These external references are generally existing entities in the integrators system (e.g. a cardholder bank account id).  
+
+Integrators can also "upsert" these entities by providing the customer_key rather than cardsavr ids.  If the entity exists, it is merely updated and returned.  If the entity does not exist, it will be created.  This simplifies the integration and can reduce the complexity of the integrator's middleware.
+
+Entity | External ID | Default | card_placement_result column
+------ | ---- | ----------- | ----------------
+Cardholder | cuid | random | cuid
+Card | customer_key | random | card_customer_key
+Account | customer_key | merchant site, $, and cuid concatenated | account_customer_key
+
+<aside class="notice">
+The par is an alternate customer_key for the card entity (for backward compatibility).  If a par is supplied without a customer_key, the par will be used.  If they are both supplied, the par cannot be used as an upserting key.  If the are both omitted, the PAR remains null, and the customer_key gets set to a random value.
+</aside>
+
+
 ## Request Hydration on POST
 
 ```javascript
@@ -572,14 +589,15 @@ curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs"
   "status": "REQUESTED",
   "cardholder":
     {
-      "cuid":"{{CARDHOLDER_UNIQUE_KEY}}",
+      "cuid":"12345678",
     },
   "card":
     {
       "cardholder_ref": {
-        "cuid": "{{CARDHOLDER_UNIQUE_KEY}}"
+        "cuid": "12345678"
       },
-      "par":"peLpzDnEHdhiiWEtuhUgIbN{{CARDHOLDER_UNIQUE_KEY}}",
+      "customer_key":"12345678",
+      "par":"peLpzDnEHdhiiWEtuhUgIbN12345678",
       "pan":"KOnalFfwdrBXlZD",
       "cvv":"123",
       "expiration_month":12,
@@ -588,7 +606,7 @@ curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs"
       "address":
         {
           "cardholder_ref": {
-            "cuid": "{{CARDHOLDER_UNIQUE_KEY}}"
+            "cuid": "12345678"
           },
           "first_name":"Switch",
           "last_name":"Strivve",
@@ -604,7 +622,7 @@ curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs"
   "account":
     {
       "cardholder_ref": {
-        "cuid": "{{CARDHOLDER_UNIQUE_KEY}}"
+        "cuid": "12345678"
       },
       "merchant_site_id":1,
       "username":"bad_email",
