@@ -43,7 +43,7 @@ Registers a client to a broadcast message channel.  Messages are saved for an ho
 Note: Creating a place_card_on_single_site_job will automatically create a subscription to a job and return an access_key.  Thereforce explicit subscription is only for higher privileged agents that didn't actually create the job.
 
 <aside class="notice">
-See the <a href="https://developers.strivve.com/resources/messaging">Messaging system document</a> for more details on how the messaging system is architected.
+See the <a href="https://developers.strivve.com/resources/job-progress/">Messaging system document</a> for more details on how the messaging system is architected.
 </aside>
 
 ## Get Job Status Updates
