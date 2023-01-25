@@ -5553,7 +5553,7 @@ curl <span class="nt">-iv</span>
 <p>Note: Creating a place_card_on_single_site_job will automatically create a subscription to a job and return an access_key.  Thereforce explicit subscription is only for higher privileged agents that didn&#39;t actually create the job.</p>
 
 <aside class="notice">
-See the <a href="https://developers.strivve.com/resources/job-progress/">Messaging system document</a> for more details on how the messaging system is architected.
+See the <a href="https://developers.strivve.com/resources/job-progress/">Messaging system documention</a> for more details on how the messaging system is architected.  Although these apis can be used to handle messaging, CardSavr provides easier mechanisms for receiving and posting messages via the <a href="#single_site_jobs">job</a> and <a href="#accounts">account</a> apis.
 </aside>
 <h2 id='get-job-status-updates'>Get Job Status Updates</h2>
 <blockquote>
@@ -5743,7 +5743,8 @@ curl <span class="nt">-iv</span> <span class="nt">-X</span> POST <span class="nt
   <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace: {</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> <span class="nt">-H</span> <span class="s2">"x-cardsavr-session-jwt: {{JWT_TOKEN}}"</span>
 </code></pre></div>
 <blockquote>
-<p>The login call returns the user, along with a public key to be used to encrypt future requests</p>
+<p>The response returns a 200 if the post succeeds correctly.  There are better mechanisms for posting credentials using
+hydrated api calls outlined in the <a href="https://developers.strivve.com/resources/job-progress/">Messaging system documentation</a> </p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"credential_response"</span><span class="p">,</span><span class="w">
