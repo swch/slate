@@ -43,7 +43,7 @@ Registers a client to a broadcast message channel.  Messages are saved for an ho
 Note: Creating a place_card_on_single_site_job will automatically create a subscription to a job and return an access_key.  Thereforce explicit subscription is only for higher privileged agents that didn't actually create the job.
 
 <aside class="notice">
-See the <a href="https://developers.strivve.com/resources/job-progress/">Messaging system document</a> for more details on how the messaging system is architected.
+See the <a href="https://developers.strivve.com/resources/job-progress/">Messaging system documention</a> for more details on how the messaging system is architected.  Although these apis can be used to handle messaging, CardSavr provides easier mechanisms for receiving and posting messages via the <a href="#single_site_jobs">job</a> and <a href="#accounts">account</a> apis.
 </aside>
 
 ## Get Job Status Updates
@@ -253,7 +253,8 @@ curl -iv -X POST -d "{\"envelope_id\": \"uHsa6mI3GYO2ZwOf82SuaA==\", \"type\": \
   -H "x-cardsavr-trace: {\"key\": \"my_trace\"}" -H "x-cardsavr-session-jwt: {{JWT_TOKEN}}"
 ```
 
-> The login call returns the user, along with a public key to be used to encrypt future requests
+> The response returns a 200 if the post succeeds correctly.  There are better mechanisms for posting credentials using
+hydrated api calls outlined in the <a href="https://developers.strivve.com/resources/job-progress/">Messaging system documentation</a> 
 
 ```json
 {
