@@ -615,6 +615,8 @@ curl "https://api.INSTANCE.cardsavr.io/place_card_on_single_site-jobs"
           "city":"Seattle",
           "subnational":"WA",
           "postal_code":"98177",
+          "email":"email@domain.com",
+          "phone_number":"5555555555",
           "country":"USA",
           "is_primary": true
         }
