@@ -46,7 +46,7 @@ curl -iv
 GET /cardsavr_users/:id/credential_grant
 
 ### Description
-Returns a credential grant for specified user. This grant can be included with an authorize endpoint call ONCE within three minutes of being created.
+Returns a credential grant for specified user. This grant can be included with an authorize endpoint call ONCE within three minutes of being created.  Grants can also be hydrated into a cardholder response.  Frequently grants are issued immediately following the creation of a cardholder, so this is a common workflow.
 
 ## Update user password
 
@@ -169,7 +169,18 @@ curl -iv -d "{\"password\": \"PASSWORD\", \"userName\": \"USERNAME\"}"
     "is_locked": true,
     "role": "dev",
     "created_on": "2018-04-19T23:10:36.657Z",
-    "last_updated_on": null
+    "last_updated_on": null,
+    "financial_institution": {
+      "id": 1,
+      "name": "Acme Credit Union",
+      "description": "Users in this FI can view and perform actions on users in all other FIs.",
+      "lookup_key": "acmecu",
+      "alternate_lookup_key": null,
+      "config": null,
+      "last_activity": null,
+      "created_on": "2023-09-07T18:49:54.859Z",
+      "last_updated_on": null
+    }
   }
 }
 ```
