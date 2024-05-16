@@ -72,7 +72,7 @@ curl -iv -d "{\"password\": \"PASSWORD\", \"userName\": \"USERNAME\"}"
 
 ```json
 {
-  "serverPublicKey": "sample_public_key",
+  "server_public_key": "sample_public_key",
   "status": "valid_password",
   "success": true,
   "user_id": 321,
