@@ -73,8 +73,7 @@ curl -iv -d "{\"password\": \"PASSWORD\", \"userName\": \"USERNAME\"}"
 ```json
 {
   "server_public_key": "sample_public_key",
-  "status": "valid_password",
-  "success": true,
+  "session_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4ZjJkYjQ1OS1kODMzLTQ2NmItOGE0MS1mYzcwMzA1M2QwZGIiLCJpc3MiOiJhcGkuZ3RvbWxpbnNvbi5jYXJkc2F2ci5pbyIsImF1ZCI6ImFwaS5ndG9tbGluc29uLmNhcmRzYXZyLmlvIiwiaWF0IjoxNTk5NzY5NDQ2fQ.slI13GGNot8SU_hPdzXzZrjcv90G43etofgh9HotNj0",
   "user_id": 321,
   "user": 
   {
