@@ -471,6 +471,12 @@
                     <a href="#create-card-link" class="toc-h2 toc-link" data-title="Create card link">Create card link</a>
                   </li>
                   <li>
+                    <a href="#create-ondemand-card-link" class="toc-h2 toc-link" data-title="Create OnDemand Card Link">Create OnDemand Card Link</a>
+                  </li>
+                  <li>
+                    <a href="#create-ondemand-card-link-2" class="toc-h2 toc-link" data-title="Create OnDemand card link">Create OnDemand card link</a>
+                  </li>
+                  <li>
                     <a href="#update-card-link" class="toc-h2 toc-link" data-title="Update card link">Update card link</a>
                   </li>
                   <li>
@@ -3294,6 +3300,348 @@ https://api.INSTANCE.cardsavr.io/card_links/
 </tbody></table>
 
 <p>See <a href="#response-card_link">card link response attributes</a>.</p>
+<h2 id='create-ondemand-card-link'>Create OnDemand Card Link</h2>
+<blockquote>
+<p>Sample request body:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"auth"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"cardsavr_server"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.example.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"app_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MyIntegrator"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"app_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"app_key_value"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"config_username"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"config_password"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"cardholder"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"cuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"customerid123"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jane@example.com"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"expiration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"month"</span><span class="p">:</span><span class="w"> </span><span class="s2">"05"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"day"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"year"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"address1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Main St"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"address2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apt 4"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Seattle"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"subnational"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WA"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98101"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2065551234"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"card"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"pan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4111111111111111"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"expiration_month"</span><span class="p">:</span><span class="w"> </span><span class="s2">"05"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"expiration_year"</span><span class="p">:</span><span class="w"> </span><span class="s2">"26"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"name_on_card"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane Doe"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Visa"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"cvv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Sample response body:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"card_link_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.example.com/card_links/ondemand/abc123"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"cardholder_long_token_expiration"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-07-16T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"card_link_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234567890</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='create-ondemand-card-link-2'>Create OnDemand card link</h2><h3 id='path-20'>Path</h3>
+<p>POST /card_links/ondemand</p>
+<h3 id='description-20'>Description</h3>
+<p>The OnDemand Card Link endpoint may be called to create a single card link. The request body consists of several separate objects. The <code>auth</code> object contains the credentials required to authenticate with CardSavr. The <code>expiration</code> object, which is optional, specifies the expiration date for the card link — if not provided, it defaults to 2 months from the current date. The <code>cardholder</code>, <code>card</code>, and <code>address</code> objects contain the necessary information to create those entities on behalf of a cardholder.</p>
+
+<p>In response to a properly formed POST request to the OnDemand endpoint containing this information, the user will receive a card link containing a fully formed URL that can be accessed immediately, along with the card link ID and the expiration date timestamp.</p>
+<h3 id='body-parameters-10'>Body parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Subproperty</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>auth</td>
+<td></td>
+<td>object</td>
+<td>yes</td>
+<td></td>
+<td>Authentication credentials.</td>
+</tr>
+<tr>
+<td></td>
+<td>cardsavr_server</td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+<td>HTTPS url of the cardsavr API endpoint.</td>
+</tr>
+<tr>
+<td></td>
+<td>app_name</td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+<td>Integrator name.</td>
+</tr>
+<tr>
+<td></td>
+<td>app_key</td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+<td>Integrator key.</td>
+</tr>
+<tr>
+<td></td>
+<td>username</td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+<td>Username for cardsavr authentication.</td>
+</tr>
+<tr>
+<td></td>
+<td>password</td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+<td>Password for cardsavr authentication.</td>
+</tr>
+<tr>
+<td>cardholder</td>
+<td></td>
+<td>object</td>
+<td>yes</td>
+<td></td>
+<td>Cardholder information.</td>
+</tr>
+<tr>
+<td></td>
+<td>cuid</td>
+<td>string</td>
+<td>no</td>
+<td>generated</td>
+<td>External ID. If not provided, a random number will be generated.</td>
+</tr>
+<tr>
+<td></td>
+<td>first_name</td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+<td>Cardholder&#39;s first name.</td>
+</tr>
+<tr>
+<td></td>
+<td>last_name</td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+<td>Cardholder&#39;s last name.</td>
+</tr>
+<tr>
+<td></td>
+<td>email</td>
+<td>string</td>
+<td>no</td>
+<td></td>
+<td>Used to send card placement notifications.</td>
+</tr>
+<tr>
+<td>expiration</td>
+<td></td>
+<td>object</td>
+<td>no</td>
+<td>2 months from current date</td>
+<td>Expiration date for the request. Defaults to 2 months from the current date.</td>
+</tr>
+<tr>
+<td></td>
+<td>month</td>
+<td>string</td>
+<td>no</td>
+<td></td>
+<td>Two-digit month (01-12).</td>
+</tr>
+<tr>
+<td></td>
+<td>day</td>
+<td>string</td>
+<td>no</td>
+<td></td>
+<td>Day of the month (1-31).</td>
+</tr>
+<tr>
+<td></td>
+<td>year</td>
+<td>string</td>
+<td>no</td>
+<td></td>
+<td>Four-digit year.</td>
+</tr>
+<tr>
+<td>address</td>
+<td></td>
+<td>object</td>
+<td>yes</td>
+<td></td>
+<td>Cardholder&#39;s billing address.</td>
+</tr>
+<tr>
+<td></td>
+<td>address1</td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+<td>Street address.</td>
+</tr>
+<tr>
+<td></td>
+<td>address2</td>
+<td>string</td>
+<td>no</td>
+<td></td>
+<td>Additional address info (apt, suite, etc.).</td>
+</tr>
+<tr>
+<td></td>
+<td>city</td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+<td>City name.</td>
+</tr>
+<tr>
+<td></td>
+<td>subnational</td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+<td>State or province.</td>
+</tr>
+<tr>
+<td></td>
+<td>postal_code</td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+<td>Zip or postal code.</td>
+</tr>
+<tr>
+<td></td>
+<td>country</td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+<td>Accepted values: &quot;usa&quot;, &quot;USA&quot;, &quot;us&quot;, &quot;US&quot;, &quot;canada&quot;, &quot;Canada&quot;, &quot;ca&quot;, &quot;CA&quot;.</td>
+</tr>
+<tr>
+<td></td>
+<td>phone_number</td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+<td>Phone number.</td>
+</tr>
+<tr>
+<td>card</td>
+<td></td>
+<td>object</td>
+<td>yes</td>
+<td></td>
+<td>Card details.</td>
+</tr>
+<tr>
+<td></td>
+<td>reference</td>
+<td>object</td>
+<td>yes</td>
+<td></td>
+<td>Reference object. If NULL, all other fields are required.</td>
+</tr>
+<tr>
+<td></td>
+<td>pan</td>
+<td>string</td>
+<td>conditional</td>
+<td></td>
+<td>Primary account number. Required if reference is NULL.</td>
+</tr>
+<tr>
+<td></td>
+<td>expiration_month</td>
+<td>string</td>
+<td>conditional</td>
+<td></td>
+<td>Two-digit expiration month. Required if reference is NULL.</td>
+</tr>
+<tr>
+<td></td>
+<td>expiration_year</td>
+<td>string</td>
+<td>conditional</td>
+<td></td>
+<td>Two-digit expiration year. Required if reference is NULL.</td>
+</tr>
+<tr>
+<td></td>
+<td>name_on_card</td>
+<td>string</td>
+<td>conditional</td>
+<td></td>
+<td>Name as it appears on the card. Required if reference is NULL.</td>
+</tr>
+<tr>
+<td></td>
+<td>nickname</td>
+<td>string</td>
+<td>conditional</td>
+<td></td>
+<td>Display name for the card. Required if reference is NULL.</td>
+</tr>
+<tr>
+<td></td>
+<td>cvv</td>
+<td>string</td>
+<td>no</td>
+<td></td>
+<td>Card verification value.</td>
+</tr>
+</tbody></table>
+<h3 id='response'>Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>card_link_url</td>
+<td>string</td>
+<td>Fully formed URL for the card link.</td>
+</tr>
+<tr>
+<td>cardholder_long_token_expiration</td>
+<td>string</td>
+<td>Expiration date of the cardholder&#39;s long token.</td>
+</tr>
+<tr>
+<td>card_link_id</td>
+<td>number</td>
+<td>ID of the created card link.</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">Calls to /card_links/ondemand require the cardholder's personal cardholder_safe_key header to encrypt and save card and account data.</aside>
 <h2 id='update-card-link'>Update card link</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">cardlink</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">updateCardLink</span><span class="p">(</span><span class="mi">1</span><span class="p">,{</span>
   <span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">This is an error</span><span class="dl">"</span><span class="p">,</span>
   <span class="dl">"</span><span class="s2">custom_data</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
@@ -3316,13 +3664,13 @@ https://api.INSTANCE.cardsavr.io/card_links/
 <span class="nt">-X</span> PUT <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/card_links/1895187881
-</code></pre></div><h3 id='path-20'>Path</h3>
+</code></pre></div><h3 id='path-21'>Path</h3>
 <p>PUT /card_links OR /card_links/{id}</p>
-<h3 id='description-20'>Description</h3>
+<h3 id='description-21'>Description</h3>
 <p>Update a card link and return the updated object.  An id is required on every update request.</p>
 <h3 id='sdk-usage-20'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-10'>Body parameters</h3>
+<h3 id='body-parameters-11'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3349,9 +3697,9 @@ https://api.INSTANCE.cardsavr.io/card_links/1895187881
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">deleteCardLink</span><span class="p">(</span><span class="kc">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">CardLink</span><span class="p">&gt;</span> <span class="n">cardlink</span> <span class="p">=</span> <span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">DeleteCardLinkAsync</span><span class="p">(</span><span class="n">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonValue</span> <span class="n">cardlink</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">"/card_links"</span><span class="o">,</span> <span class="n">undefined</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
-</code></pre></div><h3 id='path-21'>Path</h3>
+</code></pre></div><h3 id='path-22'>Path</h3>
 <p>DELETE /card_links/{id}</p>
-<h3 id='description-21'>Description</h3>
+<h3 id='description-22'>Description</h3>
 <p>Delete a card link and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h3 id='sdk-usage-21'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -3451,9 +3799,9 @@ https://api.INSTANCE.cardsavr.io/card_links/1895187881
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"cuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LbGCJNwbnxMrm"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='path-22'>Path</h3>
+</span></code></pre></div><h3 id='path-23'>Path</h3>
 <p>GET /cardholder_sessions <strong>(batch)</strong> or GET /cardholder_sessions/:id <strong>(singular)</strong></p>
-<h3 id='description-22'>Description</h3>
+<h3 id='description-23'>Description</h3>
 <p>Returns the cardholder session specified by the provided ID</p>
 <h3 id='sdk-usage-22'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -3604,13 +3952,13 @@ https://api.INSTANCE.cardsavr.io/card_links/1895187881
 <span class="nt">-X</span> PUT <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/cardholder_sessions/1899508020
-</code></pre></div><h3 id='path-23'>Path</h3>
+</code></pre></div><h3 id='path-24'>Path</h3>
 <p>PUT /cardholder_sessions OR /cardholder_sessions/{id}</p>
-<h3 id='description-23'>Description</h3>
+<h3 id='description-24'>Description</h3>
 <p>Upsert can be used to either update a cardholder session, create a new cardholder session, or return an existing cardholder session.  Either an id or customer_key is required for upsert. The id (in path or body), along with an updated body, can be used to update an existing cardholder session; the customer_key (in body) can likewise be used to update a cardholder session, and can also be used to create a new cardholder session, if the customer_key does not match any existing cardholder sessions. If the id or customer_key provided corresponds to a pre-existing cardholder session and no updated information has been included in the body, the existing cardholder session will be returned.</p>
 <h3 id='sdk-usage-23'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-11'>Body parameters</h3>
+<h3 id='body-parameters-12'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3735,9 +4083,9 @@ https://api.INSTANCE.cardsavr.io/cardholder_sessions/1899508020
   </span><span class="nl">"par"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NvzgeTDIzCgfYdaRgSBXxmKhvAZAe"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"customer_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mvhunz"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='path-24'>Path</h3>
+</span></code></pre></div><h3 id='path-25'>Path</h3>
 <p>GET /cardsavr_cards <strong>(batch)</strong> or GET /cardsavr_cards/:id <strong>(singular)</strong></p>
-<h3 id='description-24'>Description</h3>
+<h3 id='description-25'>Description</h3>
 <p>Returns the card specified by the provided ID</p>
 <h3 id='sdk-usage-24'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -3903,16 +4251,16 @@ https://api.INSTANCE.cardsavr.io/cardholder_sessions/1899508020
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-cardholder-safe-key: CARDHOLDER_SAFE_KEY"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/cardsavr_cards/
-</code></pre></div><h3 id='path-25'>Path</h3>
+</code></pre></div><h3 id='path-26'>Path</h3>
 <p>POST /cardsavr_cards</p>
-<h3 id='description-25'>Description</h3>
+<h3 id='description-26'>Description</h3>
 <p>Create a card and return the created object.</p>
 <h3 id='sdk-usage-25'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
 
 <aside class="notice"><a href=#request-hydration-on-post>Request hydration</a> can be used on this endpoint. This allows you to create a new card and all referential entities in a single POST request.
 </aside>
-<h3 id='body-parameters-12'>Body parameters</h3>
+<h3 id='body-parameters-13'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4063,13 +4411,13 @@ https://api.INSTANCE.cardsavr.io/cardsavr_cards/
 <span class="nt">-X</span> PUT <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/cardsavr_cards/1061970351
-</code></pre></div><h3 id='path-26'>Path</h3>
+</code></pre></div><h3 id='path-27'>Path</h3>
 <p>PUT /cardsavr_cards OR /cardsavr_cards/{id}</p>
-<h3 id='description-26'>Description</h3>
+<h3 id='description-27'>Description</h3>
 <p>Upsert can be used to either update a card, create a new card, or return an existing card.  Either an id or customer_key is required for upsert. The id (in path or body), along with an updated body, can be used to update an existing card; the customer_key (in body) can likewise be used to update a card, and can also be used to create a new card, if the customer_key does not match any existing cards. If the id or customer_key provided corresponds to a pre-existing card and no updated information has been included in the body, the existing card will be returned.</p>
 <h3 id='sdk-usage-26'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-13'>Body parameters</h3>
+<h3 id='body-parameters-14'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4126,9 +4474,9 @@ https://api.INSTANCE.cardsavr.io/cardsavr_cards/1061970351
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">deleteCard</span><span class="p">(</span><span class="kc">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">Card</span><span class="p">&gt;</span> <span class="n">card</span> <span class="p">=</span> <span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">DeleteCardAsync</span><span class="p">(</span><span class="n">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonValue</span> <span class="n">card</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">"/cardsavr_cards"</span><span class="o">,</span> <span class="n">undefined</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
-</code></pre></div><h3 id='path-27'>Path</h3>
+</code></pre></div><h3 id='path-28'>Path</h3>
 <p>DELETE /cardsavr_cards/{id}</p>
-<h3 id='description-27'>Description</h3>
+<h3 id='description-28'>Description</h3>
 <p>Delete a card and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h3 id='sdk-usage-27'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -4199,9 +4547,9 @@ https://api.INSTANCE.cardsavr.io/cardsavr_cards/1061970351
     </span><span class="nl">"integration"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CU3_CL"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='path-28'>Path</h3>
+</span></code></pre></div><h3 id='path-29'>Path</h3>
 <p>GET /cardholders <strong>(batch)</strong> or GET /cardholders/:id <strong>(singular)</strong></p>
-<h3 id='description-28'>Description</h3>
+<h3 id='description-29'>Description</h3>
 <p>Returns the cardholder specified by the provided ID</p>
 <h3 id='sdk-usage-28'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -4349,13 +4697,13 @@ https://api.INSTANCE.cardsavr.io/cardsavr_cards/1061970351
 <span class="nt">-X</span> POST <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/cardholders/
-</code></pre></div><h3 id='path-29'>Path</h3>
+</code></pre></div><h3 id='path-30'>Path</h3>
 <p>POST /cardholders</p>
-<h3 id='description-29'>Description</h3>
+<h3 id='description-30'>Description</h3>
 <p>Create a cardholder and return the created object.</p>
 <h3 id='sdk-usage-29'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-14'>Body parameters</h3>
+<h3 id='body-parameters-15'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4465,13 +4813,13 @@ https://api.INSTANCE.cardsavr.io/cardholders/
 <span class="nt">-X</span> PUT <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/cardholders/156249640
-</code></pre></div><h3 id='path-30'>Path</h3>
+</code></pre></div><h3 id='path-31'>Path</h3>
 <p>PUT /cardholders OR /cardholders/{id}</p>
-<h3 id='description-30'>Description</h3>
+<h3 id='description-31'>Description</h3>
 <p>Upsert can be used to either update a cardholder, create a new cardholder, or return an existing cardholder.  Either an id or cuid is required for upsert. The id (in path or body), along with an updated body, can be used to update an existing cardholder; the cuid (in body) can likewise be used to update a cardholder, and can also be used to create a new cardholder, if the cuid does not match any existing cardholders. If the id or cuid provided corresponds to a pre-existing cardholder and no updated information has been included in the body, the existing cardholder will be returned.</p>
 <h3 id='sdk-usage-30'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-15'>Body parameters</h3>
+<h3 id='body-parameters-16'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4523,9 +4871,9 @@ https://api.INSTANCE.cardsavr.io/cardholders/156249640
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">deleteCardholder</span><span class="p">(</span><span class="kc">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">Cardholder</span><span class="p">&gt;</span> <span class="n">cardholder</span> <span class="p">=</span> <span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">DeleteCardholderAsync</span><span class="p">(</span><span class="n">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonValue</span> <span class="n">cardholder</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">"/cardholders"</span><span class="o">,</span> <span class="n">undefined</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
-</code></pre></div><h3 id='path-31'>Path</h3>
+</code></pre></div><h3 id='path-32'>Path</h3>
 <p>DELETE /cardholders/{id}</p>
-<h3 id='description-31'>Description</h3>
+<h3 id='description-32'>Description</h3>
 <p>Delete a cardholder and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h3 id='sdk-usage-31'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -4576,9 +4924,9 @@ https://api.INSTANCE.cardsavr.io/cardholders/156249640
     </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1984-01-17T01:09:09.965Z"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='path-32'>Path</h3>
+</span></code></pre></div><h3 id='path-33'>Path</h3>
 <p>GET /cardsavr_users <strong>(batch)</strong> or GET /cardsavr_users/:id <strong>(singular)</strong></p>
-<h3 id='description-32'>Description</h3>
+<h3 id='description-33'>Description</h3>
 <p>Returns the user specified by the provided ID</p>
 <h3 id='sdk-usage-32'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -4732,13 +5080,13 @@ https://api.INSTANCE.cardsavr.io/cardholders/156249640
 <span class="nt">-X</span> POST <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/cardsavr_users/
-</code></pre></div><h3 id='path-33'>Path</h3>
+</code></pre></div><h3 id='path-34'>Path</h3>
 <p>POST /cardsavr_users</p>
-<h3 id='description-33'>Description</h3>
+<h3 id='description-34'>Description</h3>
 <p>Create a user and return the created object.</p>
 <h3 id='sdk-usage-33'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-16'>Body parameters</h3>
+<h3 id='body-parameters-17'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4863,13 +5211,13 @@ https://api.INSTANCE.cardsavr.io/cardsavr_users/
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-new-cardholder-safe-key: NEW_CARDHODLER_SAFE_KEY"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/cardsavr_users/1732070224
-</code></pre></div><h3 id='path-34'>Path</h3>
+</code></pre></div><h3 id='path-35'>Path</h3>
 <p>PUT /cardsavr_users OR /cardsavr_users/{id}</p>
-<h3 id='description-34'>Description</h3>
+<h3 id='description-35'>Description</h3>
 <p>Update a user and return the updated object.  An id is required on every update request.</p>
 <h3 id='sdk-usage-34'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-17'>Body parameters</h3>
+<h3 id='body-parameters-18'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4926,9 +5274,9 @@ https://api.INSTANCE.cardsavr.io/cardsavr_users/1732070224
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">deleteUser</span><span class="p">(</span><span class="kc">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;</span> <span class="n">user</span> <span class="p">=</span> <span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">DeleteUserAsync</span><span class="p">(</span><span class="n">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonValue</span> <span class="n">user</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">"/cardsavr_users"</span><span class="o">,</span> <span class="n">undefined</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
-</code></pre></div><h3 id='path-35'>Path</h3>
+</code></pre></div><h3 id='path-36'>Path</h3>
 <p>DELETE /cardsavr_users/{id}</p>
-<h3 id='description-35'>Description</h3>
+<h3 id='description-36'>Description</h3>
 <p>Delete a user and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h3 id='sdk-usage-35'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -4964,9 +5312,9 @@ https://api.INSTANCE.cardsavr.io/cardsavr_users/1732070224
   </span><span class="nl">"created_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1990-07-03T01:53:23.862Z"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1998-10-26T06:28:22.190Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='path-36'>Path</h3>
+</span></code></pre></div><h3 id='path-37'>Path</h3>
 <p>GET /financial_institutions <strong>(batch)</strong> or GET /financial_institutions/:id <strong>(singular)</strong></p>
-<h3 id='description-36'>Description</h3>
+<h3 id='description-37'>Description</h3>
 <p>Returns the financial institution specified by the provided ID</p>
 <h3 id='sdk-usage-36'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -5076,13 +5424,13 @@ https://api.INSTANCE.cardsavr.io/cardsavr_users/1732070224
 <span class="nt">-X</span> POST <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/financial_institutions/
-</code></pre></div><h3 id='path-37'>Path</h3>
+</code></pre></div><h3 id='path-38'>Path</h3>
 <p>POST /financial_institutions</p>
-<h3 id='description-37'>Description</h3>
+<h3 id='description-38'>Description</h3>
 <p>Create a financial institution and return the created object.</p>
 <h3 id='sdk-usage-37'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-18'>Body parameters</h3>
+<h3 id='body-parameters-19'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -5153,13 +5501,13 @@ https://api.INSTANCE.cardsavr.io/financial_institutions/
 <span class="nt">-X</span> PUT <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/financial_institutions/786378094
-</code></pre></div><h3 id='path-38'>Path</h3>
+</code></pre></div><h3 id='path-39'>Path</h3>
 <p>PUT /financial_institutions OR /financial_institutions/{id}</p>
-<h3 id='description-38'>Description</h3>
+<h3 id='description-39'>Description</h3>
 <p>Update a financial institution and return the updated object.  An id is required on every update request.</p>
 <h3 id='sdk-usage-38'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-19'>Body parameters</h3>
+<h3 id='body-parameters-20'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -5201,9 +5549,9 @@ https://api.INSTANCE.cardsavr.io/financial_institutions/786378094
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">deleteFinancialInstitution</span><span class="p">(</span><span class="kc">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">FinancialInstitution</span><span class="p">&gt;</span> <span class="n">financialinstitution</span> <span class="p">=</span> <span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">DeleteFinancialInstitutionAsync</span><span class="p">(</span><span class="n">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonValue</span> <span class="n">financialinstitution</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">"/financial_institutions"</span><span class="o">,</span> <span class="n">undefined</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
-</code></pre></div><h3 id='path-39'>Path</h3>
+</code></pre></div><h3 id='path-40'>Path</h3>
 <p>DELETE /financial_institutions/{id}</p>
-<h3 id='description-39'>Description</h3>
+<h3 id='description-40'>Description</h3>
 <p>Delete a financial institution and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h3 id='sdk-usage-39'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -5250,9 +5598,9 @@ https://api.INSTANCE.cardsavr.io/financial_institutions/786378094
     </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1984-02-20T23:15:00.062Z"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='path-40'>Path</h3>
+</span></code></pre></div><h3 id='path-41'>Path</h3>
 <p>GET /integrators <strong>(batch)</strong> or GET /integrators/:id <strong>(singular)</strong></p>
-<h3 id='description-40'>Description</h3>
+<h3 id='description-41'>Description</h3>
 <p>Returns the integrator specified by the provided ID</p>
 <h3 id='sdk-usage-40'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -5367,13 +5715,13 @@ https://api.INSTANCE.cardsavr.io/financial_institutions/786378094
 <span class="nt">-X</span> POST <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/integrators/
-</code></pre></div><h3 id='path-41'>Path</h3>
+</code></pre></div><h3 id='path-42'>Path</h3>
 <p>POST /integrators</p>
-<h3 id='description-41'>Description</h3>
+<h3 id='description-42'>Description</h3>
 <p>Create a integrator and return the created object.</p>
 <h3 id='sdk-usage-41'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-20'>Body parameters</h3>
+<h3 id='body-parameters-21'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -5453,13 +5801,13 @@ https://api.INSTANCE.cardsavr.io/integrators/
 <span class="nt">-X</span> PUT <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/integrators/1641648524
-</code></pre></div><h3 id='path-42'>Path</h3>
+</code></pre></div><h3 id='path-43'>Path</h3>
 <p>PUT /integrators OR /integrators/{id}</p>
-<h3 id='description-42'>Description</h3>
+<h3 id='description-43'>Description</h3>
 <p>Update a integrator and return the updated object.  An id is required on every update request.</p>
 <h3 id='sdk-usage-42'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-21'>Body parameters</h3>
+<h3 id='body-parameters-22'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -5506,9 +5854,9 @@ https://api.INSTANCE.cardsavr.io/integrators/1641648524
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">deleteIntegrator</span><span class="p">(</span><span class="kc">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">Integrator</span><span class="p">&gt;</span> <span class="n">integrator</span> <span class="p">=</span> <span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">DeleteIntegratorAsync</span><span class="p">(</span><span class="n">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonValue</span> <span class="n">integrator</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">"/integrators"</span><span class="o">,</span> <span class="n">undefined</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
-</code></pre></div><h3 id='path-43'>Path</h3>
+</code></pre></div><h3 id='path-44'>Path</h3>
 <p>DELETE /integrators/{id}</p>
-<h3 id='description-43'>Description</h3>
+<h3 id='description-44'>Description</h3>
 <p>Delete a integrator and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h3 id='sdk-usage-43'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -5595,9 +5943,9 @@ https://api.INSTANCE.cardsavr.io/integrators/1641648524
   </span><span class="nl">"merchant_sso_group"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VSkFuUjzIDWfwLIwTOW"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"tier"</span><span class="p">:</span><span class="w"> </span><span class="mi">940302177</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='path-44'>Path</h3>
+</span></code></pre></div><h3 id='path-45'>Path</h3>
 <p>GET /merchant_sites <strong>(batch)</strong> or GET /merchant_sites/:id <strong>(singular)</strong></p>
-<h3 id='description-44'>Description</h3>
+<h3 id='description-45'>Description</h3>
 <p>Returns the merchant site specified by the provided ID</p>
 <h3 id='sdk-usage-44'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -5769,9 +6117,9 @@ https://api.INSTANCE.cardsavr.io/integrators/1641648524
     </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1998-04-04T09:37:18.503Z"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='path-45'>Path</h3>
+</span></code></pre></div><h3 id='path-46'>Path</h3>
 <p>GET /notifications <strong>(batch)</strong> or GET /notifications/:id <strong>(singular)</strong></p>
-<h3 id='description-45'>Description</h3>
+<h3 id='description-46'>Description</h3>
 <p>Returns the notification specified by the provided ID</p>
 <h3 id='sdk-usage-45'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -5896,13 +6244,13 @@ https://api.INSTANCE.cardsavr.io/integrators/1641648524
 <span class="nt">-X</span> POST <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/notifications/
-</code></pre></div><h3 id='path-46'>Path</h3>
+</code></pre></div><h3 id='path-47'>Path</h3>
 <p>POST /notifications</p>
-<h3 id='description-46'>Description</h3>
+<h3 id='description-47'>Description</h3>
 <p>Create a notification and return the created object.</p>
 <h3 id='sdk-usage-46'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-22'>Body parameters</h3>
+<h3 id='body-parameters-23'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -6006,13 +6354,13 @@ https://api.INSTANCE.cardsavr.io/notifications/
 <span class="nt">-X</span> PUT <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/notifications/1437913716
-</code></pre></div><h3 id='path-47'>Path</h3>
+</code></pre></div><h3 id='path-48'>Path</h3>
 <p>PUT /notifications OR /notifications/{id}</p>
-<h3 id='description-47'>Description</h3>
+<h3 id='description-48'>Description</h3>
 <p>Update a notification and return the updated object.  An id is required on every update request.</p>
 <h3 id='sdk-usage-47'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-23'>Body parameters</h3>
+<h3 id='body-parameters-24'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -6059,9 +6407,9 @@ https://api.INSTANCE.cardsavr.io/notifications/1437913716
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">deleteNotification</span><span class="p">(</span><span class="kc">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">Notification</span><span class="p">&gt;</span> <span class="n">notification</span> <span class="p">=</span> <span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">DeleteNotificationAsync</span><span class="p">(</span><span class="n">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonValue</span> <span class="n">notification</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">"/notifications"</span><span class="o">,</span> <span class="n">undefined</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
-</code></pre></div><h3 id='path-48'>Path</h3>
+</code></pre></div><h3 id='path-49'>Path</h3>
 <p>DELETE /notifications/{id}</p>
-<h3 id='description-48'>Description</h3>
+<h3 id='description-49'>Description</h3>
 <p>Delete a notification and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h3 id='sdk-usage-48'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -6120,9 +6468,9 @@ https://api.INSTANCE.cardsavr.io/notifications/1437913716
     </span><span class="nl">"last_updated_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1988-12-28T17:07:13.546Z"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='path-49'>Path</h3>
+</span></code></pre></div><h3 id='path-50'>Path</h3>
 <p>GET /notification_results <strong>(batch)</strong> or GET /notification_results/:id <strong>(singular)</strong></p>
-<h3 id='description-49'>Description</h3>
+<h3 id='description-50'>Description</h3>
 <p>Returns the notification result specified by the provided ID</p>
 <h3 id='sdk-usage-49'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -6242,13 +6590,13 @@ https://api.INSTANCE.cardsavr.io/notifications/1437913716
 <span class="nt">-X</span> POST <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/notification_results/
-</code></pre></div><h3 id='path-50'>Path</h3>
+</code></pre></div><h3 id='path-51'>Path</h3>
 <p>POST /notification_results</p>
-<h3 id='description-50'>Description</h3>
+<h3 id='description-51'>Description</h3>
 <p>Create a notification result and return the created object.</p>
 <h3 id='sdk-usage-50'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-24'>Body parameters</h3>
+<h3 id='body-parameters-25'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -6390,9 +6738,9 @@ https://api.INSTANCE.cardsavr.io/notification_results/
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"credential_timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">941874093</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='path-51'>Path</h3>
+</span></code></pre></div><h3 id='path-52'>Path</h3>
 <p>GET /place_card_on_single_site_jobs <strong>(batch)</strong> or GET /place_card_on_single_site_jobs/:id <strong>(singular)</strong></p>
-<h3 id='description-51'>Description</h3>
+<h3 id='description-52'>Description</h3>
 <p>Returns the single-site job specified by the provided ID</p>
 <h3 id='sdk-usage-51'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
@@ -6572,16 +6920,16 @@ https://api.INSTANCE.cardsavr.io/notification_results/
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-cardholder-safe-key: CARDHOLDER_SAFE_KEY"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/
-</code></pre></div><h3 id='path-52'>Path</h3>
+</code></pre></div><h3 id='path-53'>Path</h3>
 <p>POST /place_card_on_single_site_jobs</p>
-<h3 id='description-52'>Description</h3>
+<h3 id='description-53'>Description</h3>
 <p>Create a single-site job and return the created object.</p>
 <h3 id='sdk-usage-52'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
 
 <aside class="notice"><a href=#request-hydration-on-post>Request hydration</a> can be used on this endpoint. This allows you to create a new single-site job and all referential entities in a single POST request.
 </aside>
-<h3 id='body-parameters-25'>Body parameters</h3>
+<h3 id='body-parameters-26'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -6791,13 +7139,13 @@ https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/
 <span class="nt">-H</span> <span class="s2">"cardholder-safe-key: CARDHOLDER_SAFE_KEY"</span>
 <span class="nt">-H</span> <span class="s2">"x-cardsavr-trace:{</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">my_trace</span><span class="se">\"</span><span class="s2">}"</span> 
 https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/2035432543
-</code></pre></div><h3 id='path-53'>Path</h3>
+</code></pre></div><h3 id='path-54'>Path</h3>
 <p>PUT /place_card_on_single_site_jobs OR /place_card_on_single_site_jobs/{id}</p>
-<h3 id='description-53'>Description</h3>
+<h3 id='description-54'>Description</h3>
 <p>Update a single-site job and return the updated object.  An id is required on every update request.</p>
 <h3 id='sdk-usage-53'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
-<h3 id='body-parameters-26'>Body parameters</h3>
+<h3 id='body-parameters-27'>Body parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -6861,9 +7209,9 @@ https://api.INSTANCE.cardsavr.io/place_card_on_single_site_jobs/2035432543
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="k">await</span> <span class="nx">session</span><span class="p">.</span><span class="nx">deleteSingleSiteJob</span><span class="p">(</span><span class="kc">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight csharp tab-csharp"><code><span class="n">CardSavrResponse</span><span class="p">&lt;</span><span class="n">SingleSiteJob</span><span class="p">&gt;</span> <span class="n">singlesitejob</span> <span class="p">=</span> <span class="k">await</span> <span class="n">http</span><span class="p">.</span><span class="nf">DeleteSingleSiteJobAsync</span><span class="p">(</span><span class="n">undefined</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">JsonValue</span> <span class="n">singlesitejob</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">"/place_card_on_single_site_jobs"</span><span class="o">,</span> <span class="n">undefined</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
-</code></pre></div><h3 id='path-54'>Path</h3>
+</code></pre></div><h3 id='path-55'>Path</h3>
 <p>DELETE /place_card_on_single_site_jobs/{id}</p>
-<h3 id='description-54'>Description</h3>
+<h3 id='description-55'>Description</h3>
 <p>Delete a single-site job and purge its <a href="#cascading-delete">related items</a>.  An id is required on every delete request.</p>
 <h3 id='sdk-usage-54'>SDK Usage</h3>
 <p>Please visit the <a href="https://github.com/swch/Strivve-SDK">javascript</a>, <a href="https://github.com/swch/metro_sdk_c_sharp">c sharp</a>, and <a href="https://github.com/swch/strivve-sdk-java">java</a> SDKs for further examples and information on SDK usage.</p>
